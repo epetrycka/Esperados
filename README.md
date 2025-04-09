@@ -1,10 +1,10 @@
-# 📜 SquickLang Specification
+# SquickLang Specification
 
 SquickLang is a mini programming language inspired by Python, but with Esperanto-style keywords and custom syntax.
 
 ---
 
-## 🔤 Keywords and Tokens
+## Keywords and Tokens
 
 | Token        | Python Equivalent  | Category               |
 |--------------|--------------------|------------------------|
@@ -38,7 +38,7 @@ SquickLang is a mini programming language inspired by Python, but with Esperanto
 
 ---
 
-## ➕ Arithmetic Operators
+## Arithmetic Operators
 
 | Token        | Python Equivalent | Operation         |
 |--------------|-------------------|-------------------|
@@ -51,7 +51,7 @@ SquickLang is a mini programming language inspired by Python, but with Esperanto
 
 ---
 
-## 🧮 Comparison and Assignment Operators
+## Comparison and Assignment Operators
 
 | Token              | Python Equivalent | Operation              |
 |--------------------|-------------------|------------------------|
@@ -65,7 +65,7 @@ SquickLang is a mini programming language inspired by Python, but with Esperanto
 
 ---
 
-## 🧱 Structural Symbols
+## Structural Symbols
 
 | Symbol   | Meaning              | Category               |
 |----------|----------------------|------------------------|
@@ -82,7 +82,7 @@ SquickLang is a mini programming language inspired by Python, but with Esperanto
 
 ---
 
-## 🔢 Data Types
+## Data Types
 
 | Token     | Python Equivalent | Type        |
 |-----------|-------------------|-------------|
