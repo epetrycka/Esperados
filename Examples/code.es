@@ -33,5 +33,4 @@ se ( (((2 egala 2) malgranda 5) kaj (5 granda 9) ) au malvero){
     skribi("Else wykonal sie")
 }
 
-
 Adiau

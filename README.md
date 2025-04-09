@@ -77,15 +77,13 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 7. Użycie maksymalnej ilości słów kluczowych zrozumiałych w języku esperanto (minimalizacja używania symboli).
 
----
-
 ## Code Example
 
 ```esperando
 Saluton
 
 difini salutu(nomo: snuro):
-    reveni("Saluton, " + nomo)
+    skribi("Saluton, " + nomo)
 
 por variablo en ["Mia", "Eta", "Amiko"]:
     salutu(variablo)
@@ -101,7 +99,7 @@ Adiau
 > source venv/Scripts/activate
 > python -m pip install --upgrade pip
 > python -m pip install -r requirements.txt
-> py src/main.py Examples/code.es
+> python main.py ../Examples/code.es
 ```
 
 ---
