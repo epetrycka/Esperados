@@ -78,7 +78,8 @@ SquickLang is a mini programming language inspired by Python, but with Esperanto
 | `,`      | comma                | Separator              |
 | `:`      | colon                | Block or dict separator|
 | `;`      | semicolon            | Statement separator    |
-| `:O...o:`| comment_symbol       | Comment                |
+| `:O...`  | comment_symbol       | Comment                |
+| `:P...P:`| commentblock_symbols | Comment Block          |
 
 ---
 
