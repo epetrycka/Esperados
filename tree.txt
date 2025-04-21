@@ -1,3 +1,0 @@
-(program (statement (greeting Saluton))
-(statement (printStmt skribi ( "HelloWorld" )))
-(statement (goodbye Adiau)))

@@ -1,4 +1,4 @@
-# Generated from ../Grammar/Esperando.g4 by ANTLR 4.13.2
+# Generated from ../Grammar/Esperados.g4 by ANTLR 4.13.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -35,7 +35,7 @@ def serializedATN():
         67,68,5,10,0,0,68,18,1,0,0,0,5,0,47,53,60,65,1,6,0,0
     ]
 
-class EsperandoLexer(Lexer):
+class EsperadosLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -64,7 +64,7 @@ class EsperandoLexer(Lexer):
     ruleNames = [ "T__0", "T__1", "GREETING", "GOODBYE", "PRINT", "INT", 
                   "STRING", "WS", "NL" ]
 
-    grammarFileName = "Esperando.g4"
+    grammarFileName = "Esperados.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)
