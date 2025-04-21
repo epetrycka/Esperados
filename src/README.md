@@ -8,16 +8,16 @@
 > python -m pip install -r requirements.txt
 ```
 
-Download complete binaries from [link](https://www.antlr.org/download/antlr-4.13.2-complete.jar) and save in for example in C:/Users/User/ProgramFiles/antlr/
+Download complete binaries from [link](https://www.antlr.org/download/antlr-4.13.2-complete.jar) and save in for example in ~/ProgramFiles/antlr/
 
 ```
-> curl -O C/Users/User/ProgramFiles/antlr/antlr-4.13.2-complete.jar https://www.antlr.org/download/antlr-4.13.2-complete.jar
-> echo 'alias antlr4="java -jar C/Users/User/ProgramFiles/antlr/antlr-4.13.2-complete.jar"' >> ~/.bashrc
+> curl -O ~/ProgramFiles/antlr/antlr-4.13.2-complete.jar https://www.antlr.org/download/antlr-4.13.2-complete.jar
+> echo 'alias antlr4="java -jar ~/ProgramFiles/antlr/antlr-4.13.2-complete.jar"' >> ~/.bashrc
 > source ~/.bashrc
 > cd ../Grammar
 > antlr4 -Dlanguage=Python3 -visitor Esperados.g4 -o ../src/generated
 > cd ../src
-> python main.py
+> python main.py "programme.es"
 ```
 
 ! Make sure you have Java version at least 11.
