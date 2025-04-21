@@ -1,4 +1,4 @@
-# Generated from Esperando.g4 by ANTLR 4.13.2
+# Generated from ../Grammar/Esperando.g4 by ANTLR 4.13.2
 from antlr4 import *
 if "." in __name__:
     from .EsperandoParser import EsperandoParser
@@ -14,23 +14,18 @@ class EsperandoVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperandoParser#statement.
-    def visitStatement(self, ctx:EsperandoParser.StatementContext):
+    # Visit a parse tree produced by EsperandoParser#action.
+    def visitAction(self, ctx:EsperandoParser.ActionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperandoParser#greeting.
-    def visitGreeting(self, ctx:EsperandoParser.GreetingContext):
+    # Visit a parse tree produced by EsperandoParser#expr.
+    def visitExpr(self, ctx:EsperandoParser.ExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperandoParser#goodbye.
-    def visitGoodbye(self, ctx:EsperandoParser.GoodbyeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperandoParser#printStmt.
-    def visitPrintStmt(self, ctx:EsperandoParser.PrintStmtContext):
+    # Visit a parse tree produced by EsperandoParser#printExpr.
+    def visitPrintExpr(self, ctx:EsperandoParser.PrintExprContext):
         return self.visitChildren(ctx)
 
 

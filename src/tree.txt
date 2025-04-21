@@ -1,0 +1,3 @@
+(program Saluton (action (printExpr skribi ( (expr "Saluton") )))
+(action (printExpr skribi ( (expr "Aha lol") )))
+(action (printExpr skribi ( (expr 5) ))) Adiau <EOF>)

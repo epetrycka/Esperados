@@ -1,4 +1,4 @@
-# Generated from Esperando.g4 by ANTLR 4.13.2
+# Generated from ../Grammar/Esperando.g4 by ANTLR 4.13.2
 from antlr4 import *
 if "." in __name__:
     from .EsperandoParser import EsperandoParser
@@ -17,39 +17,30 @@ class EsperandoListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by EsperandoParser#statement.
-    def enterStatement(self, ctx:EsperandoParser.StatementContext):
+    # Enter a parse tree produced by EsperandoParser#action.
+    def enterAction(self, ctx:EsperandoParser.ActionContext):
         pass
 
-    # Exit a parse tree produced by EsperandoParser#statement.
-    def exitStatement(self, ctx:EsperandoParser.StatementContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperandoParser#greeting.
-    def enterGreeting(self, ctx:EsperandoParser.GreetingContext):
-        pass
-
-    # Exit a parse tree produced by EsperandoParser#greeting.
-    def exitGreeting(self, ctx:EsperandoParser.GreetingContext):
+    # Exit a parse tree produced by EsperandoParser#action.
+    def exitAction(self, ctx:EsperandoParser.ActionContext):
         pass
 
 
-    # Enter a parse tree produced by EsperandoParser#goodbye.
-    def enterGoodbye(self, ctx:EsperandoParser.GoodbyeContext):
+    # Enter a parse tree produced by EsperandoParser#expr.
+    def enterExpr(self, ctx:EsperandoParser.ExprContext):
         pass
 
-    # Exit a parse tree produced by EsperandoParser#goodbye.
-    def exitGoodbye(self, ctx:EsperandoParser.GoodbyeContext):
+    # Exit a parse tree produced by EsperandoParser#expr.
+    def exitExpr(self, ctx:EsperandoParser.ExprContext):
         pass
 
 
-    # Enter a parse tree produced by EsperandoParser#printStmt.
-    def enterPrintStmt(self, ctx:EsperandoParser.PrintStmtContext):
+    # Enter a parse tree produced by EsperandoParser#printExpr.
+    def enterPrintExpr(self, ctx:EsperandoParser.PrintExprContext):
         pass
 
-    # Exit a parse tree produced by EsperandoParser#printStmt.
-    def exitPrintStmt(self, ctx:EsperandoParser.PrintStmtContext):
+    # Exit a parse tree produced by EsperandoParser#printExpr.
+    def exitPrintExpr(self, ctx:EsperandoParser.PrintExprContext):
         pass
 
 

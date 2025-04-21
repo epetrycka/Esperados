@@ -1,4 +1,4 @@
-# Generated from Esperando.g4 by ANTLR 4.13.2
+# Generated from ../Grammar/Esperando.g4 by ANTLR 4.13.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -10,15 +10,14 @@ else:
 
 def serializedATN():
     return [
-        4,1,7,30,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,1,0,4,0,12,8,0,
-        11,0,12,0,13,1,1,1,1,1,1,3,1,19,8,1,1,2,1,2,1,3,1,3,1,4,1,4,1,4,
-        1,4,1,4,1,4,0,0,5,0,2,4,6,8,0,0,27,0,11,1,0,0,0,2,18,1,0,0,0,4,20,
-        1,0,0,0,6,22,1,0,0,0,8,24,1,0,0,0,10,12,3,2,1,0,11,10,1,0,0,0,12,
-        13,1,0,0,0,13,11,1,0,0,0,13,14,1,0,0,0,14,1,1,0,0,0,15,19,3,4,2,
-        0,16,19,3,8,4,0,17,19,3,6,3,0,18,15,1,0,0,0,18,16,1,0,0,0,18,17,
-        1,0,0,0,19,3,1,0,0,0,20,21,5,1,0,0,21,5,1,0,0,0,22,23,5,2,0,0,23,
-        7,1,0,0,0,24,25,5,3,0,0,25,26,5,4,0,0,26,27,5,6,0,0,27,28,5,5,0,
-        0,28,9,1,0,0,0,2,13,18
+        4,1,9,28,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,4,0,12,8,0,
+        11,0,12,0,13,1,0,1,0,1,0,1,1,1,1,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,
+        0,0,4,0,2,4,6,0,1,1,0,6,7,25,0,8,1,0,0,0,2,18,1,0,0,0,4,20,1,0,0,
+        0,6,22,1,0,0,0,8,11,5,3,0,0,9,12,3,2,1,0,10,12,5,9,0,0,11,9,1,0,
+        0,0,11,10,1,0,0,0,12,13,1,0,0,0,13,11,1,0,0,0,13,14,1,0,0,0,14,15,
+        1,0,0,0,15,16,5,4,0,0,16,17,5,0,0,1,17,1,1,0,0,0,18,19,3,6,3,0,19,
+        3,1,0,0,0,20,21,7,0,0,0,21,5,1,0,0,0,22,23,5,5,0,0,23,24,5,1,0,0,
+        24,25,3,4,2,0,25,26,5,2,0,0,26,7,1,0,0,0,2,11,13
     ]
 
 class EsperandoParser ( Parser ):
@@ -31,28 +30,29 @@ class EsperandoParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'Saluton'", "'Adiau'", "'skribi'", "'('", 
-                     "')'" ]
+    literalNames = [ "<INVALID>", "'('", "')'", "'Saluton'", "'Adiau'", 
+                     "'skribi'" ]
 
-    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "STRING", "WS" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "GREETING", 
+                      "GOODBYE", "PRINT", "INT", "STRING", "WS", "NL" ]
 
     RULE_program = 0
-    RULE_statement = 1
-    RULE_greeting = 2
-    RULE_goodbye = 3
-    RULE_printStmt = 4
+    RULE_action = 1
+    RULE_expr = 2
+    RULE_printExpr = 3
 
-    ruleNames =  [ "program", "statement", "greeting", "goodbye", "printStmt" ]
+    ruleNames =  [ "program", "action", "expr", "printExpr" ]
 
     EOF = Token.EOF
     T__0=1
     T__1=2
-    T__2=3
-    T__3=4
-    T__4=5
-    STRING=6
-    WS=7
+    GREETING=3
+    GOODBYE=4
+    PRINT=5
+    INT=6
+    STRING=7
+    WS=8
+    NL=9
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -70,12 +70,27 @@ class EsperandoParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def statement(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(EsperandoParser.StatementContext)
-            else:
-                return self.getTypedRuleContext(EsperandoParser.StatementContext,i)
+        def GREETING(self):
+            return self.getToken(EsperandoParser.GREETING, 0)
 
+        def GOODBYE(self):
+            return self.getToken(EsperandoParser.GOODBYE, 0)
+
+        def EOF(self):
+            return self.getToken(EsperandoParser.EOF, 0)
+
+        def action(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(EsperandoParser.ActionContext)
+            else:
+                return self.getTypedRuleContext(EsperandoParser.ActionContext,i)
+
+
+        def NL(self, i:int=None):
+            if i is None:
+                return self.getTokens(EsperandoParser.NL)
+            else:
+                return self.getToken(EsperandoParser.NL, i)
 
         def getRuleIndex(self):
             return EsperandoParser.RULE_program
@@ -104,18 +119,36 @@ class EsperandoParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+            self.state = 8
+            self.match(EsperandoParser.GREETING)
             self.state = 11 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 10
-                self.statement()
+                self.state = 11
+                self._errHandler.sync(self)
+                token = self._input.LA(1)
+                if token in [5]:
+                    self.state = 9
+                    self.action()
+                    pass
+                elif token in [9]:
+                    self.state = 10
+                    self.match(EsperandoParser.NL)
+                    pass
+                else:
+                    raise NoViableAltException(self)
+
                 self.state = 13 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 14) != 0)):
+                if not (_la==5 or _la==9):
                     break
 
+            self.state = 15
+            self.match(EsperandoParser.GOODBYE)
+            self.state = 16
+            self.match(EsperandoParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -125,71 +158,45 @@ class EsperandoParser ( Parser ):
         return localctx
 
 
-    class StatementContext(ParserRuleContext):
+    class ActionContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def greeting(self):
-            return self.getTypedRuleContext(EsperandoParser.GreetingContext,0)
-
-
-        def printStmt(self):
-            return self.getTypedRuleContext(EsperandoParser.PrintStmtContext,0)
-
-
-        def goodbye(self):
-            return self.getTypedRuleContext(EsperandoParser.GoodbyeContext,0)
+        def printExpr(self):
+            return self.getTypedRuleContext(EsperandoParser.PrintExprContext,0)
 
 
         def getRuleIndex(self):
-            return EsperandoParser.RULE_statement
+            return EsperandoParser.RULE_action
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStatement" ):
-                listener.enterStatement(self)
+            if hasattr( listener, "enterAction" ):
+                listener.enterAction(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStatement" ):
-                listener.exitStatement(self)
+            if hasattr( listener, "exitAction" ):
+                listener.exitAction(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStatement" ):
-                return visitor.visitStatement(self)
+            if hasattr( visitor, "visitAction" ):
+                return visitor.visitAction(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def statement(self):
+    def action(self):
 
-        localctx = EsperandoParser.StatementContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_statement)
+        localctx = EsperandoParser.ActionContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_action)
         try:
+            self.enterOuterAlt(localctx, 1)
             self.state = 18
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [1]:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 15
-                self.greeting()
-                pass
-            elif token in [3]:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 16
-                self.printStmt()
-                pass
-            elif token in [2]:
-                self.enterOuterAlt(localctx, 3)
-                self.state = 17
-                self.goodbye()
-                pass
-            else:
-                raise NoViableAltException(self)
-
+            self.printExpr()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -199,97 +206,7 @@ class EsperandoParser ( Parser ):
         return localctx
 
 
-    class GreetingContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-
-        def getRuleIndex(self):
-            return EsperandoParser.RULE_greeting
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGreeting" ):
-                listener.enterGreeting(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGreeting" ):
-                listener.exitGreeting(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGreeting" ):
-                return visitor.visitGreeting(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def greeting(self):
-
-        localctx = EsperandoParser.GreetingContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_greeting)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 20
-            self.match(EsperandoParser.T__0)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class GoodbyeContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-
-        def getRuleIndex(self):
-            return EsperandoParser.RULE_goodbye
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGoodbye" ):
-                listener.enterGoodbye(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGoodbye" ):
-                listener.exitGoodbye(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGoodbye" ):
-                return visitor.visitGoodbye(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def goodbye(self):
-
-        localctx = EsperandoParser.GoodbyeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_goodbye)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 22
-            self.match(EsperandoParser.T__1)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class PrintStmtContext(ParserRuleContext):
+    class ExprContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -299,40 +216,100 @@ class EsperandoParser ( Parser ):
         def STRING(self):
             return self.getToken(EsperandoParser.STRING, 0)
 
+        def INT(self):
+            return self.getToken(EsperandoParser.INT, 0)
+
         def getRuleIndex(self):
-            return EsperandoParser.RULE_printStmt
+            return EsperandoParser.RULE_expr
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPrintStmt" ):
-                listener.enterPrintStmt(self)
+            if hasattr( listener, "enterExpr" ):
+                listener.enterExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPrintStmt" ):
-                listener.exitPrintStmt(self)
+            if hasattr( listener, "exitExpr" ):
+                listener.exitExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPrintStmt" ):
-                return visitor.visitPrintStmt(self)
+            if hasattr( visitor, "visitExpr" ):
+                return visitor.visitExpr(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def printStmt(self):
+    def expr(self):
 
-        localctx = EsperandoParser.PrintStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_printStmt)
+        localctx = EsperandoParser.ExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 4, self.RULE_expr)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+            self.state = 20
+            _la = self._input.LA(1)
+            if not(_la==6 or _la==7):
+                self._errHandler.recoverInline(self)
+            else:
+                self._errHandler.reportMatch(self)
+                self.consume()
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class PrintExprContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def PRINT(self):
+            return self.getToken(EsperandoParser.PRINT, 0)
+
+        def expr(self):
+            return self.getTypedRuleContext(EsperandoParser.ExprContext,0)
+
+
+        def getRuleIndex(self):
+            return EsperandoParser.RULE_printExpr
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPrintExpr" ):
+                listener.enterPrintExpr(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPrintExpr" ):
+                listener.exitPrintExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrintExpr" ):
+                return visitor.visitPrintExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def printExpr(self):
+
+        localctx = EsperandoParser.PrintExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_printExpr)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 22
+            self.match(EsperandoParser.PRINT)
+            self.state = 23
+            self.match(EsperandoParser.T__0)
             self.state = 24
-            self.match(EsperandoParser.T__2)
+            self.expr()
             self.state = 25
-            self.match(EsperandoParser.T__3)
-            self.state = 26
-            self.match(EsperandoParser.STRING)
-            self.state = 27
-            self.match(EsperandoParser.T__4)
+            self.match(EsperandoParser.T__1)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

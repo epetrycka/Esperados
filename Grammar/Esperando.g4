@@ -1,17 +1,22 @@
 grammar Esperando;
 
-program: statement+;
+//PARSER
 
-statement
-    : greeting
-    | printStmt
-    | goodbye
-    ;
+program: GREETING (action|NL)+ GOODBYE EOF;
 
-greeting: 'Saluton';
-goodbye: 'Adiau';
-printStmt: 'skribi' '(' STRING ')';
+action: printExpr;
 
-STRING: '"' [a-zA-Z]+ '"';
+expr: (STRING|INT);
+printExpr: PRINT '(' expr ')';
+
+// LEXER
+
+GREETING: 'Saluton';
+GOODBYE: 'Adiau';
+PRINT: 'skribi';
+
+INT: [0-9]+;
+STRING: '"' [a-zA-Z0-9 ]+ '"';
 
 WS: [ \t\r\n]+ -> skip;
+NL: '\r'? '\n';
