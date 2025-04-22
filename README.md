@@ -17,7 +17,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 * Python - język implementacji interpretera
 * ANTLR4 - generator skanerów i parserów
-* pytests - narzędzie do testów
+* pytest - narzędzie do testów
 
 ## Spis tokenów - [link](https://github.com/epetrycka/Squick-Lang/blob/main/spis_tokenów.md)
 

@@ -20,12 +20,14 @@ Download complete binaries from [link](https://www.antlr.org/download/antlr-4.13
 > python main.py "programme.es"
 ```
 
-! Make sure you have Java version at least 11.
+> [!TIP]
+> Make sure you have Java version at least 11.
+
 ```
 java -version
 ```
 
-If not install Java from [link](https://www.oracle.com/pl/java/technologies/javase/jdk11-archive-downloads.html)
+If not install Java from [link](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 ### To run tests:
 
