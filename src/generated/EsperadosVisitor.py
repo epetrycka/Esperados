@@ -19,8 +19,8 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#greeting.
-    def visitGreeting(self, ctx:EsperadosParser.GreetingContext):
+    # Visit a parse tree produced by EsperadosParser#instructions.
+    def visitInstructions(self, ctx:EsperadosParser.InstructionsContext):
         return self.visitChildren(ctx)
 
 
@@ -34,13 +34,13 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#algebraExpr.
-    def visitAlgebraExpr(self, ctx:EsperadosParser.AlgebraExprContext):
+    # Visit a parse tree produced by EsperadosParser#condition.
+    def visitCondition(self, ctx:EsperadosParser.ConditionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#addStrings.
-    def visitAddStrings(self, ctx:EsperadosParser.AddStringsContext):
+    # Visit a parse tree produced by EsperadosParser#algebraExpr.
+    def visitAlgebraExpr(self, ctx:EsperadosParser.AlgebraExprContext):
         return self.visitChildren(ctx)
 
 
@@ -49,8 +49,23 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by EsperadosParser#logicExpr.
+    def visitLogicExpr(self, ctx:EsperadosParser.LogicExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#addStrings.
+    def visitAddStrings(self, ctx:EsperadosParser.AddStringsContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by EsperadosParser#expr.
     def visitExpr(self, ctx:EsperadosParser.ExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#addExpr.
+    def visitAddExpr(self, ctx:EsperadosParser.AddExprContext):
         return self.visitChildren(ctx)
 
 

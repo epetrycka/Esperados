@@ -2,30 +2,31 @@ grammar Esperados;
 
 //PARSER
 
-program: (comment | NL)* greeting EOF;
+program: (comment | NL)* GREETING instructions EOF;
 
-comment: COMMENTBLOCK
-        | COMMENT
-        ;
+comment: (COMMENTBLOCK | COMMENT);
 
-greeting: GREETING (comment | action | NL)* goodbye?;
+instructions: (comment | action | NL)* goodbye?;
 goodbye: GOODBYE (comment | NL)* EOF;
 
-action: printExpr
-        | variableExpr
-        ;
+action: (printExpr | variableExpr | condition);
+condition: IF LP expr RP LC instructions RC;
 
-algebraExpr: LP (INT | FLOAT | NAME) (ADD | SUB | MULT | DIV | MOD | EXPON) (INT | FLOAT | NAME) RP;
+algebraExpr: (ADD | SUB | MULT | DIV | MOD | EXPON) (INT | FLOAT | NAME | STRING);
 
-addStrings: LP STRING ADD STRING RP;
+boolExpr: (EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) expr;
 
-boolExpr: LP expr (EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) expr RP;
+logicExpr: (AND | OR) expr;
 
-expr: (STRING | INT | FLOAT | algebraExpr | NAME | addStrings);
+addStrings: STRING ADD STRING;
 
-printExpr: PRINT LP (expr | boolExpr) RP;
+expr: ( ((STRING | INT | FLOAT | NAME) addExpr?) | addStrings);
 
-variableExpr: VARDEF NAME ASS (expr | boolExpr);
+addExpr: (algebraExpr | boolExpr | logicExpr);
+
+printExpr: PRINT LP expr (COMMA expr)* RP;
+
+variableExpr: VARDEF NAME ASS expr;
 
 // LEXER
 
@@ -33,6 +34,7 @@ GREETING: 'Saluton';
 GOODBYE: 'Adiau';
 PRINT: 'skribi';
 VARDEF: 'variablo';
+IF: 'se';
 
 ASS: 'asigini';
 ADD: 'aldoni';
@@ -44,6 +46,10 @@ EXPON: 'intensigi';
 
 LP: '(';
 RP: ')';
+LC: '{';
+RC: '}';
+COMMA: ',';
+DOT: '.';
 
 TRUE: 'vere';
 FALSE: 'malvero';
@@ -58,7 +64,8 @@ OR: 'au';
 NOT: 'ne';
 
 INT: [0-9]+;
-STRING: '"' [a-zA-Z0-9 ]+ '"';
+fragment ESC: '\\' ["\\/bfnrt];
+STRING: '"' (ESC | ~["\\\r\n])* '"';
 FLOAT: [0-9]+ '.' [0-9]+;
 
 NAME: [a-zA-Z0-9]+;

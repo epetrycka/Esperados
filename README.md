@@ -29,7 +29,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau".
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zaminneych oraz użycie ich (np. int, string, bool).
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie).
 
 4. Instrukcje warunkowe – wsparcie dla if, else, elif.
 
@@ -39,7 +39,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 7. Komentarze – możliwość dodawania komentarzy.
 
-8. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT.
+8. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań.
 
 9. Operacje na stringach - dodawanie stringów.
 
@@ -50,6 +50,10 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 12. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
 
 13. Interfejs CLI – interpreter, który przyjmuje plik .esp i uruchamia kod.
+
+14. Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
+
+15. Wczytywanie danych z konsoli do programu.
 
 ## Wymagania niefunkcjonalne
 
