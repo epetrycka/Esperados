@@ -23,6 +23,8 @@ skribi(("lubie " aldoni "psy"))
 blokowy
 P:
 
+skribi(("aha" == "aha"))
+
 variablo w asigini (12 aldoni z)
 skribi(w)
 

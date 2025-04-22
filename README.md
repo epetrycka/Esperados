@@ -86,7 +86,12 @@ Adiau
 ## Uruchamianie programu
 
 ```bash
-py src/main.py Examples/code.es
+> cd src
+> python -m venv venv
+> source venv/Scripts/activate
+> python -m pip install --upgrade pip
+> python -m pip install -r requirements.txt
+> py src/main.py Examples/code.es
 ```
 
 ---
