@@ -6,12 +6,14 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.variables = {}
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
-        return self.visit(ctx.greeting())
+        if ctx.GREETING():
+            print("👋 Saluton!")
+        return self.visit(ctx.instructions())
 
-    def visitGreeting(self, ctx: EsperadosParser.GreetingContext):
-        print("👋 Saluton!")
-        for action in ctx.action():
-            self.visit(action)
+    def visitInstructions(self, ctx: EsperadosParser.InstructionsContext):
+        for child in ctx.children:
+            if isinstance(child, EsperadosParser.ActionContext):
+                self.visit(child)
         if ctx.goodbye():
             self.visit(ctx.goodbye())
 
@@ -19,96 +21,160 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         print("👋 Adiau!")
 
     def visitAction(self, ctx: EsperadosParser.ActionContext):
-        if ctx.printExpr() is not None:
+        if ctx.printExpr():
             return self.visit(ctx.printExpr())
-        elif ctx.variableExpr() is not None:
+        elif ctx.variableExpr():
             return self.visit(ctx.variableExpr())
+        elif ctx.condition():
+            return self.visit(ctx.condition())
         return None
-
+    
     def visitPrintExpr(self, ctx: EsperadosParser.PrintExprContext):
-        value = self.visit(ctx.expr())
-        print(value)
-        return value
+        printValue = ""
+        if ctx.expr():    
+            for i in range(0, len(ctx.expr())):
+                value = self.visit(ctx.expr(i))
+                printValue += str(value)
+        
+        print(printValue)
+        return None
 
     def visitVariableExpr(self, ctx: EsperadosParser.VariableExprContext):
         if ctx.NAME() is not None:
             varName = ctx.NAME().getText()
             if ctx.expr():
                 value = self.visitExpr(ctx.expr())
-            if ctx.boolExpr():
-                value = self.visitBoolExpr(ctx.boolExpr())
 
             self.variables[varName] = value
             return None
         return None
     
-    def visitBoolExpr(self, ctx: EsperadosParser.BoolExprContext):
-        value1 = self.visit(ctx.expr(0))
-        value2 = self.visit(ctx.expr(1))
-
-        if ctx.EQUAL():
-            return value1 == value2
-        if ctx.INEQUAL():
-            return value1 != value2
-        if ctx.GREATER():
-            return value1 > value2
-        if ctx.LESS():
-            return value1 < value2
-        if ctx.EGREATER():
-            return value1 >= value2
-        if ctx.ELESS():
-            return value1 <= value2
-
-    def visitAlgebraExpr(self, ctx: EsperadosParser.AlgebraExprContext):
-        value1 = None
-        value2 = None
-        if ctx.INT(0):
-            value1 = int(ctx.INT(0).getText())
-        if ctx.FLOAT(0):
-            if value1:
-                value2 = float(ctx.FLOAT(0).getText())
-            else:
-                value1 = float(ctx.FLOAT(0).getText())
-        if ctx.NAME(0):
-            if value1:
-                value2 = self.variables[ctx.NAME(0).getText()]
-            else:
-                value1 = self.variables[ctx.NAME(0).getText()]
-        
-        if ctx.INT(1):
-            value2 = int(ctx.INT(1).getText())
-        if ctx.FLOAT(1):
-            value2 = float(ctx.FLOAT(1).getText())
-        if ctx.NAME(1):
-            value2 = self.variables[ctx.NAME(1).getText()]
-        
-        if ctx.ADD():
-            return value1 + value2
-        if ctx.SUB():
-            return value1 - value2
-        if ctx.MULT():
-            return value1 * value2
-        if ctx.DIV():
-            return value1 / value2
-        if ctx.MOD():
-            return value1 % value2
-        if ctx.EXPON():
-            return value1 ** value2
-        
-    def visitAddStrings(self, ctx: EsperadosParser.AddStringsContext):
-        return (ctx.STRING(0).getText().strip('"') + ctx.STRING(1).getText().strip('"'))
+    def visitCondition(self, ctx: EsperadosParser.ConditionContext):
+        if ctx.ifExpr():
+            conditionPassed = self.visitIfExpr(ctx.ifExpr())
+        if not conditionPassed:
+            for i in range (0, len(ctx.elifExpr())):
+                conditionElsePassed = self.visitElifExpr(ctx.elifExpr(i))
+                if conditionElsePassed:
+                    return None
+            if ctx.elseExpr():
+                return self.visit(ctx.elseExpr())
+        return None
+    
+    def visitIfExpr(self, ctx: EsperadosParser.IfExprContext):
+        condition = self.visitExpr(ctx.expr())
+        if condition:
+            self.visitInstructions(ctx.instructions())
+        return condition
+    
+    def visitElifExpr(self, ctx: EsperadosParser.ElifExprContext):
+        condition = self.visitExpr(ctx.expr())
+        if condition:
+            self.visitInstructions(ctx.instructions())
+        return condition
+    
+    def visitElseExpr(self, ctx: EsperadosParser.ElseExprContext):
+        self.visitInstructions(ctx.instructions())
+        return None
 
     def visitExpr(self, ctx: EsperadosParser.ExprContext):
+        return self.visitOrExpr(ctx.orExpr())
+    
+    def visitOrExpr(self, ctx: EsperadosParser.OrExprContext):
+        value = False
+        for i in range (0, len(ctx.andExpr())):
+            value = value or self.visitAndExpr(ctx.andExpr(i))
+        return value
+
+    def visitAndExpr(self, ctx: EsperadosParser.AndExprContext):
+        value = True
+        for i in range (0, len(ctx.notExpr())):
+            value = value and self.visitNotExpr(ctx.notExpr(i))
+        return value
+        
+    def visitNotExpr(self, ctx: EsperadosParser.NotExprContext):
+        if ctx.NOT():
+            return self.visitNotExpr(ctx.notExpr())
+        if ctx.comparisonExpr():
+            return self.visitComparisonExpr(ctx.comparisonExpr())
+    
+    def visitComparisonExpr(self, ctx: EsperadosParser.ComparisonExprContext):
+        value = self.visitAdditionExpr(ctx.additionExpr(0))
+
+        for i in range(1, len(ctx.additionExpr())):
+            additionExpr2 = self.visitAdditionExpr(ctx.additionExpr(i))
+
+            if ctx.EQUAL():
+                value = value == additionExpr2
+            if ctx.INEQUAL():
+                value = value != additionExpr2
+            if ctx.GREATER():
+                value = value > additionExpr2
+            if ctx.LESS():
+                value = value < additionExpr2
+            if ctx.EGREATER():
+                value = value >= additionExpr2
+            if ctx.ELESS():
+                value = value <= additionExpr2
+
+        return value
+    
+    def visitAdditionExpr(self, ctx: EsperadosParser.AdditionExprContext):
+        value = self.visitMultiExpr(ctx.multiExpr(0))
+
+        for i in range(1, len(ctx.multiExpr())):
+            multiExpr2 = self.visitMultiExpr(ctx.multiExpr(i))
+
+            if ctx.ADD():
+                value = value + multiExpr2
+            if ctx.SUB():
+                value = value - multiExpr2
+
+        return value
+    
+    def visitMultiExpr(self, ctx: EsperadosParser.MultiExprContext):
+        value = self.visitExponExpr(ctx.exponExpr(0))
+
+        for i in range(1, len(ctx.exponExpr())):
+            exponExpr2 = self.visitExponExpr(ctx.exponExpr(i))
+
+            if ctx.MULT():
+                value = value * exponExpr2
+            if ctx.DIV():
+                value = value / exponExpr2
+            if ctx.MOD():
+                value = value % exponExpr2
+
+        return value
+    
+    def visitExponExpr(self, ctx: EsperadosParser.ExponExprContext):
+            value = self.visitAtom(ctx.atom(0))
+
+            for i in range(1, len(ctx.atom())):
+                atom2 = self.visitAtom(ctx.atom(i))
+                value = value ** atom2
+
+            return value
+    
+    def visitAtom(self, ctx: EsperadosParser.AtomContext):
         if ctx.STRING():
-            return ctx.STRING().getText().strip('"')
+            return self.visitString(ctx.STRING())
         elif ctx.INT():
             return int(ctx.INT().getText())
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
         elif ctx.NAME():
             return self.variables[ctx.NAME().getText()]
-        elif ctx.algebraExpr():
-            return self.visitAlgebraExpr(ctx.algebraExpr())
-        elif ctx.addStrings():
-            return self.visitAddStrings(ctx.addStrings())
-        return None
+        elif ctx.expr():
+            return self.visitExpr(ctx.expr())
+        elif ctx.TRUE():
+            return True
+        elif ctx.FALSE():
+            return False
+
+    def visitString(self, token):
+        text = token.getText()[1:-1]
+        try:
+            return bytes(text, "utf-8").decode("unicode_escape")
+        except UnicodeDecodeError:
+            return text
