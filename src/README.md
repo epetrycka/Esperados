@@ -17,7 +17,7 @@ Download complete binaries from [link](https://www.antlr.org/download/antlr-4.13
 > cd ../Grammar
 > antlr4 -Dlanguage=Python3 -visitor Esperados.g4 -o ../src/generated
 > cd ../src
-> python main.py "programme.es"
+> python main.py ../Examples/code.es
 ```
 
 > [!TIP]
