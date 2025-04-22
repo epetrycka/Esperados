@@ -30,7 +30,7 @@ se ( (((2 egala 2) malgranda 5) kaj (5 granda 9) ) au malvero){
 } alie se (malvero){
     skribi("Else if false")
 } alie {
-    skribi("Else sie wykonal")
+    skribi("Else wykonal sie")
 }
 
 

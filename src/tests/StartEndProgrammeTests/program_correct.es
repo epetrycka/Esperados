@@ -1,5 +1,0 @@
-
-        Saluton
-        skribi("HelloWorld")
-        Adiau
-        

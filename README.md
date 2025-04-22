@@ -55,7 +55,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ---
 
-14. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
+14. Obsługa błędów składniowych i błędów kompilacji – generowanie błędów, jeśli składnia jest nieprawidłowa.
 
 15. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
 
@@ -63,7 +63,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ## Wymagania niefunkcjonalne
 
-1. Język implementacji: Python + pytests dla testów
+1. Język implementacji: Python + pytest do testów
 
 2. Użycie narzędzia ANTLR4.
 
