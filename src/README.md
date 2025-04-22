@@ -28,11 +28,13 @@ java -version
 If not install Java from [link](https://www.oracle.com/pl/java/technologies/javase/jdk11-archive-downloads.html)
 
 ### To run tests:
+
 ```
 cd src
-python -m unittest discover -s tests
+pytest
 ```
-no runnable tests yet
+> [!WARNING]
+> No runnable tests yet
 
 ### Notes
 ```
