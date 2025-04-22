@@ -1,105 +1,91 @@
-# SquickLang Specification
+# Esperados - projekt w ramach zajęć Teoria kompilacji i kompilatory
 
-SquickLang is a mini programming language inspired by Python, but with Esperanto-style keywords and custom syntax.
+Projekt ma na celu stworzenie własnego języka programowania, z użyciem słów kluczowych w języku esperanto. 
+Język ma być łatwy w użyciu i możliwie najprostszy do zrozumienia.
 
----
+<details>
+  <summary>Autorzy</summary>
+    <br>Eliza Petrycka (epetrycka@student.agh.edu.pl)
+    <br>Dominika Bujnarowska (dbujnarowska@student.agh.edu.pl)
+</details>
 
-## Keywords and Tokens
+## Opis
 
-| Token        | Python Equivalent  | Category               |
-|--------------|--------------------|------------------------|
-| `variablo`   | variable           | Variable declaration   |
-| `se`         | if                 | Conditional            |
-| `gis`        | while              | Loop                   |
-| `por`        | for                | Loop                   |
-| `alie`       | else               | Conditional            |
-| `alie se`    | elif               | Conditional            |
-| `kaj`        | and                | Logical operator       |
-| `au`         | or                 | Logical operator       |
-| `haltu`      | break              | Loop control           |
-| `daurigi`    | continue           | Loop control           |
-| `difini`     | def                | Function definition    |
-| `forigi`     | delete             | Deletion               |
-| `provu`      | try                | Exception handling     |
-| `krom`       | except             | Exception handling     |
-| `malvero`    | false              | Boolean literal        |
-| `vere`       | true               | Boolean literal        |
-| `finfine`    | finally            | Exception handling     |
-| `klaso`      | class              | Class definition       |
-| `tutmonda`   | global             | Scope modifier         |
-| `en`         | in                 | Membership operator    |
-| `estas`      | is                 | Identity operator      |
-| `funkcio`    | lambda             | Anonymous function     |
-| `nenio`      | none               | Null literal           |
-| `ne`         | not                | Logical negation       |
-| `reveni`     | return             | Return statement       |
-| `Saluton`    | (start of program) | Program entry point    |
-| `Adiau`      | (end of program)   | Program termination    |
+Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który parsuje kod źródłowy napisany w Esperados i wykonuje go w czasie rzeczywistym. Interpreter będzie zaimplementowany w języku Python z wykorzystaniem narzędzia ANTLR4 do generowania skanera i parsera na podstawie zdefiniowanej gramatyki.
+
+## Wybranie technologie
+
+* Python - język implementacji interpretera
+* ANTLR4 - generator skanerów i parserów
+* pytest - narzędzie do testów
+
+## Spis tokenów - [link](https://github.com/epetrycka/Squick-Lang/blob/main/spis_tokenów.md)
+
+## Gramatyka języka - [link](https://github.com/epetrycka/Squick-Lang/blob/main/Grammar/Esperados.g4)
+
+## Wymagania funkcjonalne
+
+1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy). ✅
 
 ---
 
-## Arithmetic Operators
+2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". ✅ ( - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
 
-| Token        | Python Equivalent | Operation         |
-|--------------|-------------------|-------------------|
-| `aldoni`     | `+`               | Addition          |
-| `subtrahi`   | `-`               | Subtraction       |
-| `multigi`    | `*`               | Multiplication    |
-| `dividi`     | `/`               | Division          |
-| `modulo`     | `%`               | Modulo            |
-| `intensigi`  | `**`              | Exponentiation    |
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅ (- bez podziału na zmienne globalne i wewnątrz-funkcyjne, nie ma opcji wymuszenia typu zmiennej)
 
----
+4. Wypisywanie danych do konsoli. ✅
 
-## Comparison and Assignment Operators
+5. Instrukcje warunkowe – wsparcie dla if, else, elif. ✅
 
-| Token              | Python Equivalent | Operation              |
-|--------------------|-------------------|------------------------|
-| `asigini`          | `=`               | Assignment             |
-| `egala`            | `==`              | Equality               |
-| `ne egala`         | `!=`              | Inequality             |
-| `granda`           | `>`               | Greater than           |
-| `malgranda`        | `<`               | Less than              |
-| `granda egala`     | `>=`              | Greater than or equal  |
-| `malgranda egala`  | `<=`              | Less than or equal     |
+6. Pętle – while, for.
 
----
+7. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
 
-## Structural Symbols
+8. Komentarze – możliwość dodawania komentarzy. ✅
 
-| Symbol   | Meaning              | Category               |
-|----------|----------------------|------------------------|
-| `(`      | left_parenthesis     | Grouping               |
-| `)`      | right_parenthesis    | Grouping               |
-| `{`      | left_brace           | Block start            |
-| `}`      | right_brace          | Block end              |
-| `[`      | left_bracket         | Indexing/list start    |
-| `]`      | right_bracket        | Indexing/list end      |
-| `,`      | comma                | Separator              |
-| `:`      | colon                | Block or dict separator|
-| `;`      | semicolon            | Statement separator    |
-| `:O...`  | comment_symbol       | Comment                |
-| `:P...P:`| commentblock_symbols | Comment Block          |
+9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
+
+10. Operacje na stringach - dodawanie stringów. ✅
+
+11. Tworzenie tablic i map - definiowanie indexowanych tablic i map dla danych.
+
+12. Wczytywanie danych z konsoli do programu.
+
+13. [BUG] Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
 
 ---
 
-## Data Types
+14. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
 
-| Token     | Python Equivalent | Type        |
-|-----------|-------------------|-------------|
-| `entjero` | int               | Integer     |
-| `flosi`   | float             | Float       |
-| `snuro`   | str               | String      |
+15. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
+
+16. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
+
+## Wymagania niefunkcjonalne
+
+1. Język implementacji: Python + pytests dla testów
+
+2. Użycie narzędzia ANTLR4.
+
+3. Czytelność kodu źródłowego – składnia języka Esperados powinna być zrozumiała dla człowieka.
+
+4. Dokumentacja składni – język ma zdefiniowaną gramtykę BNF w pliku Esperados.g4.
+
+5. Zgodność z konwencjami kodowania – styl kodu podobny do GoLang (znak końca linii kończy instrukcję, bloki if/def/for zapakowane w nawiasy klamrowe '{}').
+
+6. Szybkość działania nie jest kluczowa – nacisk na poprawność, nie wydajność.
+
+7. Użycie maksymalnej ilości słów kluczowych zrozumiałych w języku esperanto (minimalizacja używania symboli).
 
 ---
 
 ## Code Example
 
-```squick
+```esperando
 Saluton
 
 difini salutu(nomo: snuro):
-    skribi("Saluton, " + nomo)
+    reveni("Saluton, " + nomo)
 
 por variablo en ["Mia", "Eta", "Amiko"]:
     salutu(variablo)
@@ -107,4 +93,18 @@ por variablo en ["Mia", "Eta", "Amiko"]:
 Adiau
 ```
 
+## Uruchamianie programu
+
+```bash
+> cd src
+> python -m venv venv
+> source venv/Scripts/activate
+> python -m pip install --upgrade pip
+> python -m pip install -r requirements.txt
+> py src/main.py Examples/code.es
+```
+
 ---
+
+> [!IMPORTANT]
+> Projekt jest na etapie developmentu
