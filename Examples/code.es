@@ -13,7 +13,7 @@ skribi ("Zmienna y ma wartosc: ", y)
 variablo z asigini (x multigi 3.5)
 skribi("Zmienna z ma wartosc x*3.5: ", z)
 
-skribi("Wartosc z%2: ", (z modulo 2)) :O nie działa
+skribi("Wartosc z%2: ", (z modulo 2)) :O działa
 
 variablo false asigini (4 egala 5)
 skribi("Czy 4 jest rowne 5? ", false)
@@ -30,8 +30,7 @@ se ( (((2 egala 2) malgranda 5) kaj (5 granda 9) ) au malvero){
 } alie se (malvero){
     skribi("Else if false")
 } alie {
-    skribi("Else sie wykonal")
+    skribi("Else wykonal sie")
 }
-
 
 Adiau

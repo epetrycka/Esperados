@@ -1,4 +1,0 @@
-
-        skribi("Hello World!")
-        Adiau
-        
