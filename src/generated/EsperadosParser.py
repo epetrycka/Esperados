@@ -438,7 +438,6 @@ class EsperadosParser ( Parser ):
             else:
                 return self.getTypedRuleContext(EsperadosParser.ActionContext,i)
 
-
         def NL(self, i:int=None):
             if i is None:
                 return self.getTokens(EsperadosParser.NL)
@@ -497,7 +496,6 @@ class EsperadosParser ( Parser ):
                     pass
                 else:
                     raise NoViableAltException(self)
-
                 self.state = 70
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -536,8 +534,6 @@ class EsperadosParser ( Parser ):
 
         def condition(self):
             return self.getTypedRuleContext(EsperadosParser.ConditionContext,0)
-
-
         def getRuleIndex(self):
             return EsperadosParser.RULE_action
 
@@ -591,7 +587,6 @@ class EsperadosParser ( Parser ):
         finally:
             self.exitRule()
         return localctx
-
 
     class PrintExprContext(ParserRuleContext):
         __slots__ = 'parser'
@@ -717,7 +712,6 @@ class EsperadosParser ( Parser ):
 
 
 
-
     def variableExpr(self):
 
         localctx = EsperadosParser.VariableExprContext(self, self._ctx, self.state)
@@ -747,7 +741,6 @@ class EsperadosParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
-
         def ifExpr(self):
             return self.getTypedRuleContext(EsperadosParser.IfExprContext,0)
 
@@ -808,7 +801,6 @@ class EsperadosParser ( Parser ):
             if _la==6:
                 self.state = 103
                 self.elseExpr()
-
 
         except RecognitionException as re:
             localctx.exception = re
@@ -1577,7 +1569,6 @@ class EsperadosParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
-
         def atom(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(EsperadosParser.AtomContext)
