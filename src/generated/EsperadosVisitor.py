@@ -19,13 +19,13 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#instructions.
-    def visitInstructions(self, ctx:EsperadosParser.InstructionsContext):
+    # Visit a parse tree produced by EsperadosParser#goodbye.
+    def visitGoodbye(self, ctx:EsperadosParser.GoodbyeContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#goodbye.
-    def visitGoodbye(self, ctx:EsperadosParser.GoodbyeContext):
+    # Visit a parse tree produced by EsperadosParser#instructions.
+    def visitInstructions(self, ctx:EsperadosParser.InstructionsContext):
         return self.visitChildren(ctx)
 
 
@@ -34,8 +34,33 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by EsperadosParser#printExpr.
+    def visitPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#variableExpr.
+    def visitVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by EsperadosParser#condition.
     def visitCondition(self, ctx:EsperadosParser.ConditionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#ifExpr.
+    def visitIfExpr(self, ctx:EsperadosParser.IfExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#elifExpr.
+    def visitElifExpr(self, ctx:EsperadosParser.ElifExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#elseExpr.
+    def visitElseExpr(self, ctx:EsperadosParser.ElseExprContext):
         return self.visitChildren(ctx)
 
 
@@ -81,16 +106,6 @@ class EsperadosVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by EsperadosParser#atom.
     def visitAtom(self, ctx:EsperadosParser.AtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperadosParser#printExpr.
-    def visitPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperadosParser#variableExpr.
-    def visitVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
         return self.visitChildren(ctx)
 
 

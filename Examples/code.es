@@ -25,10 +25,13 @@ skribi("Czy aha to to samo co aha? ", true)
 blokowy
 P:
 
-se ( ( (5 granda 2) kaj (5 granda 9) ) au vere){
-    skribi("Wypisuje sie jesli 5 > 2 AND 5 > 9 OR true")
+se ( (((2 egala 2) malgranda 5) kaj (5 granda 9) ) au malvero){
+    skribi("Wypisuje sie jesli 4 < 2 AND 5 > 9 OR false")
+} alie se (malvero){
+    skribi("Else if false")
+} alie {
+    skribi("Else sie wykonal")
 }
 
-skribi( "ala" aldoni " ma kota")
 
 Adiau

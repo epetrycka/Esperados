@@ -6,33 +6,30 @@ program: (comment | NL)* GREETING instructions EOF;
 
 comment: (COMMENTBLOCK | COMMENT);
 
-instructions: (comment | action | NL)* goodbye?;
 goodbye: GOODBYE (comment | NL)* EOF;
 
+instructions: (comment | action | NL)* goodbye?;
+
 action: (printExpr | variableExpr | condition);
-condition: IF LP expr RP LC instructions RC ;
+
+printExpr: PRINT LP expr (COMMA expr)* RP;
+variableExpr: VARDEF NAME ASS expr;
+condition: ifExpr elifExpr* elseExpr?;
+
+ifExpr: IF LP expr RP LC instructions  RC;
+elifExpr: ELIF LP expr RP LC instructions RC;
+elseExpr: ELSE LC instructions RC;
 
 expr: orExpr ;
-
 orExpr: andExpr (OR andExpr)* ;
-
 andExpr: notExpr (AND notExpr)*;
-
 notExpr: (NOT notExpr | comparisonExpr);
-
 comparisonExpr: additionExpr ( (EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) additionExpr )* ;
-
 additionExpr: multiplicationExpr ( (ADD | SUB) multiplicationExpr )* ;
-
 multiplicationExpr: exponentialExpr ( (MULT | DIV | MOD) exponentialExpr )* ;
-
 exponentialExpr: atom (EXPON atom)* ;
 
 atom: (LP expr RP | INT | FLOAT | STRING | TRUE | FALSE | NAME) ;
-
-printExpr: PRINT LP expr (COMMA expr)* RP;
-
-variableExpr: VARDEF NAME ASS expr;
 
 // LEXER
 
@@ -41,6 +38,8 @@ GOODBYE: 'Adiau';
 PRINT: 'skribi';
 VARDEF: 'variablo';
 IF: 'se';
+ELSE: 'alie';
+ELIF: 'alie se';
 
 ASS: 'asigini';
 ADD: 'aldoni';

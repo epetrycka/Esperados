@@ -50,9 +50,31 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         return None
     
     def visitCondition(self, ctx: EsperadosParser.ConditionContext):
+        if ctx.ifExpr():
+            conditionPassed = self.visitIfExpr(ctx.ifExpr())
+        if not conditionPassed:
+            for i in range (0, len(ctx.elifExpr())):
+                conditionElsePassed = self.visitElifExpr(ctx.elifExpr(i))
+                if conditionElsePassed:
+                    return None
+            if ctx.elseExpr():
+                return self.visit(ctx.elseExpr())
+        return None
+    
+    def visitIfExpr(self, ctx: EsperadosParser.IfExprContext):
         condition = self.visitExpr(ctx.expr())
         if condition:
             self.visitInstructions(ctx.instructions())
+        return condition
+    
+    def visitElifExpr(self, ctx: EsperadosParser.ElifExprContext):
+        condition = self.visitExpr(ctx.expr())
+        if condition:
+            self.visitInstructions(ctx.instructions())
+        return condition
+    
+    def visitElseExpr(self, ctx: EsperadosParser.ElseExprContext):
+        self.visitInstructions(ctx.instructions())
         return None
 
     def visitExpr(self, ctx: EsperadosParser.ExprContext):

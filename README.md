@@ -27,33 +27,39 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy). ✅
 
-2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". (✅ - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
+---
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅
+2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". ✅ ( - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
 
-4. Instrukcje warunkowe – wsparcie dla if, else, elif.
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅ (- bez podziału na zmienne globalne i wewnątrz-funkcyjne, nie ma opcji wymuszenia typu zmiennej)
 
-5. Pętle – while, for.
+4. Wypisywanie danych do konsoli. ✅
 
-6. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
+5. Instrukcje warunkowe – wsparcie dla if, else, elif. ✅
 
-7. Komentarze – możliwość dodawania komentarzy. ✅
+6. Pętle – while, for.
 
-8. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
+7. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
 
-9. Operacje na stringach - dodawanie stringów. ✅
+8. Komentarze – możliwość dodawania komentarzy. ✅
 
-10. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
+9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
+
+10. Operacje na stringach - dodawanie stringów. ✅
 
 11. Tworzenie tablic i map - definiowanie indexowanych tablic i map dla danych.
 
-12. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
+12. Wczytywanie danych z konsoli do programu.
 
-13. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
+13. [BUG] Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
 
-14. Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
+---
 
-15. Wczytywanie danych z konsoli do programu.
+14. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
+
+15. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
+
+16. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
 
 ## Wymagania niefunkcjonalne
 

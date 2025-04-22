@@ -26,21 +26,21 @@ class EsperadosListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by EsperadosParser#instructions.
-    def enterInstructions(self, ctx:EsperadosParser.InstructionsContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#instructions.
-    def exitInstructions(self, ctx:EsperadosParser.InstructionsContext):
-        pass
-
-
     # Enter a parse tree produced by EsperadosParser#goodbye.
     def enterGoodbye(self, ctx:EsperadosParser.GoodbyeContext):
         pass
 
     # Exit a parse tree produced by EsperadosParser#goodbye.
     def exitGoodbye(self, ctx:EsperadosParser.GoodbyeContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#instructions.
+    def enterInstructions(self, ctx:EsperadosParser.InstructionsContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#instructions.
+    def exitInstructions(self, ctx:EsperadosParser.InstructionsContext):
         pass
 
 
@@ -53,12 +53,57 @@ class EsperadosListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by EsperadosParser#printExpr.
+    def enterPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#printExpr.
+    def exitPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#variableExpr.
+    def enterVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#variableExpr.
+    def exitVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
+        pass
+
+
     # Enter a parse tree produced by EsperadosParser#condition.
     def enterCondition(self, ctx:EsperadosParser.ConditionContext):
         pass
 
     # Exit a parse tree produced by EsperadosParser#condition.
     def exitCondition(self, ctx:EsperadosParser.ConditionContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#ifExpr.
+    def enterIfExpr(self, ctx:EsperadosParser.IfExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#ifExpr.
+    def exitIfExpr(self, ctx:EsperadosParser.IfExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#elifExpr.
+    def enterElifExpr(self, ctx:EsperadosParser.ElifExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#elifExpr.
+    def exitElifExpr(self, ctx:EsperadosParser.ElifExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#elseExpr.
+    def enterElseExpr(self, ctx:EsperadosParser.ElseExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#elseExpr.
+    def exitElseExpr(self, ctx:EsperadosParser.ElseExprContext):
         pass
 
 
@@ -140,24 +185,6 @@ class EsperadosListener(ParseTreeListener):
 
     # Exit a parse tree produced by EsperadosParser#atom.
     def exitAtom(self, ctx:EsperadosParser.AtomContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperadosParser#printExpr.
-    def enterPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#printExpr.
-    def exitPrintExpr(self, ctx:EsperadosParser.PrintExprContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperadosParser#variableExpr.
-    def enterVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#variableExpr.
-    def exitVariableExpr(self, ctx:EsperadosParser.VariableExprContext):
         pass
 
 
