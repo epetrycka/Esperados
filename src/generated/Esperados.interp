@@ -100,8 +100,8 @@ andExpr
 notExpr
 comparisonExpr
 additionExpr
-multiplicationExpr
-exponentialExpr
+multiExpr
+exponExpr
 atom
 
 

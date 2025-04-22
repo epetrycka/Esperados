@@ -121,15 +121,14 @@ class EsperadosParser ( Parser ):
     RULE_notExpr = 14
     RULE_comparisonExpr = 15
     RULE_additionExpr = 16
-    RULE_multiplicationExpr = 17
-    RULE_exponentialExpr = 18
+    RULE_multiExpr = 17
+    RULE_exponExpr = 18
     RULE_atom = 19
 
     ruleNames =  [ "program", "comment", "goodbye", "instructions", "action", 
                    "printExpr", "variableExpr", "condition", "ifExpr", "elifExpr", 
                    "elseExpr", "expr", "orExpr", "andExpr", "notExpr", "comparisonExpr", 
-                   "additionExpr", "multiplicationExpr", "exponentialExpr", 
-                   "atom" ]
+                   "additionExpr", "multiExpr", "exponExpr", "atom" ]
 
     EOF = Token.EOF
     GREETING=1
@@ -564,19 +563,21 @@ class EsperadosParser ( Parser ):
         localctx = EsperadosParser.ActionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_action)
         try:
-            self.enterOuterAlt(localctx, 1)
             self.state = 77
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [3]:
+                self.enterOuterAlt(localctx, 1)
                 self.state = 74
                 self.printExpr()
                 pass
             elif token in [4]:
+                self.enterOuterAlt(localctx, 2)
                 self.state = 75
                 self.variableExpr()
                 pass
             elif token in [5]:
+                self.enterOuterAlt(localctx, 3)
                 self.state = 76
                 self.condition()
                 pass
@@ -1270,17 +1271,18 @@ class EsperadosParser ( Parser ):
         localctx = EsperadosParser.NotExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_notExpr)
         try:
-            self.enterOuterAlt(localctx, 1)
             self.state = 148
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [31]:
+                self.enterOuterAlt(localctx, 1)
                 self.state = 145
                 self.match(EsperadosParser.NOT)
                 self.state = 146
                 self.notExpr()
                 pass
             elif token in [15, 21, 22, 32, 33, 34, 35]:
+                self.enterOuterAlt(localctx, 2)
                 self.state = 147
                 self.comparisonExpr()
                 pass
@@ -1408,11 +1410,11 @@ class EsperadosParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def multiplicationExpr(self, i:int=None):
+        def multiExpr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(EsperadosParser.MultiplicationExprContext)
+                return self.getTypedRuleContexts(EsperadosParser.MultiExprContext)
             else:
-                return self.getTypedRuleContext(EsperadosParser.MultiplicationExprContext,i)
+                return self.getTypedRuleContext(EsperadosParser.MultiExprContext,i)
 
 
         def ADD(self, i:int=None):
@@ -1455,7 +1457,7 @@ class EsperadosParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 158
-            self.multiplicationExpr()
+            self.multiExpr()
             self.state = 163
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -1468,7 +1470,7 @@ class EsperadosParser ( Parser ):
                     self._errHandler.reportMatch(self)
                     self.consume()
                 self.state = 160
-                self.multiplicationExpr()
+                self.multiExpr()
                 self.state = 165
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -1482,18 +1484,18 @@ class EsperadosParser ( Parser ):
         return localctx
 
 
-    class MultiplicationExprContext(ParserRuleContext):
+    class MultiExprContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def exponentialExpr(self, i:int=None):
+        def exponExpr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(EsperadosParser.ExponentialExprContext)
+                return self.getTypedRuleContexts(EsperadosParser.ExponExprContext)
             else:
-                return self.getTypedRuleContext(EsperadosParser.ExponentialExprContext,i)
+                return self.getTypedRuleContext(EsperadosParser.ExponExprContext,i)
 
 
         def MULT(self, i:int=None):
@@ -1515,34 +1517,34 @@ class EsperadosParser ( Parser ):
                 return self.getToken(EsperadosParser.MOD, i)
 
         def getRuleIndex(self):
-            return EsperadosParser.RULE_multiplicationExpr
+            return EsperadosParser.RULE_multiExpr
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMultiplicationExpr" ):
-                listener.enterMultiplicationExpr(self)
+            if hasattr( listener, "enterMultiExpr" ):
+                listener.enterMultiExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMultiplicationExpr" ):
-                listener.exitMultiplicationExpr(self)
+            if hasattr( listener, "exitMultiExpr" ):
+                listener.exitMultiExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMultiplicationExpr" ):
-                return visitor.visitMultiplicationExpr(self)
+            if hasattr( visitor, "visitMultiExpr" ):
+                return visitor.visitMultiExpr(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def multiplicationExpr(self):
+    def multiExpr(self):
 
-        localctx = EsperadosParser.MultiplicationExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_multiplicationExpr)
+        localctx = EsperadosParser.MultiExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 34, self.RULE_multiExpr)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 166
-            self.exponentialExpr()
+            self.exponExpr()
             self.state = 171
             self._errHandler.sync(self)
             _la = self._input.LA(1)
@@ -1555,7 +1557,7 @@ class EsperadosParser ( Parser ):
                     self._errHandler.reportMatch(self)
                     self.consume()
                 self.state = 168
-                self.exponentialExpr()
+                self.exponExpr()
                 self.state = 173
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -1569,7 +1571,7 @@ class EsperadosParser ( Parser ):
         return localctx
 
 
-    class ExponentialExprContext(ParserRuleContext):
+    class ExponExprContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1590,29 +1592,29 @@ class EsperadosParser ( Parser ):
                 return self.getToken(EsperadosParser.EXPON, i)
 
         def getRuleIndex(self):
-            return EsperadosParser.RULE_exponentialExpr
+            return EsperadosParser.RULE_exponExpr
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExponentialExpr" ):
-                listener.enterExponentialExpr(self)
+            if hasattr( listener, "enterExponExpr" ):
+                listener.enterExponExpr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExponentialExpr" ):
-                listener.exitExponentialExpr(self)
+            if hasattr( listener, "exitExponExpr" ):
+                listener.exitExponExpr(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExponentialExpr" ):
-                return visitor.visitExponentialExpr(self)
+            if hasattr( visitor, "visitExponExpr" ):
+                return visitor.visitExponExpr(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def exponentialExpr(self):
+    def exponExpr(self):
 
-        localctx = EsperadosParser.ExponentialExprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_exponentialExpr)
+        localctx = EsperadosParser.ExponExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 36, self.RULE_exponExpr)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
@@ -1699,11 +1701,11 @@ class EsperadosParser ( Parser ):
         localctx = EsperadosParser.AtomContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_atom)
         try:
-            self.enterOuterAlt(localctx, 1)
             self.state = 192
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [15]:
+                self.enterOuterAlt(localctx, 1)
                 self.state = 182
                 self.match(EsperadosParser.LP)
                 self.state = 183
@@ -1712,26 +1714,32 @@ class EsperadosParser ( Parser ):
                 self.match(EsperadosParser.RP)
                 pass
             elif token in [32]:
+                self.enterOuterAlt(localctx, 2)
                 self.state = 186
                 self.match(EsperadosParser.INT)
                 pass
             elif token in [34]:
+                self.enterOuterAlt(localctx, 3)
                 self.state = 187
                 self.match(EsperadosParser.FLOAT)
                 pass
             elif token in [33]:
+                self.enterOuterAlt(localctx, 4)
                 self.state = 188
                 self.match(EsperadosParser.STRING)
                 pass
             elif token in [21]:
+                self.enterOuterAlt(localctx, 5)
                 self.state = 189
                 self.match(EsperadosParser.TRUE)
                 pass
             elif token in [22]:
+                self.enterOuterAlt(localctx, 6)
                 self.state = 190
                 self.match(EsperadosParser.FALSE)
                 pass
             elif token in [35]:
+                self.enterOuterAlt(localctx, 7)
                 self.state = 191
                 self.match(EsperadosParser.NAME)
                 pass

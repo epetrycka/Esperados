@@ -161,21 +161,21 @@ class EsperadosListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by EsperadosParser#multiplicationExpr.
-    def enterMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+    # Enter a parse tree produced by EsperadosParser#multiExpr.
+    def enterMultiExpr(self, ctx:EsperadosParser.MultiExprContext):
         pass
 
-    # Exit a parse tree produced by EsperadosParser#multiplicationExpr.
-    def exitMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+    # Exit a parse tree produced by EsperadosParser#multiExpr.
+    def exitMultiExpr(self, ctx:EsperadosParser.MultiExprContext):
         pass
 
 
-    # Enter a parse tree produced by EsperadosParser#exponentialExpr.
-    def enterExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+    # Enter a parse tree produced by EsperadosParser#exponExpr.
+    def enterExponExpr(self, ctx:EsperadosParser.ExponExprContext):
         pass
 
-    # Exit a parse tree produced by EsperadosParser#exponentialExpr.
-    def exitExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+    # Exit a parse tree produced by EsperadosParser#exponExpr.
+    def exitExponExpr(self, ctx:EsperadosParser.ExponExprContext):
         pass
 
 

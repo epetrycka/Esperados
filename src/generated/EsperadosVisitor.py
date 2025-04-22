@@ -94,13 +94,13 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#multiplicationExpr.
-    def visitMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+    # Visit a parse tree produced by EsperadosParser#multiExpr.
+    def visitMultiExpr(self, ctx:EsperadosParser.MultiExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#exponentialExpr.
-    def visitExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+    # Visit a parse tree produced by EsperadosParser#exponExpr.
+    def visitExponExpr(self, ctx:EsperadosParser.ExponExprContext):
         return self.visitChildren(ctx)
 
 

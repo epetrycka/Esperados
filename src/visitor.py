@@ -120,34 +120,34 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         return value
     
     def visitAdditionExpr(self, ctx: EsperadosParser.AdditionExprContext):
-        value = self.visitMultiplicationExpr(ctx.multiplicationExpr(0))
+        value = self.visitMultiExpr(ctx.multiExpr(0))
 
-        for i in range(1, len(ctx.multiplicationExpr())):
-            multiplicationExpr2 = self.visitMultiplicationExpr(ctx.multiplicationExpr(i))
+        for i in range(1, len(ctx.multiExpr())):
+            multiExpr2 = self.visitMultiExpr(ctx.multiExpr(i))
 
             if ctx.ADD():
-                value = value + multiplicationExpr2
+                value = value + multiExpr2
             if ctx.SUB():
-                value = value - multiplicationExpr2
+                value = value - multiExpr2
 
         return value
     
-    def visitMultiplicationExpr(self, ctx: EsperadosParser.MultiplicationExprContext):
-        value = self.visitExponentialExpr(ctx.exponentialExpr(0))
+    def visitMultiExpr(self, ctx: EsperadosParser.MultiExprContext):
+        value = self.visitExponExpr(ctx.exponExpr(0))
 
-        for i in range(1, len(ctx.exponentialExpr())):
-            exponentialExpr2 = self.visitExponentialExpr(ctx.exponentialExpr(i))
+        for i in range(1, len(ctx.exponExpr())):
+            exponExpr2 = self.visitExponExpr(ctx.exponExpr(i))
 
             if ctx.MULT():
-                value = value * exponentialExpr2
+                value = value * exponExpr2
             if ctx.DIV():
-                value = value / exponentialExpr2
+                value = value / exponExpr2
             if ctx.MOD():
-                value = value % exponentialExpr2
+                value = value % exponExpr2
 
         return value
     
-    def visitExponentialExpr(self, ctx: EsperadosParser.ExponentialExprContext):
+    def visitExponExpr(self, ctx: EsperadosParser.ExponExprContext):
             value = self.visitAtom(ctx.atom(0))
 
             for i in range(1, len(ctx.atom())):
