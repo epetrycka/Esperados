@@ -26,9 +26,18 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         return None
 
     def visitPrintExpr(self, ctx: EsperadosParser.PrintExprContext):
-        value = self.visit(ctx.expr())
-        print(value)
-        return value
+        printValue = ""
+        if ctx.expr():    
+            for i in range(0, len(ctx.expr())):
+                value = self.visit(ctx.expr(i))
+                printValue += str(value)
+        if ctx.boolExpr():
+            for i in range(0, len(ctx.boolExpr())):
+                value = self.visit(ctx.boolExpr(i))
+                printValue += str(value)
+        
+        print(printValue)
+        return None
 
     def visitVariableExpr(self, ctx: EsperadosParser.VariableExprContext):
         if ctx.NAME() is not None:
@@ -62,8 +71,9 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def visitAlgebraExpr(self, ctx: EsperadosParser.AlgebraExprContext):
         value1 = None
         value2 = None
+
         if ctx.INT(0):
-            value1 = int(ctx.INT(0).getText())
+            value1 = int(ctx.INT()[0].getText())
         if ctx.FLOAT(0):
             if value1:
                 value2 = float(ctx.FLOAT(0).getText())

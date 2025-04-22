@@ -10,39 +10,43 @@ else:
 
 def serializedATN():
     return [
-        4,1,32,102,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,34,112,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,1,0,1,0,5,0,25,8,0,10,0,12,0,
         28,9,0,1,0,1,0,1,0,1,1,1,1,1,2,1,2,1,2,1,2,5,2,39,8,2,10,2,12,2,
         42,9,2,1,2,3,2,45,8,2,1,3,1,3,1,3,5,3,50,8,3,10,3,12,3,53,9,3,1,
         3,1,3,1,4,1,4,3,4,59,8,4,1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,
         1,6,1,6,1,7,1,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,3,8,85,8,
-        8,1,9,1,9,1,9,1,9,3,9,91,8,9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,3,
-        10,100,8,10,1,10,0,0,11,0,2,4,6,8,10,12,14,16,18,20,0,4,1,0,29,30,
-        2,0,25,25,27,28,1,0,6,11,1,0,16,21,106,0,26,1,0,0,0,2,32,1,0,0,0,
-        4,34,1,0,0,0,6,46,1,0,0,0,8,58,1,0,0,0,10,60,1,0,0,0,12,66,1,0,0,
-        0,14,72,1,0,0,0,16,84,1,0,0,0,18,86,1,0,0,0,20,94,1,0,0,0,22,25,
-        3,2,1,0,23,25,5,32,0,0,24,22,1,0,0,0,24,23,1,0,0,0,25,28,1,0,0,0,
-        26,24,1,0,0,0,26,27,1,0,0,0,27,29,1,0,0,0,28,26,1,0,0,0,29,30,3,
-        4,2,0,30,31,5,0,0,1,31,1,1,0,0,0,32,33,7,0,0,0,33,3,1,0,0,0,34,40,
-        5,1,0,0,35,39,3,2,1,0,36,39,3,8,4,0,37,39,5,32,0,0,38,35,1,0,0,0,
-        38,36,1,0,0,0,38,37,1,0,0,0,39,42,1,0,0,0,40,38,1,0,0,0,40,41,1,
-        0,0,0,41,44,1,0,0,0,42,40,1,0,0,0,43,45,3,6,3,0,44,43,1,0,0,0,44,
-        45,1,0,0,0,45,5,1,0,0,0,46,51,5,2,0,0,47,50,3,2,1,0,48,50,5,32,0,
-        0,49,47,1,0,0,0,49,48,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,
-        1,0,0,0,52,54,1,0,0,0,53,51,1,0,0,0,54,55,5,0,0,1,55,7,1,0,0,0,56,
-        59,3,18,9,0,57,59,3,20,10,0,58,56,1,0,0,0,58,57,1,0,0,0,59,9,1,0,
-        0,0,60,61,5,12,0,0,61,62,7,1,0,0,62,63,7,2,0,0,63,64,7,1,0,0,64,
-        65,5,13,0,0,65,11,1,0,0,0,66,67,5,12,0,0,67,68,5,26,0,0,68,69,5,
-        6,0,0,69,70,5,26,0,0,70,71,5,13,0,0,71,13,1,0,0,0,72,73,5,12,0,0,
-        73,74,3,16,8,0,74,75,7,3,0,0,75,76,3,16,8,0,76,77,5,13,0,0,77,15,
-        1,0,0,0,78,85,5,26,0,0,79,85,5,25,0,0,80,85,5,27,0,0,81,85,3,10,
-        5,0,82,85,5,28,0,0,83,85,3,12,6,0,84,78,1,0,0,0,84,79,1,0,0,0,84,
-        80,1,0,0,0,84,81,1,0,0,0,84,82,1,0,0,0,84,83,1,0,0,0,85,17,1,0,0,
-        0,86,87,5,3,0,0,87,90,5,12,0,0,88,91,3,16,8,0,89,91,3,14,7,0,90,
-        88,1,0,0,0,90,89,1,0,0,0,91,92,1,0,0,0,92,93,5,13,0,0,93,19,1,0,
-        0,0,94,95,5,4,0,0,95,96,5,28,0,0,96,99,5,5,0,0,97,100,3,16,8,0,98,
-        100,3,14,7,0,99,97,1,0,0,0,99,98,1,0,0,0,100,21,1,0,0,0,11,24,26,
-        38,40,44,49,51,58,84,90,99
+        8,1,9,1,9,1,9,1,9,3,9,91,8,9,1,9,1,9,1,9,3,9,96,8,9,5,9,98,8,9,10,
+        9,12,9,101,9,9,1,9,1,9,1,10,1,10,1,10,1,10,1,10,3,10,110,8,10,1,
+        10,0,0,11,0,2,4,6,8,10,12,14,16,18,20,0,4,1,0,31,32,2,0,27,27,29,
+        30,1,0,6,11,1,0,18,23,118,0,26,1,0,0,0,2,32,1,0,0,0,4,34,1,0,0,0,
+        6,46,1,0,0,0,8,58,1,0,0,0,10,60,1,0,0,0,12,66,1,0,0,0,14,72,1,0,
+        0,0,16,84,1,0,0,0,18,86,1,0,0,0,20,104,1,0,0,0,22,25,3,2,1,0,23,
+        25,5,34,0,0,24,22,1,0,0,0,24,23,1,0,0,0,25,28,1,0,0,0,26,24,1,0,
+        0,0,26,27,1,0,0,0,27,29,1,0,0,0,28,26,1,0,0,0,29,30,3,4,2,0,30,31,
+        5,0,0,1,31,1,1,0,0,0,32,33,7,0,0,0,33,3,1,0,0,0,34,40,5,1,0,0,35,
+        39,3,2,1,0,36,39,3,8,4,0,37,39,5,34,0,0,38,35,1,0,0,0,38,36,1,0,
+        0,0,38,37,1,0,0,0,39,42,1,0,0,0,40,38,1,0,0,0,40,41,1,0,0,0,41,44,
+        1,0,0,0,42,40,1,0,0,0,43,45,3,6,3,0,44,43,1,0,0,0,44,45,1,0,0,0,
+        45,5,1,0,0,0,46,51,5,2,0,0,47,50,3,2,1,0,48,50,5,34,0,0,49,47,1,
+        0,0,0,49,48,1,0,0,0,50,53,1,0,0,0,51,49,1,0,0,0,51,52,1,0,0,0,52,
+        54,1,0,0,0,53,51,1,0,0,0,54,55,5,0,0,1,55,7,1,0,0,0,56,59,3,18,9,
+        0,57,59,3,20,10,0,58,56,1,0,0,0,58,57,1,0,0,0,59,9,1,0,0,0,60,61,
+        5,12,0,0,61,62,7,1,0,0,62,63,7,2,0,0,63,64,7,1,0,0,64,65,5,13,0,
+        0,65,11,1,0,0,0,66,67,5,12,0,0,67,68,5,28,0,0,68,69,5,6,0,0,69,70,
+        5,28,0,0,70,71,5,13,0,0,71,13,1,0,0,0,72,73,5,12,0,0,73,74,3,16,
+        8,0,74,75,7,3,0,0,75,76,3,16,8,0,76,77,5,13,0,0,77,15,1,0,0,0,78,
+        85,5,28,0,0,79,85,5,27,0,0,80,85,5,29,0,0,81,85,3,10,5,0,82,85,5,
+        30,0,0,83,85,3,12,6,0,84,78,1,0,0,0,84,79,1,0,0,0,84,80,1,0,0,0,
+        84,81,1,0,0,0,84,82,1,0,0,0,84,83,1,0,0,0,85,17,1,0,0,0,86,87,5,
+        3,0,0,87,90,5,12,0,0,88,91,3,16,8,0,89,91,3,14,7,0,90,88,1,0,0,0,
+        90,89,1,0,0,0,91,99,1,0,0,0,92,95,5,14,0,0,93,96,3,16,8,0,94,96,
+        3,14,7,0,95,93,1,0,0,0,95,94,1,0,0,0,96,98,1,0,0,0,97,92,1,0,0,0,
+        98,101,1,0,0,0,99,97,1,0,0,0,99,100,1,0,0,0,100,102,1,0,0,0,101,
+        99,1,0,0,0,102,103,5,13,0,0,103,19,1,0,0,0,104,105,5,4,0,0,105,106,
+        5,30,0,0,106,109,5,5,0,0,107,110,3,16,8,0,108,110,3,14,7,0,109,107,
+        1,0,0,0,109,108,1,0,0,0,110,21,1,0,0,0,13,24,26,38,40,44,49,51,58,
+        84,90,95,99,109
     ]
 
 class EsperadosParser ( Parser ):
@@ -58,16 +62,16 @@ class EsperadosParser ( Parser ):
     literalNames = [ "<INVALID>", "'Saluton'", "'Adiau'", "'skribi'", "'variablo'", 
                      "'asigini'", "'aldoni'", "'subtrahi'", "'multigi'", 
                      "'dividi'", "'modulo'", "'intensigi'", "'('", "')'", 
-                     "'vere'", "'malvero'", "'egala'", "'ne egala'", "'granda'", 
-                     "'malgranda'", "'granda egala'", "'malgranda egala'", 
+                     "','", "'.'", "'vere'", "'malvero'", "'egala'", "'ne egala'", 
+                     "'granda'", "'malgranda'", "'granda egala'", "'malgranda egala'", 
                      "'kaj'", "'au'", "'ne'" ]
 
     symbolicNames = [ "<INVALID>", "GREETING", "GOODBYE", "PRINT", "VARDEF", 
                       "ASS", "ADD", "SUB", "MULT", "DIV", "MOD", "EXPON", 
-                      "LP", "RP", "TRUE", "FALSE", "EQUAL", "INEQUAL", "GREATER", 
-                      "LESS", "EGREATER", "ELESS", "AND", "OR", "NOT", "INT", 
-                      "STRING", "FLOAT", "NAME", "COMMENT", "COMMENTBLOCK", 
-                      "WS", "NL" ]
+                      "LP", "RP", "COMMA", "DOT", "TRUE", "FALSE", "EQUAL", 
+                      "INEQUAL", "GREATER", "LESS", "EGREATER", "ELESS", 
+                      "AND", "OR", "NOT", "INT", "STRING", "FLOAT", "NAME", 
+                      "COMMENT", "COMMENTBLOCK", "WS", "NL" ]
 
     RULE_program = 0
     RULE_comment = 1
@@ -99,25 +103,27 @@ class EsperadosParser ( Parser ):
     EXPON=11
     LP=12
     RP=13
-    TRUE=14
-    FALSE=15
-    EQUAL=16
-    INEQUAL=17
-    GREATER=18
-    LESS=19
-    EGREATER=20
-    ELESS=21
-    AND=22
-    OR=23
-    NOT=24
-    INT=25
-    STRING=26
-    FLOAT=27
-    NAME=28
-    COMMENT=29
-    COMMENTBLOCK=30
-    WS=31
-    NL=32
+    COMMA=14
+    DOT=15
+    TRUE=16
+    FALSE=17
+    EQUAL=18
+    INEQUAL=19
+    GREATER=20
+    LESS=21
+    EGREATER=22
+    ELESS=23
+    AND=24
+    OR=25
+    NOT=26
+    INT=27
+    STRING=28
+    FLOAT=29
+    NAME=30
+    COMMENT=31
+    COMMENTBLOCK=32
+    WS=33
+    NL=34
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -185,15 +191,15 @@ class EsperadosParser ( Parser ):
             self.state = 26
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 5905580032) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 23622320128) != 0):
                 self.state = 24
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [29, 30]:
+                if token in [31, 32]:
                     self.state = 22
                     self.comment()
                     pass
-                elif token in [32]:
+                elif token in [34]:
                     self.state = 23
                     self.match(EsperadosParser.NL)
                     pass
@@ -259,7 +265,7 @@ class EsperadosParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 32
             _la = self._input.LA(1)
-            if not(_la==29 or _la==30):
+            if not(_la==31 or _la==32):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -339,11 +345,11 @@ class EsperadosParser ( Parser ):
             self.state = 40
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 5905580056) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 23622320152) != 0):
                 self.state = 38
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [29, 30]:
+                if token in [31, 32]:
                     self.state = 35
                     self.comment()
                     pass
@@ -351,7 +357,7 @@ class EsperadosParser ( Parser ):
                     self.state = 36
                     self.action()
                     pass
-                elif token in [32]:
+                elif token in [34]:
                     self.state = 37
                     self.match(EsperadosParser.NL)
                     pass
@@ -437,15 +443,15 @@ class EsperadosParser ( Parser ):
             self.state = 51
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 5905580032) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 23622320128) != 0):
                 self.state = 49
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [29, 30]:
+                if token in [31, 32]:
                     self.state = 47
                     self.comment()
                     pass
-                elif token in [32]:
+                elif token in [34]:
                     self.state = 48
                     self.match(EsperadosParser.NL)
                     pass
@@ -612,7 +618,7 @@ class EsperadosParser ( Parser ):
             self.match(EsperadosParser.LP)
             self.state = 61
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 436207616) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 1744830464) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -626,7 +632,7 @@ class EsperadosParser ( Parser ):
                 self.consume()
             self.state = 63
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 436207616) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 1744830464) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -780,7 +786,7 @@ class EsperadosParser ( Parser ):
             self.expr()
             self.state = 74
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 4128768) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 16515072) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -910,13 +916,25 @@ class EsperadosParser ( Parser ):
         def RP(self):
             return self.getToken(EsperadosParser.RP, 0)
 
-        def expr(self):
-            return self.getTypedRuleContext(EsperadosParser.ExprContext,0)
+        def expr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(EsperadosParser.ExprContext)
+            else:
+                return self.getTypedRuleContext(EsperadosParser.ExprContext,i)
 
 
-        def boolExpr(self):
-            return self.getTypedRuleContext(EsperadosParser.BoolExprContext,0)
+        def boolExpr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(EsperadosParser.BoolExprContext)
+            else:
+                return self.getTypedRuleContext(EsperadosParser.BoolExprContext,i)
 
+
+        def COMMA(self, i:int=None):
+            if i is None:
+                return self.getTokens(EsperadosParser.COMMA)
+            else:
+                return self.getToken(EsperadosParser.COMMA, i)
 
         def getRuleIndex(self):
             return EsperadosParser.RULE_printExpr
@@ -942,6 +960,7 @@ class EsperadosParser ( Parser ):
 
         localctx = EsperadosParser.PrintExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_printExpr)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 86
@@ -962,7 +981,31 @@ class EsperadosParser ( Parser ):
                 pass
 
 
-            self.state = 92
+            self.state = 99
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            while _la==14:
+                self.state = 92
+                self.match(EsperadosParser.COMMA)
+                self.state = 95
+                self._errHandler.sync(self)
+                la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+                if la_ == 1:
+                    self.state = 93
+                    self.expr()
+                    pass
+
+                elif la_ == 2:
+                    self.state = 94
+                    self.boolExpr()
+                    pass
+
+
+                self.state = 101
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+
+            self.state = 102
             self.match(EsperadosParser.RP)
         except RecognitionException as re:
             localctx.exception = re
@@ -1023,22 +1066,22 @@ class EsperadosParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_variableExpr)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 94
+            self.state = 104
             self.match(EsperadosParser.VARDEF)
-            self.state = 95
+            self.state = 105
             self.match(EsperadosParser.NAME)
-            self.state = 96
+            self.state = 106
             self.match(EsperadosParser.ASS)
-            self.state = 99
+            self.state = 109
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,10,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
             if la_ == 1:
-                self.state = 97
+                self.state = 107
                 self.expr()
                 pass
 
             elif la_ == 2:
-                self.state = 98
+                self.state = 108
                 self.boolExpr()
                 pass
 
