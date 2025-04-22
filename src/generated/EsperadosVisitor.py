@@ -39,33 +39,48 @@ class EsperadosVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#algebraExpr.
-    def visitAlgebraExpr(self, ctx:EsperadosParser.AlgebraExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperadosParser#boolExpr.
-    def visitBoolExpr(self, ctx:EsperadosParser.BoolExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperadosParser#logicExpr.
-    def visitLogicExpr(self, ctx:EsperadosParser.LogicExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by EsperadosParser#addStrings.
-    def visitAddStrings(self, ctx:EsperadosParser.AddStringsContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by EsperadosParser#expr.
     def visitExpr(self, ctx:EsperadosParser.ExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by EsperadosParser#addExpr.
-    def visitAddExpr(self, ctx:EsperadosParser.AddExprContext):
+    # Visit a parse tree produced by EsperadosParser#orExpr.
+    def visitOrExpr(self, ctx:EsperadosParser.OrExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#andExpr.
+    def visitAndExpr(self, ctx:EsperadosParser.AndExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#notExpr.
+    def visitNotExpr(self, ctx:EsperadosParser.NotExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#comparisonExpr.
+    def visitComparisonExpr(self, ctx:EsperadosParser.ComparisonExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#additionExpr.
+    def visitAdditionExpr(self, ctx:EsperadosParser.AdditionExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#multiplicationExpr.
+    def visitMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#exponentialExpr.
+    def visitExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by EsperadosParser#atom.
+    def visitAtom(self, ctx:EsperadosParser.AtomContext):
         return self.visitChildren(ctx)
 
 

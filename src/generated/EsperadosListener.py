@@ -62,42 +62,6 @@ class EsperadosListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by EsperadosParser#algebraExpr.
-    def enterAlgebraExpr(self, ctx:EsperadosParser.AlgebraExprContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#algebraExpr.
-    def exitAlgebraExpr(self, ctx:EsperadosParser.AlgebraExprContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperadosParser#boolExpr.
-    def enterBoolExpr(self, ctx:EsperadosParser.BoolExprContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#boolExpr.
-    def exitBoolExpr(self, ctx:EsperadosParser.BoolExprContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperadosParser#logicExpr.
-    def enterLogicExpr(self, ctx:EsperadosParser.LogicExprContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#logicExpr.
-    def exitLogicExpr(self, ctx:EsperadosParser.LogicExprContext):
-        pass
-
-
-    # Enter a parse tree produced by EsperadosParser#addStrings.
-    def enterAddStrings(self, ctx:EsperadosParser.AddStringsContext):
-        pass
-
-    # Exit a parse tree produced by EsperadosParser#addStrings.
-    def exitAddStrings(self, ctx:EsperadosParser.AddStringsContext):
-        pass
-
-
     # Enter a parse tree produced by EsperadosParser#expr.
     def enterExpr(self, ctx:EsperadosParser.ExprContext):
         pass
@@ -107,12 +71,75 @@ class EsperadosListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by EsperadosParser#addExpr.
-    def enterAddExpr(self, ctx:EsperadosParser.AddExprContext):
+    # Enter a parse tree produced by EsperadosParser#orExpr.
+    def enterOrExpr(self, ctx:EsperadosParser.OrExprContext):
         pass
 
-    # Exit a parse tree produced by EsperadosParser#addExpr.
-    def exitAddExpr(self, ctx:EsperadosParser.AddExprContext):
+    # Exit a parse tree produced by EsperadosParser#orExpr.
+    def exitOrExpr(self, ctx:EsperadosParser.OrExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#andExpr.
+    def enterAndExpr(self, ctx:EsperadosParser.AndExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#andExpr.
+    def exitAndExpr(self, ctx:EsperadosParser.AndExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#notExpr.
+    def enterNotExpr(self, ctx:EsperadosParser.NotExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#notExpr.
+    def exitNotExpr(self, ctx:EsperadosParser.NotExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#comparisonExpr.
+    def enterComparisonExpr(self, ctx:EsperadosParser.ComparisonExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#comparisonExpr.
+    def exitComparisonExpr(self, ctx:EsperadosParser.ComparisonExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#additionExpr.
+    def enterAdditionExpr(self, ctx:EsperadosParser.AdditionExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#additionExpr.
+    def exitAdditionExpr(self, ctx:EsperadosParser.AdditionExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#multiplicationExpr.
+    def enterMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#multiplicationExpr.
+    def exitMultiplicationExpr(self, ctx:EsperadosParser.MultiplicationExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#exponentialExpr.
+    def enterExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#exponentialExpr.
+    def exitExponentialExpr(self, ctx:EsperadosParser.ExponentialExprContext):
+        pass
+
+
+    # Enter a parse tree produced by EsperadosParser#atom.
+    def enterAtom(self, ctx:EsperadosParser.AtomContext):
+        pass
+
+    # Exit a parse tree produced by EsperadosParser#atom.
+    def exitAtom(self, ctx:EsperadosParser.AtomContext):
         pass
 
 

@@ -10,19 +10,25 @@ instructions: (comment | action | NL)* goodbye?;
 goodbye: GOODBYE (comment | NL)* EOF;
 
 action: (printExpr | variableExpr | condition);
-condition: IF LP expr RP LC instructions RC;
+condition: IF LP expr RP LC instructions RC ;
 
-algebraExpr: (ADD | SUB | MULT | DIV | MOD | EXPON) (INT | FLOAT | NAME | STRING);
+expr: orExpr ;
 
-boolExpr: (EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) expr;
+orExpr: andExpr (OR andExpr)* ;
 
-logicExpr: (AND | OR) expr;
+andExpr: notExpr (AND notExpr)*;
 
-addStrings: STRING ADD STRING;
+notExpr: (NOT notExpr | comparisonExpr);
 
-expr: ( ((STRING | INT | FLOAT | NAME) addExpr?) | addStrings);
+comparisonExpr: additionExpr ( (EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) additionExpr )* ;
 
-addExpr: (algebraExpr | boolExpr | logicExpr);
+additionExpr: multiplicationExpr ( (ADD | SUB) multiplicationExpr )* ;
+
+multiplicationExpr: exponentialExpr ( (MULT | DIV | MOD) exponentialExpr )* ;
+
+exponentialExpr: atom (EXPON atom)* ;
+
+atom: (LP expr RP | INT | FLOAT | STRING | TRUE | FALSE | NAME) ;
 
 printExpr: PRINT LP expr (COMMA expr)* RP;
 

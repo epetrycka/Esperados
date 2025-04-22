@@ -25,11 +25,11 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ## Wymagania funkcjonalne
 
-1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy).
+1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy). ✅
 
-2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau".
+2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". (✅ - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie).
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅
 
 4. Instrukcje warunkowe – wsparcie dla if, else, elif.
 
@@ -37,11 +37,11 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 6. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
 
-7. Komentarze – możliwość dodawania komentarzy.
+7. Komentarze – możliwość dodawania komentarzy. ✅
 
-8. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań.
+8. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
 
-9. Operacje na stringach - dodawanie stringów.
+9. Operacje na stringach - dodawanie stringów. ✅
 
 10. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
 
@@ -49,7 +49,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 12. Obsługa błędów składniowych i błędów kompilacji– generowanie błędów, jeśli składnia jest nieprawidłowa.
 
-13. Interfejs CLI – interpreter, który przyjmuje plik .esp i uruchamia kod.
+13. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
 
 14. Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
 
