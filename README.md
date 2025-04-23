@@ -19,7 +19,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 * ANTLR4 - generator skanerów i parserów
 * pytest - narzędzie do testów
 
-## Spis tokenów - [link](https://github.com/epetrycka/Squick-Lang/blob/main/spis_tokenów.md)
+## Spis tokenów - [link](https://github.com/epetrycka/Squick-Lang/blob/main/Grammar/spis_tokenów.md)
 
 ## Gramatyka języka - [link](https://github.com/epetrycka/Squick-Lang/blob/main/Grammar/Esperados.g4)
 
@@ -29,29 +29,29 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ---
 
-2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". ✅ ( - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
+2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau".
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅ (- bez podziału na zmienne globalne i wewnątrz-funkcyjne, nie ma opcji wymuszenia typu zmiennej)
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie).
 
-4. Wypisywanie danych do konsoli. ✅
+4. Wypisywanie danych do konsoli.
 
-5. Instrukcje warunkowe – wsparcie dla if, else, elif. ✅
+5. Instrukcje warunkowe – wsparcie dla if, else, elif.
 
-6. Pętle – while, for.
+6. Pętle – while, for, for each.
 
 7. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
 
-8. Komentarze – możliwość dodawania komentarzy. ✅
+8. Komentarze – możliwość dodawania komentarzy.
 
-9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
+9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań.
 
-10. Operacje na stringach - dodawanie stringów. ✅
+10. Operacje na stringach.
 
-11. Tworzenie tablic i map - definiowanie indexowanych tablic i map dla danych.
+11. Tworzenie tablic i map - definiowanie indexowanych tablic i map danych.
 
 12. Wczytywanie danych z konsoli do programu.
 
-13. [BUG] Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
+13. Obsługa polskich znaków w konsoli i znaków białych w konsoli (np. '\n').
 
 ---
 
@@ -60,6 +60,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 15. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
 
 16. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
+
 
 ## Wymagania niefunkcjonalne
 
@@ -77,16 +78,20 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 7. Użycie maksymalnej ilości słów kluczowych zrozumiałych w języku esperanto (minimalizacja używania symboli).
 
+---
+
 ## Code Example
 
 ```esperando
 Saluton
 
-difini salutu(nomo: snuro):
-    skribi("Saluton, " + nomo)
+difini salutu(nomo: snuro){
+    skribi("Saluton, ", nomo)
+}
 
-por variablo en ["Mia", "Eta", "Amiko"]:
+por ciu (variablo en ["Mia", "Eta", "Amiko"]){
     salutu(variablo)
+}
 
 Adiau
 ```
@@ -94,15 +99,43 @@ Adiau
 ## Uruchamianie programu
 
 ```bash
-> cd src
+> cd EsperadosApp
 > python -m venv venv
 > source venv/Scripts/activate
 > python -m pip install --upgrade pip
 > python -m pip install -r requirements.txt
-> python main.py ../Examples/code.es
+> python src/main.py ../Examples/code.es
 ```
 
 ---
 
 > [!IMPORTANT]
 > Projekt jest na etapie developmentu
+
+<details>
+  <summary><strong>TO DO</strong></summary>
+
+### Gramatyka:
+- [ ] Dodanie funkcji wczytywania danych z konsoli.
+- [ ] Obsługa wartości `NULL` (`nenio`) dla zmiennych.
+- [ ] Definiowanie list, map, tablic.
+- [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
+- [ ] Pętla `for each`.
+- [ ] Definicje funkcji, wywołania funkcji, klasy (do rozważenia).
+
+<sub><i>Opcjonalnie:</i></sub>  
+- [ ] Wymuszanie typu zmiennej (np. `string(5)`, `int("56")`).
+- [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
+- [ ] Operacje na stringach (`indexOf` itp.).
+- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz ( -> skip).
+
+---
+
+### Visitor (interpretacja):
+- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
+- [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
+- [ ] Implementacja pętli `for`, `for each`, `while`, klas, funkcji i lambd.
+- [ ] Obsługa list, map, dynamicznych tablic.
+- [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
+
+</details>
