@@ -48,13 +48,13 @@ forEachLoop     : FOREACH NAME IN expr LC instructions RC ;
 funDefAction    : action
                 | returnStmt ;
 
-funDefInstructions: (comment | funAction | NL)* ;
+funDefInstructions: (comment | funDefAction | NL)* ;
 
 functionDef     : DEF NAME LP parameters? RP LC funDefInstructions RC ;
 
-parameters      : type? NAME (COMMA type? NAME)* ;
+parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
 
-functionCall    : NAME LP (expr (COMMA expr)*)? RP ;
+functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
 
 returnStmt      : RETURN expr? ;
 

@@ -15,6 +15,7 @@ FOR             : 'por' ;
 WHILE           : 'gis' ;
 DEF             : 'difini' ;
 DEL             : 'forigi' ;
+FUN             : 'funcio' ;
 
 ASG             : 'asigini' ;
 ADD             : 'aldoni' ;
@@ -31,6 +32,8 @@ RC              : '}' ;
 COMMA           : ',' ;
 DOT             : '.' ;
 SEMICOLON       : ';' ;
+COLON           : ':' ;
+EQUALSIGN       : '=' ;
 
 TRUE            : 'vere' ;
 FALSE           : 'malvero' ;
