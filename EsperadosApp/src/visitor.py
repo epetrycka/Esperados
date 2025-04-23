@@ -1,6 +1,12 @@
 from generated.EsperadosVisitor import EsperadosVisitor
 from generated.EsperadosParser import EsperadosParser
 
+class BreakException(Exception):
+    pass
+
+class ContinueException(Exception):
+    pass
+
 class EsperadosVisitorImpl(EsperadosVisitor):
     def __init__(self):
         self.variables = {}
@@ -27,6 +33,11 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.variableExpr())
         elif ctx.condition():
             return self.visit(ctx.condition())
+        elif ctx.forLoop():
+            return self.visit(ctx.forLoop())
+        elif ctx.whileLoop():
+            return self.visit(ctx.whileLoop())
+
         return None
     
     def visitPrintExpr(self, ctx: EsperadosParser.PrintExprContext):
@@ -178,3 +189,44 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return bytes(text, "utf-8").decode("unicode_escape")
         except UnicodeDecodeError:
             return text
+        
+    def visitForLoop(self, ctx: EsperadosParser.ForLoopContext):
+        var_name = ctx.NAME().getText()
+        start = int(ctx.INT(0).getText())
+        end = int(ctx.INT(1).getText())
+        step = int(ctx.INT(2).getText()) if ctx.INT(2) else 1
+
+        i = start
+        while (step > 0 and i < end) or (step < 0 and i > end):
+            self.variables[var_name] = i
+            try:
+                self.visitLoopInstructions(ctx.loopInstructions())
+            except ContinueException:
+                i += step
+                continue
+            except BreakException:
+                break
+            i += step
+    
+    def visitLoopInstructions(self, ctx: EsperadosParser.LoopInstructionsContext):
+        for child in ctx.children:
+            self.visit(child)
+
+    def visitLoopAction(self, ctx: EsperadosParser.LoopActionContext):
+        if ctx.action():
+            return self.visitAction(ctx.action())
+        elif ctx.BREAK():
+            raise BreakException()
+        elif ctx.CONTINUE():
+            raise ContinueException()
+        
+        return None
+    
+    def visitWhileLoop(self, ctx: EsperadosParser.WhileLoopContext):
+        while self.visitExpr(ctx.expr()):
+            try:
+                self.visitLoopInstructions(ctx.loopInstructions())
+            except ContinueException:
+                continue
+            except BreakException:
+                break
