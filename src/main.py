@@ -14,8 +14,8 @@ def main(argv):
         parser = EsperadosParser(stream)
         tree = parser.program()
 
-        with open("tree.txt", "w") as file:
-            file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
+        # with open(f"{argv[1]}_tree.txt", "w") as file:
+        #     file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
 
         visitor = EsperadosVisitorImpl()
         visitor.visit(tree)
