@@ -85,12 +85,12 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 ```esperando
 Saluton
 
-difini salutu(nomo: snuro){
+difini salutu(snuro: nomo){
     skribi("Saluton, ", nomo)
 }
 
 por ciu (variablo en ["Mia", "Eta", "Amiko"]){
-    salutu(variablo)
+    funcio salutu (nomo = variable)
 }
 
 Adiau
