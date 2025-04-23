@@ -15,7 +15,10 @@ action          : printExpr
                 | variableExpr
                 | condition 
                 | forLoop 
-                | whileLoop ;
+                | whileLoop
+                | functionDef
+                | functionCall
+                | deleteStmt;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
@@ -35,6 +38,23 @@ loopAction      : action
 
 loopInstructions: (comment | loopAction | NL)* ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ; 
+forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ;
 
 whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
+
+//forEachLoop     : FOREACH NAME IN expr LC instructions RC ;
+
+funDefAction    : action
+                | returnStmt ;
+
+funDefInstructions: (comment | funDefAction | NL)* ;
+
+functionDef     : DEF NAME LP parameters? RP LC funDefInstructions RC ;
+
+parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
+
+functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
+
+returnStmt      : RETURN expr? ;
+
+deleteStmt      : DEL NAME ;

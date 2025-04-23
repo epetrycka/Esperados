@@ -36,4 +36,10 @@ por (i; 0; 5; 1) {
 
 skribi("Koniec petli")
 
+difini salutu(snuro: nomo){
+    skribi("Saluton: ", nomo)
+}
+
+funcio salutu (nomo = "Jol")
+
 Adiau

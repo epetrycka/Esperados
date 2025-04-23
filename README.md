@@ -85,7 +85,7 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 ```esperando
 Saluton
 
-difini salutu(nomo: snuro){
+difini salutu(snuro: nomo){
     skribi("Saluton, ", nomo)
 }
 
@@ -122,6 +122,7 @@ Adiau
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
 - [ ] Pętla `for each`.
 - [ ] Definicje funkcji, wywołania funkcji, klasy (do rozważenia).
+- [ ] Każda instrukcja musi kończyć się znakiem następnej lini.
 
 <sub><i>Opcjonalnie:</i></sub>  
 - [ ] Wymuszanie typu zmiennej (np. `string(5)`, `int("56")`).

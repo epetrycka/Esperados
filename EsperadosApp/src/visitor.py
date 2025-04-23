@@ -10,6 +10,7 @@ class ContinueException(Exception):
 class EsperadosVisitorImpl(EsperadosVisitor):
     def __init__(self):
         self.variables = {}
+        self.functions = {}
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
         if ctx.GREETING():
@@ -37,6 +38,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.forLoop())
         elif ctx.whileLoop():
             return self.visit(ctx.whileLoop())
+        elif ctx.functionDef():
+            return self.visit(ctx.functionDef())
+        elif ctx.functionCall():
+            return self.visit(ctx.functionCall())
+        elif ctx.deleteStmt():
+            return self.deleteStmt()
 
         return None
     
@@ -230,3 +237,39 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 continue
             except BreakException:
                 break
+        return None
+
+    def visitFunctionDef(self, ctx: EsperadosParser.FunctionDefContext):
+        funName = ctx.NAME().getText()
+        self.functions[funName] = {"params": {}, "instructions": None}
+        if ctx.parameters():
+            self.visitParameters(ctx.parameters(), funName)
+        self.functions[funName]["instructions"] = ctx.funDefInstructions()
+        return None
+
+    def visitParameters(self, ctx: EsperadosParser.ParametersContext, funName: str):
+        for i in range(0, len(ctx.NAME())):
+            self.functions[funName]["params"][ctx.NAME(i).getText()] = None
+        return None
+    
+    def visitFunDefInstructions(self, ctx: EsperadosParser.FunDefInstructionsContext):
+        for child in ctx.children:
+            self.visit(child)
+
+    def visitFunDefAction(self, ctx: EsperadosParser.FunDefActionContext):
+        if ctx.action():
+            self.visitAction(ctx.action())
+        if ctx.returnStmt():
+            self.visitReturnStmt(ctx.returnStmt())
+
+    def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
+        fun_name = ctx.NAME(0).getText()
+        for i in range(0, len(ctx.expr())):
+            self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visitExpr(ctx.expr(i))
+        temp_variables = self.variables
+        self.variables = self.functions[fun_name]["params"]
+        self.visitFunDefInstructions(self.functions[fun_name]["instructions"])
+        self.variables = temp_variables
+    
+    def visitReturnStmt(self, ctx: EsperadosParser.ReturnStmtContext):
+        print("return")
