@@ -1,115 +1,126 @@
 grammar Esperados;
 
-//PARSER
+// PARSER
 
-program         :(comment 
-                | NL)*          
-                                GREETING        instructions EOF ;
+program         : (comment | NL)* GREETING instructions EOF ;
 
-comment         :COMMENTBLOCK 
-                | COMMENT                                        ;
+comment         : COMMENTBLOCK | COMMENT ;
 
-goodbye         :GOODBYE        (comment 
-                                | NL)*          
-                                                EOF             ;
+goodbye         : GOODBYE (comment | NL)* EOF ;
 
-instructions    :(comment 
-                | action 
-                | NL)*          
-                                goodbye?                        ;
+instructions    : (comment | action | NL)* goodbye? ;
 
-action          :printExpr 
-                | variableExpr 
-                | condition                                     ;
+action          : printExpr
+                | variableExpr
+                | condition 
+                | forLoop 
+                | whileLoop
+                | BREAK
+                | CONTINUE ;
 
-printExpr       :PRINT          LP expr (COMMA expr)* RP        ;
+printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
-variableExpr    :VARDEF         NAME ASG        expr            ;
+variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
 
-condition       :ifExpr         elifExpr*       elseExpr?       ;
-ifExpr          :IF             LP expr RP      LC instructions RC;
-elifExpr        :ELIF           LP expr RP      LC instructions RC;
-elseExpr        :ELSE                           LC instructions RC;
+condition       : ifExpr elifExpr* elseExpr? ;
 
-expr            :orExpr                                         ;
-orExpr          :andExpr        (OR andExpr)*                   ;
-andExpr         :notExpr        (AND notExpr)*                  ;
+ifExpr          : IF LP expr RP LC instructions RC ;
 
-notExpr         :NOT notExpr 
-                | comparisonExpr                                ;
+elifExpr        : ELIF LP expr RP LC instructions RC ;
 
-comparisonExpr  :additionExpr   (( EQUAL 
-                                | INEQUAL 
-                                | GREATER 
-                                | LESS 
-                                | EGREATER 
-                                | ELESS) 
-                                                additionExpr)*  ;
+elseExpr        : ELSE LC instructions RC ;
 
-additionExpr    :multiExpr      (( ADD 
-                                | SUB) 
-                                                multiExpr)*     ;
+//pętla do iterowania po liczbach całkowity z opcją zdefiniowania różnicy (default: 1)
+forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT (SEMICOLON INT)? RP LC instructions RC ; 
 
-multiExpr       :exponExpr      (( MULT 
-                                | DIV 
-                                | MOD) 
-                                                exponExpr)*     ;
+whileLoop       : WHILE LP expr RP LC instructions RC ;
 
-exponExpr       :atom           (EXPON atom)*                   ;
+expr            : orExpr ;
 
-atom            :LP expr RP 
-                | INT 
-                | FLOAT 
-                | STRING 
-                | TRUE 
-                | FALSE 
-                | NAME                                          ;
+orExpr          : andExpr (OR andExpr)* ;
+
+andExpr         : notExpr (AND notExpr)* ;
+
+notExpr         : NOT notExpr
+                | comparisonExpr ;
+
+comparisonExpr  : additionExpr ((EQUAL | INEQUAL | GREATER | LESS | EGREATER | ELESS) additionExpr)* ;
+
+additionExpr    : multiExpr ((ADD | SUB) multiExpr)* ;
+
+multiExpr       : exponExpr ((MULT | DIV | MOD) exponExpr)* ;
+
+exponExpr       : atom (EXPON atom)* ;
+
+atom            : LP expr RP
+                | INT
+                | FLOAT
+                | STRING
+                | TRUE
+                | FALSE
+                | NAME ;
+
+type            : INTTYPE
+                | FLOATTYPE
+                | STRINGTYPE ;
 
 // LEXER
 
-GREETING:       'Saluton'                       ;
-GOODBYE:        'Adiau'                         ;
-PRINT:          'skribi'                        ;
-VARDEF:         'variablo'                      ;
-IF:             'se'                            ;
-ELSE:           'alie'                          ;
-ELIF:           'alie se'                       ;
+GREETING        : 'Saluton' ;
+GOODBYE         : 'Adiau' ;
+PRINT           : 'skribi' ;
+VARDEF          : 'variablo' ;
+IF              : 'se' ;
+ELSE            : 'alie' ;
+ELIF            : 'alie se' ;
+FOR             : 'por' ;
+WHILE           : 'gis' ;
 
-ASG:            'asigini'                       ;
-ADD:            'aldoni'                        ;
-SUB:            'subtrahi'                      ;
-MULT:           'multigi'                       ;
-DIV:            'dividi'                        ;
-MOD:            'modulo'                        ;
-EXPON:          'intensigi'                     ;
+ASG             : 'asigini' ;
+ADD             : 'aldoni' ;
+SUB             : 'subtrahi' ;
+MULT            : 'multigi' ;
+DIV             : 'dividi' ;
+MOD             : 'modulo' ;
+EXPON           : 'intensigi' ;
 
-LP:             '('                             ;
-RP:             ')'                             ;
-LC:             '{'                             ;
-RC:             '}'                             ;
-COMMA:          ','                             ;
-DOT:            '.'                             ;
+LP              : '(' ;
+RP              : ')' ;
+LC              : '{' ;
+RC              : '}' ;
+COMMA           : ',' ;
+DOT             : '.' ;
+SEMICOLON       : ';' ;
 
-TRUE:           'vere'                          ;
-FALSE:          'malvero'                       ;
-EQUAL:          'egala'                         ;
-INEQUAL:        'ne egala'                      ;
-GREATER:        'granda'                        ;
-LESS:           'malgranda'                     ;
-EGREATER:       'granda egala'                  ;
-ELESS:          'malgranda egala'               ;
-AND:            'kaj'                           ;
-OR:             'au'                            ;
-NOT:            'ne'                            ;
+TRUE            : 'vere' ;
+FALSE           : 'malvero' ;
+BREAK           : 'haltu' ;
+CONTINUE        : 'daurigi' ; 
 
-INT:            [0-9]+                          ;
-fragment ESC:   '\\' ["\\/bfnrt]                ;
-STRING:         '"' (ESC | ~["\\\r\n])* '"'     ;
-FLOAT:          [0-9]+ '.' [0-9]+               ;
+EQUAL           : 'egala' ;
+INEQUAL         : 'ne egala' ;
+GREATER         : 'granda' ;
+LESS            : 'malgranda' ;
+EGREATER        : 'granda egala' ;
+ELESS           : 'malgranda egala' ;
 
-NAME:           [a-zA-Z0-9]+                    ;
+AND             : 'kaj' ;
+OR              : 'au' ;
+NOT             : 'ne' ;
 
-COMMENT:        ':O' ~[\r\n]* -> skip           ;
-COMMENTBLOCK:   ':P' ~[P:]* 'P:' -> skip        ;
-WS:             [ \t\r\n]+ -> skip              ;
-NL:             '\r'? '\n'                      ;
+GLOBAL          : 'tutmonda' ;
+INTTYPE         : 'entjero' ;
+FLOATTYPE       : 'flosi' ;
+STRINGTYPE      : 'snuro' ;    
+
+INT             : [0-9]+ ;
+fragment ESC    : '\\' ["\\/bfnrt] ;
+STRING          : '"' (ESC | ~["\\\r\n])* '"' ;
+FLOAT           : [0-9]+ '.' [0-9]+ ;
+
+NAME            : [a-zA-Z] [a-zA-Z0-9]* ;
+
+COMMENT         : ':O' ~[\r\n]* -> skip ;
+COMMENTBLOCK    : ':P' ~[P:]* 'P:' -> skip ;
+WS              : [ \t\r\n]+ -> skip ;
+NL              : '\r'? '\n' ;

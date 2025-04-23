@@ -29,29 +29,29 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ---
 
-2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau". ✅ ( - ale można dodać że wszystko przed Saluto i po Adiau jest uznawane za komentarz)
+2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau".
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie). ✅ (- bez podziału na zmienne globalne i wewnątrz-funkcyjne, nie ma opcji wymuszenia typu zmiennej)
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie).
 
-4. Wypisywanie danych do konsoli. ✅
+4. Wypisywanie danych do konsoli.
 
-5. Instrukcje warunkowe – wsparcie dla if, else, elif. ✅
+5. Instrukcje warunkowe – wsparcie dla if, else, elif.
 
-6. Pętle – while, for.
+6. Pętle – while, for, for each.
 
 7. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
 
-8. Komentarze – możliwość dodawania komentarzy. ✅
+8. Komentarze – możliwość dodawania komentarzy.
 
-9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań. ✅
+9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań.
 
-10. Operacje na stringach - dodawanie stringów. ✅
+10. Operacje na stringach.
 
-11. Tworzenie tablic i map - definiowanie indexowanych tablic i map dla danych.
+11. Tworzenie tablic i map - definiowanie indexowanych tablic i map danych.
 
 12. Wczytywanie danych z konsoli do programu.
 
-13. [BUG] Obsługa polskich znaków w funkcji wypisywania tekstu do konsoli.
+13. Obsługa polskich znaków w konsoli i znaków białych w konsoli (np. '\n').
 
 ---
 
@@ -85,11 +85,13 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 ```esperando
 Saluton
 
-difini salutu(nomo: snuro):
-    skribi("Saluton, " + nomo)
+difini salutu(nomo: snuro){
+    skribi("Saluton, ", nomo)
+}
 
-por variablo en ["Mia", "Eta", "Amiko"]:
+por ciu (variablo en ["Mia", "Eta", "Amiko"]){
     salutu(variablo)
+}
 
 Adiau
 ```
@@ -109,3 +111,27 @@ Adiau
 
 > [!IMPORTANT]
 > Projekt jest na etapie developmentu
+
+## TO DO
+
+### Gramatyka:
+
+* Dodanie funkcji wczytywania danych z konsoli.
+* Dodanie możliwej wartości NULL(/NONE): 'nenio' zmiennych.
+* Dodanie definiowania list, map, tablic.
+* Dodanie boolExpr z wykorzystaniem operatora (IN: 'en') do sprawdzenia czy dana znajduje się w liście/mapie/tablicy.
+* Dodanie pętli for each.
+* Dodanie definicji funkcji, wywołania funkcji, klasy (?).
+---
+(Opcjonalnie)
+* Dodanie funkcji wymuszania typu zmiennej np. string(5), int("56").
+* Dodanie boolExpr z wykorzystaniem operatora (IS: 'estas') do sprawdzenia typu zmiennej.
+* Dodanie operacji na stringach - indexOf itp.?
+* Dodanie logiki, w której wszystko przed pierwszym Saluto i po Adiau jest uznawane za komentarz ( -> skip).
+
+### Visitor:
+* Dodanie podziału zmiennych globalne i wewnątrz-funkcyjne.
+* Dodanie opcji wymuszania typu zmiennej w trakcie definiowania i z wykorzystaniem funkcji.
+* Dodanie pętli for, for each, while, klas, definicji funkcji, lambdy.
+* Dodanie obsługi list, map, tablic dynamicznych.
+* Dodanie obsługi polskich znaków i znaków białych jak '\n'.
