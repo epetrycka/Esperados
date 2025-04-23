@@ -6,11 +6,15 @@ GREETING        : 'Saluton' ;
 GOODBYE         : 'Adiau' ;
 PRINT           : 'skribi' ;
 VARDEF          : 'variablo' ;
+FOREACH         : 'por ciu' ;
+IN              : 'en' ;
+ELIF            : 'alie se' ;
 IF              : 'se' ;
 ELSE            : 'alie' ;
-ELIF            : 'alie se' ;
 FOR             : 'por' ;
 WHILE           : 'gis' ;
+DEF             : 'difini' ;
+DEL             : 'forigi' ;
 
 ASG             : 'asigini' ;
 ADD             : 'aldoni' ;
@@ -32,6 +36,7 @@ TRUE            : 'vere' ;
 FALSE           : 'malvero' ;
 BREAK           : 'haltu' ;
 CONTINUE        : 'daurigi' ; 
+RETURN          : 'reveni' ;
 
 EQUAL           : 'egala' ;
 INEQUAL         : 'ne egala' ;
