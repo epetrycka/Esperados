@@ -15,7 +15,14 @@ action          : printExpr
                 | variableExpr
                 | condition 
                 | forLoop 
-                | whileLoop ;
+                | whileLoop
+                | forEachLoop
+                | functionDef
+                | functionCall
+                | returnStmt
+                | deleteStmt
+                | BREAK
+                | CONTINUE ;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
@@ -29,12 +36,18 @@ elifExpr        : ELIF LP expr RP LC instructions RC ;
 
 elseExpr        : ELSE LC instructions RC ;
 
-loopAction      : action
-                | BREAK
-                | CONTINUE ;
+//pętla do iterowania po liczbach całkowity z opcją zdefiniowania różnicy (default: 1)
+forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT (SEMICOLON INT)? RP LC instructions RC ; 
 
-loopInstructions: (comment | loopAction | NL)* ;
+whileLoop       : WHILE LP expr RP LC instructions RC ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ; 
+forEachLoop     : FOREACH NAME IN expr LC instructions RC ;
 
-whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
+functionDef     : DEF NAME LP parameters? RP LC instructions RC ;
+parameters      : type? NAME (COMMA type? NAME)* ;
+
+functionCall    : NAME LP (expr (COMMA expr)*)? RP ;
+
+returnStmt      : RETURN expr? ;
+
+deleteStmt      : DEL NAME ;
