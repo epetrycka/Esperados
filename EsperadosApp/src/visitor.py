@@ -15,6 +15,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def __init__(self):
         self.variables = {}
         self.functions = {}
+        self.lists = {}
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
         if ctx.GREETING():
@@ -48,6 +49,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.functionCall())
         elif ctx.deleteStmt():
             return self.visit(ctx.deleteStmt())
+        elif ctx.defList():
+            return self.visit(ctx.defList())
 
         return None
     
@@ -286,4 +289,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     
     def visitDeleteStmt(self, ctx: EsperadosParser.DeleteStmtContext):
         _ = self.variables.pop(ctx.NAME().getText())
+        return None
+    
+    def visitDefList(self, ctx: EsperadosParser.DefListContext):
+        list_name = ctx.NAME()
+        self.lists[list_name] = []
+        for i in range(0, len(ctx.expr())):
+            self.lists[list_name].append(ctx.expr(i))
+        print(self.lists[list_name])
         return None
