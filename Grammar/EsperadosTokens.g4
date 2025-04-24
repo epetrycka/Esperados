@@ -27,6 +27,8 @@ EXPON           : 'intensigi' ;
 
 LP              : '(' ;
 RP              : ')' ;
+LS              : '[' ;
+PS              : ']' ;
 LC              : '{' ;
 RC              : '}' ;
 COMMA           : ',' ;
