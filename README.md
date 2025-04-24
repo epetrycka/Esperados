@@ -85,12 +85,12 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 ```esperando
 Saluton
 
-difini salutu(nomo: snuro){
+difini salutu(snuro: nomo){
     skribi("Saluton, ", nomo)
 }
 
 por ciu (variablo en ["Mia", "Eta", "Amiko"]){
-    salutu(variablo)
+    salutu(nomo = variablo)
 }
 
 Adiau
@@ -121,9 +121,9 @@ Adiau
 - [ ] Definiowanie list, map, tablic.
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
 - [ ] Pętla `for each`.
-- [ ] Definicje funkcji, wywołania funkcji, klasy (do rozważenia).
 
 <sub><i>Opcjonalnie:</i></sub>  
+- [ ] Definicje klas (do rozważenia).
 - [ ] Wymuszanie typu zmiennej (np. `string(5)`, `int("56")`).
 - [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
 - [ ] Operacje na stringach (`indexOf` itp.).
@@ -132,9 +132,9 @@ Adiau
 ---
 
 ### Visitor (interpretacja):
-- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
+- [ ] Dodanie zmiennych globalnych.
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja pętli `for`, `for each`, `while`, klas, funkcji i lambd.
+- [ ] Implementacja pętli `for each`, klas, lambd, wczytywania z konsoli.
 - [ ] Obsługa list, map, dynamicznych tablic.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 

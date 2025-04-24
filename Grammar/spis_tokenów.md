@@ -16,8 +16,8 @@
 | `au`         | or                 | Logical operator       | ✅     |
 | `haltu`      | break              | Loop control           | ✅     |
 | `daurigi`    | continue           | Loop control           | ✅     |
-| `difini`     | def                | Function definition    |        |
-| `forigi`     | delete             | Deletion               |        |
+| `difini`     | def                | Function definition    | ✅     |
+| `forigi`     | delete             | Deletion               | ✅     |
 | `provu`      | try                | Exception handling     |        |
 | `krom`       | except             | Exception handling     |        |
 | `malvero`    | false              | Boolean literal        | ✅     |
@@ -29,7 +29,7 @@
 | `funkcio`    | lambda             | Anonymous function     |        |
 | `nenio`      | none               | Null literal           |        |
 | `ne`         | not                | Logical negation       | ✅     |
-| `reveni`     | return             | Return statement       |        |
+| `reveni`     | return             | Return statement       | ✅     |
 | `Saluton`    | (start of program) | Program entry point    | ✅     |
 | `Adiau`      | (end of program)   | Program termination    | ✅     |
 
@@ -73,7 +73,7 @@
 | `[`      | left_bracket         | Indexing/list start    |        |
 | `]`      | right_bracket        | Indexing/list end      |        |
 | `,`      | comma                | Separator              | ✅     |
-| `:`      | colon                | ForEach condition sep  |        |
+| `:`      | colon                | ForEach condition sep  | ✅     |
 | `;`      | semicolon            | ForLoop condition sep  | ✅     |
 | `:O...`  | comment_symbol       | Comment                | ✅     |
 | `:P...P:`| commentblock_symbols | Comment Block          | ✅     |

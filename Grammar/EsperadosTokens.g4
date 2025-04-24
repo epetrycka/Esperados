@@ -6,11 +6,16 @@ GREETING        : 'Saluton' ;
 GOODBYE         : 'Adiau' ;
 PRINT           : 'skribi' ;
 VARDEF          : 'variablo' ;
+FOREACH         : 'por ciu' ;
+IN              : 'en' ;
+ELIF            : 'alie se' ;
 IF              : 'se' ;
 ELSE            : 'alie' ;
-ELIF            : 'alie se' ;
 FOR             : 'por' ;
 WHILE           : 'gis' ;
+DEF             : 'difini' ;
+DEL             : 'forigi' ;
+FUN             : 'funcio' ;
 
 ASG             : 'asigini' ;
 ADD             : 'aldoni' ;
@@ -27,11 +32,14 @@ RC              : '}' ;
 COMMA           : ',' ;
 DOT             : '.' ;
 SEMICOLON       : ';' ;
+COLON           : ':' ;
+EQUALSIGN       : '=' ;
 
 TRUE            : 'vere' ;
 FALSE           : 'malvero' ;
 BREAK           : 'haltu' ;
 CONTINUE        : 'daurigi' ; 
+RETURN          : 'reveni' ;
 
 EQUAL           : 'egala' ;
 INEQUAL         : 'ne egala' ;
