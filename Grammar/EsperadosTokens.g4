@@ -5,6 +5,10 @@ lexer grammar Esperados;
 GREETING        : 'Saluton' ;
 GOODBYE         : 'Adiau' ;
 PRINT           : 'skribi' ;
+<<<<<<< HEAD
+INPUT           : 'inputo' ;
+=======
+>>>>>>> main
 VARDEF          : 'variablo' ;
 FOREACH         : 'por ciu' ;
 IN              : 'en' ;
@@ -27,6 +31,9 @@ EXPON           : 'intensigi' ;
 
 LP              : '(' ;
 RP              : ')' ;
+
+LS              : '[' ;
+PS              : ']' ;
 LC              : '{' ;
 RC              : '}' ;
 COMMA           : ',' ;

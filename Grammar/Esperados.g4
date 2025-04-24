@@ -12,7 +12,9 @@ goodbye         : GOODBYE (comment | NL)* EOF ;
 instructions    : (comment | action | NL)* goodbye? ;
 
 action          : printExpr
+                | inputExpr
                 | variableExpr
+                | defList
                 | condition 
                 | forLoop 
                 | whileLoop
@@ -21,6 +23,8 @@ action          : printExpr
                 | deleteStmt;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
+
+inputExpr       : VARDEF type? NAME ASG INPUT LP RP;
 
 variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
 
@@ -56,3 +60,5 @@ functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)
 returnStmt      : RETURN expr? ;
 
 deleteStmt      : DEL NAME ;
+
+defList     : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;

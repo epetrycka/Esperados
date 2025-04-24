@@ -116,26 +116,27 @@ Adiau
   <summary><strong>TO DO</strong></summary>
 
 ### Gramatyka:
-- [ ] Dodanie funkcji wczytywania danych z konsoli.
 - [ ] Obsługa wartości `NULL` (`nenio`) dla zmiennych.
-- [ ] Definiowanie list, map, tablic.
+- [ ] Definiowanie map.
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
 - [ ] Pętla `for each`.
+- [ ] Każda instrukcja musi kończyć się znakiem następnej lini.
 
 <sub><i>Opcjonalnie:</i></sub>  
-- [ ] Definicje klas (do rozważenia).
+- [ ] Definicje klasy (do rozważenia).
 - [ ] Wymuszanie typu zmiennej (np. `string(5)`, `int("56")`).
 - [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
 - [ ] Operacje na stringach (`indexOf` itp.).
+- [ ] Dodanie niemutowalnych list.
 - [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz ( -> skip).
 
 ---
 
 ### Visitor (interpretacja):
-- [ ] Dodanie zmiennych globalnych.
+- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja pętli `for each`, klas, lambd, wczytywania z konsoli.
-- [ ] Obsługa list, map, dynamicznych tablic.
+- [ ] Implementacja pętli `for each`, klas i lambd.
+- [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 
 </details>
