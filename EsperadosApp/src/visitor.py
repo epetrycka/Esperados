@@ -51,8 +51,16 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.deleteStmt())
         elif ctx.defList():
             return self.visit(ctx.defList())
+        elif ctx.inputExpr():
+            return self.visit(ctx.inputExpr())
 
         return None
+    
+    def visitInputExpr(self, ctx: EsperadosParser.InputExprContext):
+        var_Name = ctx.NAME().getText()
+        self.variables[var_Name] = input()
+        return None
+
     
     def visitPrintExpr(self, ctx: EsperadosParser.PrintExprContext):
         printValue = ""
@@ -295,6 +303,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         list_name = ctx.NAME()
         self.lists[list_name] = []
         for i in range(0, len(ctx.expr())):
+            print(ctx.expr(i))
             self.lists[list_name].append(ctx.expr(i))
-        print(self.lists[list_name])
+        for el in self.lists[list_name]:
+            print(el)
         return None
