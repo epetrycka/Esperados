@@ -90,7 +90,7 @@ difini salutu(snuro: nomo){
 }
 
 por ciu (variablo en ["Mia", "Eta", "Amiko"]){
-    salutu(variablo)
+    salutu(nomo = variablo)
 }
 
 Adiau
@@ -133,10 +133,10 @@ Adiau
 ---
 
 ### Visitor (interpretacja):
-- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
+- [ ] Dodanie zmiennych globalnych.
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja pętli `for each`, klas i lambd.
-- [ ] Obsługa list, map.
+- [ ] Implementacja pętli `for each`, klas, lambd, wczytywania z konsoli.
+- [ ] Obsługa list, map, dynamicznych tablic.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 
 </details>

@@ -1,9 +1,9 @@
 import sys
+import os
 from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
 from generated.EsperadosParser import EsperadosParser
 from visitor import EsperadosVisitorImpl
-import os
 from visualizeTree import visualize_tree
 
 def main(argv):
@@ -17,15 +17,16 @@ def main(argv):
         tree = parser.program()
         visitor = EsperadosVisitorImpl()
         visitor.visit(tree)
-        
-        # base_name = os.path.splitext(os.path.basename(argv[1]))[0]
-        # output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")
-        # output_file = os.path.join(output_dir, base_name + '_tree')
 
-        # with open(f"{output_file}.txt", "w") as file:
-        #     file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
+        base_name = os.path.splitext(os.path.basename(argv[1]))[0]
+        output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")
+        output_file = os.path.join(output_dir, base_name + '_tree')
 
-        # visualize_tree(tree, parser, base_name)
+        with open(f"{output_file}.txt", "w") as file:
+            file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
+
+        visualize_tree(tree, parser, base_name)
+
     except Exception as ex:
         print(ex)
 
