@@ -197,7 +197,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
         elif ctx.NAME():
-            return self.variables[ctx.NAME().getText()]
+            if ctx.NAME().getText() in self.variables.keys():
+                return self.variables[ctx.NAME().getText()]
+            elif ctx.NAME().getText() in self.lists.keys():
+                return self.lists[ctx.NAME().getText()]
         elif ctx.expr():
             return self.visitExpr(ctx.expr())
         elif ctx.TRUE():
@@ -300,11 +303,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         return None
     
     def visitDefList(self, ctx: EsperadosParser.DefListContext):
-        list_name = ctx.NAME()
+        list_name = ctx.NAME().getText()
         self.lists[list_name] = []
         for i in range(0, len(ctx.expr())):
-            print(ctx.expr(i))
-            self.lists[list_name].append(ctx.expr(i))
-        for el in self.lists[list_name]:
-            print(el)
+            self.lists[list_name].append(self.visitExpr(ctx.expr(i)))
         return None
