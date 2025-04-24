@@ -133,10 +133,10 @@ Adiau
 ---
 
 ### Visitor (interpretacja):
-- [ ] Dodanie zmiennych globalnych.
+- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja pętli `for each`, klas, lambd, wczytywania z konsoli.
-- [ ] Obsługa list, map, dynamicznych tablic.
+- [ ] Implementacja pętli `for each`, klas i lambd.
+- [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 
 </details>
