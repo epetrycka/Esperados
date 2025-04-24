@@ -7,6 +7,7 @@ To jest komentarz blokowy
 Składa się z wielu linii
 P:
 
+skribi("wpisz cos: ")
 variablo k asigini inputo()
 skribi(k)
 
@@ -49,6 +50,7 @@ funcio salutu (nomo = "Jol")
 
 forigi x
 
-variablo LISTA asigini [1]
+variablo LISTA asigini [1, 2, vere, "lol"]
+skribi(LISTA)
 
 Adiau

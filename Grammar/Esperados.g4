@@ -1,5 +1,5 @@
 grammar Esperados;
-import EsperadosTokens, EsperadosExpr, EsperadosTab;
+import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
@@ -60,3 +60,5 @@ functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)
 returnStmt      : RETURN expr? ;
 
 deleteStmt      : DEL NAME ;
+
+defList     : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;
