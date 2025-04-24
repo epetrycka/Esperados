@@ -42,8 +42,6 @@ forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC l
 
 whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
 
-//forEachLoop     : FOREACH NAME IN expr LC instructions RC ;
-
 funDefAction    : action
                 | returnStmt ;
 

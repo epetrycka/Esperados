@@ -7,6 +7,10 @@ class BreakException(Exception):
 class ContinueException(Exception):
     pass
 
+class ReturnException(Exception):
+    def __init__(self, value):
+        self.value = value
+
 class EsperadosVisitorImpl(EsperadosVisitor):
     def __init__(self):
         self.variables = {}
@@ -43,7 +47,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif ctx.functionCall():
             return self.visit(ctx.functionCall())
         elif ctx.deleteStmt():
-            return self.deleteStmt()
+            return self.visit(ctx.deleteStmt())
 
         return None
     
@@ -254,13 +258,17 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     
     def visitFunDefInstructions(self, ctx: EsperadosParser.FunDefInstructionsContext):
         for child in ctx.children:
-            self.visit(child)
+            try:
+                self.visit(child)
+            except ReturnException as e:
+                return e.value
+        return None
 
     def visitFunDefAction(self, ctx: EsperadosParser.FunDefActionContext):
         if ctx.action():
-            self.visitAction(ctx.action())
+            return self.visitAction(ctx.action())
         if ctx.returnStmt():
-            self.visitReturnStmt(ctx.returnStmt())
+            return self.visitReturnStmt(ctx.returnStmt())
 
     def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
         fun_name = ctx.NAME(0).getText()
@@ -268,8 +276,14 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visitExpr(ctx.expr(i))
         temp_variables = self.variables
         self.variables = self.functions[fun_name]["params"]
-        self.visitFunDefInstructions(self.functions[fun_name]["instructions"])
+        value = self.visitFunDefInstructions(self.functions[fun_name]["instructions"])
         self.variables = temp_variables
+        return value
     
     def visitReturnStmt(self, ctx: EsperadosParser.ReturnStmtContext):
-        print("return")
+        value = self.visitExpr(ctx.expr()) if ctx.expr() else None
+        raise ReturnException(value)
+    
+    def visitDeleteStmt(self, ctx: EsperadosParser.DeleteStmtContext):
+        _ = self.variables.pop(ctx.NAME().getText())
+        return None

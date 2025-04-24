@@ -7,7 +7,7 @@ To jest komentarz blokowy
 Składa się z wielu linii
 P:
 
-variablo x entjero asigini 0
+variablo x entjero asigini 2
 variablo y flosi asigini 1.5
 variablo tekst snuro asigini "Czesc"
 
@@ -38,8 +38,12 @@ skribi("Koniec petli")
 
 difini salutu(snuro: nomo){
     skribi("Saluton: ", nomo)
+    reveni
+    skribi("Lol")
 }
 
 funcio salutu (nomo = "Jol")
+
+forigi x
 
 Adiau
