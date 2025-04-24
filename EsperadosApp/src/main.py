@@ -3,6 +3,7 @@ import os
 from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
 from generated.EsperadosParser import EsperadosParser
+from visitor import EsperadosVisitorImpl
 from visualizeTree import visualize_tree
 
 def main(argv):
@@ -14,6 +15,9 @@ def main(argv):
         stream = CommonTokenStream(lexer)
         parser = EsperadosParser(stream)
         tree = parser.program()
+        visitor = EsperadosVisitorImpl()
+        visitor.visit(tree)
+
         base_name = os.path.splitext(os.path.basename(argv[1]))[0]
         output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")
         output_file = os.path.join(output_dir, base_name + '_tree')
