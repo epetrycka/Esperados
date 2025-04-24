@@ -116,7 +116,6 @@ Adiau
   <summary><strong>TO DO</strong></summary>
 
 ### Gramatyka:
-- [ ] Dodanie funkcji wczytywania danych z konsoli.
 - [ ] Obsługa wartości `NULL` (`nenio`) dla zmiennych.
 - [ ] Definiowanie list, map, tablic.
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.

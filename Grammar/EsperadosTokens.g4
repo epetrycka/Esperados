@@ -5,6 +5,7 @@ lexer grammar Esperados;
 GREETING        : 'Saluton' ;
 GOODBYE         : 'Adiau' ;
 PRINT           : 'skribi' ;
+INPUT           : 'inputo' ;
 VARDEF          : 'variablo' ;
 FOREACH         : 'por ciu' ;
 IN              : 'en' ;

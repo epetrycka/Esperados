@@ -1,5 +1,5 @@
 grammar Esperados;
-import EsperadosTokens, EsperadosExpr;
+import EsperadosTokens, EsperadosExpr, EsperadosTab;
 
 // PARSER
 
@@ -12,7 +12,9 @@ goodbye         : GOODBYE (comment | NL)* EOF ;
 instructions    : (comment | action | NL)* goodbye? ;
 
 action          : printExpr
+                | inputExpr
                 | variableExpr
+                | defList
                 | condition 
                 | forLoop 
                 | whileLoop
@@ -21,6 +23,8 @@ action          : printExpr
                 | deleteStmt;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
+
+inputExpr       : VARDEF type? NAME ASG INPUT LP RP;
 
 variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
 
