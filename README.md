@@ -90,7 +90,7 @@ difini salutu(snuro: nomo){
 }
 
 por ciu (variablo en ["Mia", "Eta", "Amiko"]){
-    salutu(variablo)
+    salutu(nomo = variablo)
 }
 
 Adiau
