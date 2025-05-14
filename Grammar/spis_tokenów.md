@@ -87,6 +87,7 @@
 | `entjero` | int               | Integer     | ✅     |
 | `flosi`   | float             | Float       | ✅     |
 | `snuro`   | str               | String      | ✅     |
+| `listo`   | list              | Lista       | ✅     |
 
 ### Lexer Tokens – Literals & Structure
 

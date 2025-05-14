@@ -16,6 +16,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.variables = {}
         self.functions = {}
         self.lists = {}
+        self.fun_name = ""
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
         if ctx.GREETING():
@@ -41,6 +42,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.condition())
         elif ctx.forLoop():
             return self.visit(ctx.forLoop())
+        elif ctx.forEachLoop():
+            return self.visit(ctx.forEachLoop())
         elif ctx.whileLoop():
             return self.visit(ctx.whileLoop())
         elif ctx.functionDef():
@@ -51,6 +54,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.deleteStmt())
         elif ctx.defList():
             return self.visit(ctx.defList())
+        elif ctx.addToList():
+            return self.visit(ctx.addToList())
         elif ctx.inputExpr():
             return self.visit(ctx.inputExpr())
 
@@ -97,17 +102,17 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def visitIfExpr(self, ctx: EsperadosParser.IfExprContext):
         condition = self.visitExpr(ctx.expr())
         if condition:
-            self.visitInstructions(ctx.instructions())
+            self.visitLoopInstructions(ctx.loopInstructions())
         return condition
     
     def visitElifExpr(self, ctx: EsperadosParser.ElifExprContext):
         condition = self.visitExpr(ctx.expr())
         if condition:
-            self.visitInstructions(ctx.instructions())
+            self.visitLoopInstructions(ctx.loopInstructions())
         return condition
     
     def visitElseExpr(self, ctx: EsperadosParser.ElseExprContext):
-        self.visitInstructions(ctx.instructions())
+        self.visitLoopInstructions(ctx.loopInstructions())
         return None
 
     def visitExpr(self, ctx: EsperadosParser.ExprContext):
@@ -232,6 +237,22 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             except BreakException:
                 break
             i += step
+
+    def visitForEachLoop(self, ctx: EsperadosParser.ForEachLoopContext):
+        var_name = ctx.NAME(0).getText()
+        if self.fun_name:
+            list = self.functions[self.fun_name]["params"][ctx.NAME(1).getText()]
+        else:
+            list = self.lists[ctx.NAME(1).getText()]
+        for var in list:
+            self.variables[var_name] = var
+            try:
+                self.visitLoopInstructions(ctx.loopInstructions())
+            except ContinueException:
+                continue
+            except BreakException:
+                break
+        return None
     
     def visitLoopInstructions(self, ctx: EsperadosParser.LoopInstructionsContext):
         for child in ctx.children:
@@ -286,6 +307,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
 
     def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
         fun_name = ctx.NAME(0).getText()
+        self.fun_name = fun_name
         for i in range(0, len(ctx.expr())):
             self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visitExpr(ctx.expr(i))
         temp_variables = self.variables
@@ -307,4 +329,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.lists[list_name] = []
         for i in range(0, len(ctx.expr())):
             self.lists[list_name].append(self.visitExpr(ctx.expr(i)))
+        return None
+    
+    def visitAddToList(self, ctx: EsperadosParser.AddToListContext):
+        list_name = ctx.NAME().getText()
+        value = self.visitExpr(ctx.expr())
+        self.lists[list_name].append(value)
         return None

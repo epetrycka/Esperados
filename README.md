@@ -138,5 +138,10 @@ Adiau
 - [ ] Implementacja pętli `for each`, klas i lambd.
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
+- [ ] Wynalezienie sposobu na zmienne wewnątrz funkcyjne, do których będą miały dostęp ify, pętle itp
+- [ ] Przemyślenie działania w razie iteracji pętli i funkcji
+- [ ] Usuwanie nazw zmiennych po wyjściu z pętli, ifów, funkcji
+- [ ] Gdzie zapisywać listy?
+- [ ] Funkcja w funkcji w pętli iteracja??
 
 </details>

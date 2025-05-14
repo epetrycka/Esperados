@@ -50,7 +50,7 @@ funcio salutu (nomo = "Jol")
 
 forigi x
 
-variablo LISTA asigini [1, 2, vere, "lol"]
-skribi(LISTA)
+variablo lista asigini [1, 2, vere, "lol"]
+skribi(lista)
 
 Adiau

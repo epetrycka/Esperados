@@ -15,8 +15,10 @@ action          : printExpr
                 | inputExpr
                 | variableExpr
                 | defList
+                | addToList
                 | condition 
                 | forLoop 
+                | forEachLoop
                 | whileLoop
                 | functionDef
                 | functionCall
@@ -30,19 +32,22 @@ variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
 
 condition       : ifExpr elifExpr* elseExpr? ;
 
-ifExpr          : IF LP expr RP LC instructions RC ;
+ifExpr          : IF LP expr RP LC loopInstructions RC ;
 
-elifExpr        : ELIF LP expr RP LC instructions RC ;
+elifExpr        : ELIF LP expr RP LC loopInstructions RC ;
 
-elseExpr        : ELSE LC instructions RC ;
+elseExpr        : ELSE LC loopInstructions RC ;
 
 loopAction      : action
                 | BREAK
-                | CONTINUE ;
+                | CONTINUE 
+                | returnStmt;
 
 loopInstructions: (comment | loopAction | NL)* ;
 
 forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ;
+
+forEachLoop     : FOREACH NAME IN NAME LC loopInstructions RC ;
 
 whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
 
@@ -61,4 +66,6 @@ returnStmt      : RETURN expr? ;
 
 deleteStmt      : DEL NAME ;
 
-defList     : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;
+defList     : VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
+
+addToList   : NAME ADD expr ;

@@ -60,6 +60,7 @@ GLOBAL          : 'tutmonda' ;
 INTTYPE         : 'entjero' ;
 FLOATTYPE       : 'flosi' ;
 STRINGTYPE      : 'snuro' ;    
+LIST            : 'listo' ;
 
 INT             : [0-9]+ ;
 fragment ESC    : '\\' ["\\/bfnrt] ;
