@@ -21,6 +21,7 @@ multiExpr       : exponExpr ((MULT | DIV | MOD) exponExpr)* ;
 exponExpr       : atom (EXPON atom)* ;
 
 atom            : LP expr RP
+                | NAME LS expr PS
                 | INT
                 | FLOAT
                 | STRING

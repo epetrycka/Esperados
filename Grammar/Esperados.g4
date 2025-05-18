@@ -16,6 +16,8 @@ action          : printExpr
                 | variableExpr
                 | defList
                 | addToList
+                | removeFromList
+                | insertToList
                 | condition 
                 | forLoop 
                 | forEachLoop
@@ -66,6 +68,10 @@ returnStmt      : RETURN expr? ;
 
 deleteStmt      : DEL NAME ;
 
-defList     : VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
+defList         : VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
-addToList   : NAME ADD expr ;
+addToList       : NAME ADD expr ;
+
+removeFromList  : NAME SUB expr ;
+
+insertToList    : NAME ADD LP expr COMMA expr RP ;

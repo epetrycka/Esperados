@@ -1,6 +1,23 @@
 Saluton
 
-variablo x asigini [1, 2]
-skribi(x)
+skribi("listy test")
+
+variablo listo lista1 asigini [1, 2, 3]
+skribi(lista1) 
+
+lista1 aldoni 3
+skribi(lista1)
+
+lista1 subtrahi 3
+skribi(lista1)
+
+variablo x asigini lista1[1]
+skribi("Drugi element listy: ", x, " " ,lista1[1])
+
+lista1 aldoni (0, 0)
+skribi(lista1)
+
+variablo test_nazwy asigini 1
+skribi(test_nazwy)
 
 Adiau

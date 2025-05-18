@@ -56,6 +56,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.defList())
         elif ctx.addToList():
             return self.visit(ctx.addToList())
+        elif ctx.removeFromList():
+            return self.visit(ctx.removeFromList())
+        elif ctx.insertToList():
+            return self.visit(ctx.insertToList())
         elif ctx.inputExpr():
             return self.visit(ctx.inputExpr())
 
@@ -201,6 +205,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return int(ctx.INT().getText())
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
+        elif ctx.NAME() and ctx.expr():
+            list_name = ctx.NAME().getText()
+            if list_name not in self.lists:
+                raise NameError(f"List '{list_name}' is not defined")
+            index = self.visitExpr(ctx.expr())
+            return self.lists[list_name][index]
         elif ctx.NAME():
             if ctx.NAME().getText() in self.variables.keys():
                 return self.variables[ctx.NAME().getText()]
@@ -334,5 +344,28 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def visitAddToList(self, ctx: EsperadosParser.AddToListContext):
         list_name = ctx.NAME().getText()
         value = self.visitExpr(ctx.expr())
+        if list_name not in self.lists:
+            raise NameError(f"List '{list_name}' is not defined")
         self.lists[list_name].append(value)
+        return None
+    
+    def visitRemoveFromList(self, ctx: EsperadosParser.RemoveFromListContext):
+        list_name = ctx.NAME().getText()
+        element = self.visitExpr(ctx.expr())
+        if list_name not in self.lists:
+            raise NameError(f"List '{list_name}' is not defined")
+        if element not in self.lists[list_name]:
+            raise ValueError(f"Element '{element}' not found in list '{list_name}'")
+        self.lists[list_name].remove(element)
+        return None
+    
+    def visitInsertToList(self, ctx: EsperadosParser.InsertToListContext):
+        list_name = ctx.NAME().getText()
+        index = self.visitExpr(ctx.expr(0))
+        element = self.visitExpr(ctx.expr(1))
+        if list_name not in self.lists:
+            raise NameError(f"List '{list_name}' is not defined")
+        if index < 0 or index > len(self.lists[list_name]):
+            raise IndexError(f"List index out of range: {index}")
+        self.lists[list_name].insert(index, element)
         return None
