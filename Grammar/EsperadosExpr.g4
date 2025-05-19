@@ -20,15 +20,22 @@ multiExpr       : exponExpr ((MULT | DIV | MOD) exponExpr)* ;
 
 exponExpr       : atom (EXPON atom)* ;
 
+getFromList     : NAME LS expr PS;
+
 atom            : LP expr RP
                 | INT
                 | FLOAT
                 | STRING
                 | TRUE
                 | FALSE
-                | NAME ;
+                | NAME 
+                | getFromList
+                | functionCall;
 
 type            : INTTYPE
                 | FLOATTYPE
                 | STRINGTYPE 
                 | LIST ;
+
+comment         : COMMENTBLOCK 
+                | COMMENT ;
