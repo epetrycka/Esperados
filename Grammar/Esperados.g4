@@ -3,62 +3,49 @@ import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
-program         : (comment | NL)* GREETING instructions EOF ;
+program         : comment* GREETING (comment | instructions)* GOODBYE comment* EOF ;
 
-comment         : COMMENTBLOCK | COMMENT ;
-
-goodbye         : GOODBYE (comment | NL)* EOF ;
-
-instructions    : (comment | action | NL)* goodbye? ;
-
-action          : printExpr
-                | inputExpr
+instructions    : printExpr
                 | variableExpr
-                | defList
-                | addToList
-                | removeFromList
-                | insertToList
+                | deleteStmt
                 | condition 
                 | forLoop 
                 | forEachLoop
                 | whileLoop
                 | functionDef
                 | functionCall
-                | deleteStmt;
+                | defList
+                | addToList
+                | removeFromList
+                | insertToList
+                | returnStmt
+                ;
+
+actions         : instructions
+                | BREAK
+                | CONTINUE ;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
-inputExpr       : VARDEF type? NAME ASG INPUT LP RP;
-
-variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
+variableExpr    : GLOBAL? VARDEF type? NAME ASG (expr | INPUT LP RP);
 
 condition       : ifExpr elifExpr* elseExpr? ;
 
-ifExpr          : IF LP expr RP LC loopInstructions RC ;
+ifExpr          : IF LP expr RP LC actions* RC ;
 
-elifExpr        : ELIF LP expr RP LC loopInstructions RC ;
+elifExpr        : ELIF LP expr RP LC actions* RC ;
 
-elseExpr        : ELSE LC loopInstructions RC ;
+elseExpr        : ELSE LC actions* RC ;
 
-loopAction      : action
-                | BREAK
-                | CONTINUE 
-                | returnStmt;
+forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC actions* RC ;
 
-loopInstructions: (comment | loopAction | NL)* ;
+whileLoop       : WHILE LP expr RP LC actions* RC ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ;
+forEachLoop     : FOREACH NAME IN NAME LC actions* RC ;
 
-forEachLoop     : FOREACH NAME IN NAME LC loopInstructions RC ;
+deleteStmt      : DEL NAME ;
 
-whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
-
-funDefAction    : action
-                | returnStmt ;
-
-funDefInstructions: (comment | funDefAction | NL)* ;
-
-functionDef     : DEF NAME LP parameters? RP LC funDefInstructions RC ;
+functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 
 parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
 
@@ -66,9 +53,7 @@ functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)
 
 returnStmt      : RETURN expr? ;
 
-deleteStmt      : DEL NAME ;
-
-defList         : VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
+defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
 addToList       : NAME ADD expr ;
 

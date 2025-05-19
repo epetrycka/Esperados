@@ -1,6 +1,6 @@
 Saluton
 
-skribi("listy test")
+skribi("listy test, cześć")
 
 variablo listo lista1 asigini [1, 2, 3]
 skribi(lista1) 
