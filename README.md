@@ -144,4 +144,5 @@ Adiau
 - [ ] Gdzie zapisywać listy i słowniki temp?
 - [x] Funkcja w funkcji w pętli iteracja??
 
+
 </details>
