@@ -60,13 +60,14 @@ GLOBAL          : 'tutmonda' ;
 INTTYPE         : 'entjero' ;
 FLOATTYPE       : 'flosi' ;
 STRINGTYPE      : 'snuro' ;    
+LIST            : 'listo' ;
 
 INT             : [0-9]+ ;
 fragment ESC    : '\\' ["\\/bfnrt] ;
 STRING          : '"' (ESC | ~["\\\r\n])* '"' ;
 FLOAT           : [0-9]+ '.' [0-9]+ ;
 
-NAME            : [a-zA-Z] [a-zA-Z0-9]* ;
+NAME            : [a-zA-Z] [a-zA-Z0-9_]* ;
 
 COMMENT         : ':O' ~[\r\n]* -> skip ;
 COMMENTBLOCK    : ':P' ~[P:]* 'P:' -> skip ;

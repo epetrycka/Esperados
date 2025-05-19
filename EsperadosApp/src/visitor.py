@@ -13,54 +13,34 @@ class ReturnException(Exception):
 
 class EsperadosVisitorImpl(EsperadosVisitor):
     def __init__(self):
-        self.variables = {}
+        self.global_vars = {}
+        self.global_lists = {}
+        self.global_dicts = {}
         self.functions = {}
-        self.lists = {}
+        self.temp_vars = []
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
         if ctx.GREETING():
             print("👋 Saluton!")
-        return self.visit(ctx.instructions())
-
-    def visitInstructions(self, ctx: EsperadosParser.InstructionsContext):
-        for child in ctx.children:
-            if isinstance(child, EsperadosParser.ActionContext):
+        self.temp_vars.append({})
+        for i in range(0, len(ctx.instructions())):
+            for child in ctx.instructions(i).children:
                 self.visit(child)
-        if ctx.goodbye():
-            self.visit(ctx.goodbye())
-
-    def visitGoodbye(self, ctx: EsperadosParser.GoodbyeContext):
-        print("👋 Adiau!")
-
-    def visitAction(self, ctx: EsperadosParser.ActionContext):
-        if ctx.printExpr():
-            return self.visit(ctx.printExpr())
-        elif ctx.variableExpr():
-            return self.visit(ctx.variableExpr())
-        elif ctx.condition():
-            return self.visit(ctx.condition())
-        elif ctx.forLoop():
-            return self.visit(ctx.forLoop())
-        elif ctx.whileLoop():
-            return self.visit(ctx.whileLoop())
-        elif ctx.functionDef():
-            return self.visit(ctx.functionDef())
-        elif ctx.functionCall():
-            return self.visit(ctx.functionCall())
-        elif ctx.deleteStmt():
-            return self.visit(ctx.deleteStmt())
-        elif ctx.defList():
-            return self.visit(ctx.defList())
-        elif ctx.inputExpr():
-            return self.visit(ctx.inputExpr())
-
-        return None
-    
-    def visitInputExpr(self, ctx: EsperadosParser.InputExprContext):
-        var_Name = ctx.NAME().getText()
-        self.variables[var_Name] = input()
+        if ctx.GOODBYE():
+            print("👋 Adiau!")
         return None
 
+    def visitActions(self, ctx: EsperadosParser.ActionsContext):
+        if ctx.BREAK():
+            raise BreakException()
+        elif ctx.CONTINUE():
+            raise ContinueException()
+        else:
+            for child in ctx.instructions().children:
+                self.visit(child)
+            return None
+
+    #Functions
     
     def visitPrintExpr(self, ctx: EsperadosParser.PrintExprContext):
         printValue = ""
@@ -68,75 +48,223 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             for i in range(0, len(ctx.expr())):
                 value = self.visit(ctx.expr(i))
                 printValue += str(value)
-        
         print(printValue)
         return None
-
+    
     def visitVariableExpr(self, ctx: EsperadosParser.VariableExprContext):
         if ctx.NAME() is not None:
             varName = ctx.NAME().getText()
             if ctx.expr():
                 value = self.visitExpr(ctx.expr())
-
-            self.variables[varName] = value
+            elif ctx.INPUT():
+                value = input()
+            if ctx.GLOBAL():
+                self.global_vars[varName] = value
+            else:
+                self.temp_vars[-1][varName] = value
             return None
         return None
     
+    def visitDeleteStmt(self, ctx: EsperadosParser.DeleteStmtContext):
+        _, where = self.findVariable(ctx.NAME())
+        if where is not None:
+            _ = where.pop(ctx.NAME().getText())
+        return None
+    
     def visitCondition(self, ctx: EsperadosParser.ConditionContext):
+        self.temp_vars.append(self.temp_vars[-1].copy())
         if ctx.ifExpr():
-            conditionPassed = self.visitIfExpr(ctx.ifExpr())
+            conditionPassed = self.visit(ctx.ifExpr())
         if not conditionPassed:
             for i in range (0, len(ctx.elifExpr())):
-                conditionElsePassed = self.visitElifExpr(ctx.elifExpr(i))
+                conditionElsePassed = self.visit(ctx.elifExpr(i))
                 if conditionElsePassed:
                     return None
             if ctx.elseExpr():
-                return self.visit(ctx.elseExpr())
+                    self.visit(ctx.elseExpr())
+        _ = self.temp_vars.pop()
         return None
     
     def visitIfExpr(self, ctx: EsperadosParser.IfExprContext):
-        condition = self.visitExpr(ctx.expr())
+        condition = self.visit(ctx.expr())
         if condition:
-            self.visitInstructions(ctx.instructions())
-        return condition
+            for i in range(0, len(ctx.actions())):
+                self.visit(ctx.actions(i))
+        return None
     
     def visitElifExpr(self, ctx: EsperadosParser.ElifExprContext):
-        condition = self.visitExpr(ctx.expr())
+        condition = self.visit(ctx.expr())
         if condition:
-            self.visitInstructions(ctx.instructions())
-        return condition
+            for i in range(0, len(ctx.actions())):
+                self.visit(ctx.actions(i))
+        return None
     
     def visitElseExpr(self, ctx: EsperadosParser.ElseExprContext):
-        self.visitInstructions(ctx.instructions())
+        for i in range(0, len(ctx.actions())):
+                self.visit(ctx.actions(i))
+        return None
+    
+    def visitForLoop(self, ctx: EsperadosParser.ForLoopContext):
+        self.temp_vars.append(self.temp_vars[-1].copy())
+        var_name = ctx.NAME().getText()
+        start = int(ctx.INT(0).getText())
+        end = int(ctx.INT(1).getText())
+        step = int(ctx.INT(2).getText()) if ctx.INT(2) else 1
+        i = start
+        while (step > 0 and i < end) or (step < 0 and i > end):
+            self.temp_vars[-1][var_name] = i
+            try:
+                for k in range(0, len(ctx.actions())):
+                    self.visit(ctx.actions(k))
+            except ContinueException:
+                i += step
+                continue
+            except BreakException:
+                break
+            i += step
+        _ = self.temp_vars.pop()
+        return None
+    
+    def visitWhileLoop(self, ctx: EsperadosParser.WhileLoopContext):
+        self.temp_vars.append(self.temp_vars[-1].copy())
+        while self.visitExpr(ctx.expr()):
+            try:
+                for k in range(0, len(ctx.actions())):
+                    self.visit(ctx.actions(k))
+            except ContinueException:
+                continue
+            except BreakException:
+                break
+        _ = self.temp_vars.pop()
+        return None
+    
+    def visitForEachLoop(self, ctx: EsperadosParser.ForEachLoopContext):
+        self.temp_vars.append(self.temp_vars[-1].copy())
+        var_name = ctx.NAME(0).getText()
+        for var in list:
+            self.temp_vars[var_name] = var
+            try:
+                for k in range(0, len(ctx.actions())):
+                    self.visit(ctx.actions(k))
+            except ContinueException:
+                continue
+            except BreakException:
+                break
+        _ = self.temp_vars.pop()
         return None
 
+    def visitFunctionDef(self, ctx: EsperadosParser.FunctionDefContext):
+        funName = ctx.NAME().getText()
+        self.functions[funName] = {"params": {}, "instructions": None}
+        if ctx.parameters():
+            self.visitParameters(ctx.parameters(), funName)
+        self.functions[funName]["instructions"] = ctx.actions()
+        return None
+
+    def visitParameters(self, ctx: EsperadosParser.ParametersContext, funName: str):
+        for i in range(0, len(ctx.NAME())):
+            self.functions[funName]["params"][ctx.NAME(i).getText()] = None
+        return None
+
+    def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
+        self.temp_vars.append(self.temp_vars[-1].copy())
+        value = None
+        fun_name = ctx.NAME(0).getText()
+        for i in range(0, len(ctx.expr())):
+            self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
+        self.temp_vars[-1].update(self.functions[fun_name]["params"])
+        instructions = self.functions[fun_name]["instructions"]
+        try:
+            for i in range(0, len(instructions)):
+                self.visit(instructions[i])
+        except ReturnException as e:
+            value = e.value
+        _ = self.temp_vars.pop()
+        return value
+    
+    def visitReturnStmt(self, ctx: EsperadosParser.ReturnStmtContext):
+        value = self.visitExpr(ctx.expr()) if ctx.expr() else None
+        raise ReturnException(value)
+    
+    def visitDefList(self, ctx: EsperadosParser.DefListContext):
+        list_name = ctx.NAME().getText()
+        if ctx.GLOBAL():
+            self.global_lists[list_name] = []
+            for i in range(0, len(ctx.expr())):
+                self.global_lists[list_name].append(self.visitExpr(ctx.expr(i)))
+        else:
+            self.temp_vars[-1][list_name] = []
+            for i in range(0, len(ctx.expr())):
+                self.temp_vars[-1][list_name].append(self.visitExpr(ctx.expr(i)))
+        return None
+
+    def visitAddToList(self, ctx: EsperadosParser.AddToListContext):
+        list_name = ctx.NAME().getText()
+        value = self.visitExpr(ctx.expr())
+        if list_name in self.global_lists:
+            self.global_lists[list_name].append(value)
+        elif list_name in self.temp_vars[-1].keys():
+            self.temp_vars[-1][list_name].append(value)
+        else:
+            raise NameError(f"List '{list_name}' is not defined")
+        return None
+    
+    def visitRemoveFromList(self, ctx: EsperadosParser.RemoveFromListContext):
+        list_name = ctx.NAME().getText()
+        element = self.visitExpr(ctx.expr())
+        if list_name in self.global_lists:
+            self.global_lists[list_name].remove(element)
+        elif list_name in self.temp_vars[-1].keys():
+            self.temp_vars[-1][list_name].remove(element)
+        else:
+            if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
+                raise NameError(f"List '{list_name}' is not defined")
+            if element not in self.global_lists[list_name] or element not in self.temp_vars[-1][list_name]:
+                raise ValueError(f"Element '{element}' not found in list '{list_name}'")
+        return None
+    
+    def visitInsertToList(self, ctx: EsperadosParser.InsertToListContext):
+        list_name = ctx.NAME().getText()
+        index = self.visitExpr(ctx.expr(0))
+        element = self.visitExpr(ctx.expr(1))
+        if list_name in self.global_lists:
+            self.global_lists[list_name].insert(index, element)
+        elif list_name in self.temp_vars[-1].keys():
+            self.temp_vars[-1][list_name].insert(index, element)
+        else:
+            if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
+                raise NameError(f"List '{list_name}' is not defined")
+            if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
+                raise IndexError(f"List index out of range: {index}")
+        return None
+
+    #Expressions
+    
     def visitExpr(self, ctx: EsperadosParser.ExprContext):
-        return self.visitOrExpr(ctx.orExpr())
+        return self.visit(ctx.orExpr())
     
     def visitOrExpr(self, ctx: EsperadosParser.OrExprContext):
         value = False
         for i in range (0, len(ctx.andExpr())):
-            value = value or self.visitAndExpr(ctx.andExpr(i))
+            value = value or self.visit(ctx.andExpr(i))
         return value
 
     def visitAndExpr(self, ctx: EsperadosParser.AndExprContext):
         value = True
         for i in range (0, len(ctx.notExpr())):
-            value = value and self.visitNotExpr(ctx.notExpr(i))
+            value = value and self.visit(ctx.notExpr(i))
         return value
         
     def visitNotExpr(self, ctx: EsperadosParser.NotExprContext):
         if ctx.NOT():
-            return self.visitNotExpr(ctx.notExpr())
-        if ctx.comparisonExpr():
-            return self.visitComparisonExpr(ctx.comparisonExpr())
+            return not bool(self.visit(ctx.notExpr()))
+        else:
+            return self.visit(ctx.comparisonExpr())
     
     def visitComparisonExpr(self, ctx: EsperadosParser.ComparisonExprContext):
-        value = self.visitAdditionExpr(ctx.additionExpr(0))
-
+        value = self.visit(ctx.additionExpr(0))
         for i in range(1, len(ctx.additionExpr())):
-            additionExpr2 = self.visitAdditionExpr(ctx.additionExpr(i))
-
+            additionExpr2 = self.visit(ctx.additionExpr(i))
             if ctx.EQUAL():
                 value = value == additionExpr2
             if ctx.INEQUAL():
@@ -149,162 +277,79 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 value = value >= additionExpr2
             if ctx.ELESS():
                 value = value <= additionExpr2
-
         return value
     
     def visitAdditionExpr(self, ctx: EsperadosParser.AdditionExprContext):
-        value = self.visitMultiExpr(ctx.multiExpr(0))
-
+        value = self.visit(ctx.multiExpr(0))
         for i in range(1, len(ctx.multiExpr())):
-            multiExpr2 = self.visitMultiExpr(ctx.multiExpr(i))
-
+            multiExpr2 = self.visit(ctx.multiExpr(i))
             if ctx.ADD():
                 value = value + multiExpr2
             if ctx.SUB():
                 value = value - multiExpr2
-
         return value
     
     def visitMultiExpr(self, ctx: EsperadosParser.MultiExprContext):
-        value = self.visitExponExpr(ctx.exponExpr(0))
-
+        value = self.visit(ctx.exponExpr(0))
         for i in range(1, len(ctx.exponExpr())):
-            exponExpr2 = self.visitExponExpr(ctx.exponExpr(i))
-
+            exponExpr2 = self.visit(ctx.exponExpr(i))
             if ctx.MULT():
                 value = value * exponExpr2
             if ctx.DIV():
                 value = value / exponExpr2
             if ctx.MOD():
                 value = value % exponExpr2
-
         return value
     
     def visitExponExpr(self, ctx: EsperadosParser.ExponExprContext):
-            value = self.visitAtom(ctx.atom(0))
-
-            for i in range(1, len(ctx.atom())):
-                atom2 = self.visitAtom(ctx.atom(i))
-                value = value ** atom2
-
-            return value
+        value = self.visit(ctx.atom(0))
+        for i in range(1, len(ctx.atom())):
+            atom2 = self.visit(ctx.atom(i))
+            value = value ** atom2
+        return value
     
     def visitAtom(self, ctx: EsperadosParser.AtomContext):
         if ctx.STRING():
-            return self.visitString(ctx.STRING())
+            text = ctx.STRING().getText()[1:-1]
+            try:
+                return bytes(text, "utf-8").decode("unicode_escape")
+            except UnicodeDecodeError:
+                return text
         elif ctx.INT():
             return int(ctx.INT().getText())
         elif ctx.FLOAT():
             return float(ctx.FLOAT().getText())
-        elif ctx.NAME():
-            if ctx.NAME().getText() in self.variables.keys():
-                return self.variables[ctx.NAME().getText()]
-            elif ctx.NAME().getText() in self.lists.keys():
-                return self.lists[ctx.NAME().getText()]
         elif ctx.expr():
-            return self.visitExpr(ctx.expr())
+            return self.visit(ctx.expr())
         elif ctx.TRUE():
             return True
         elif ctx.FALSE():
             return False
-
-    def visitString(self, token):
-        text = token.getText()[1:-1]
-        try:
-            return bytes(text, "utf-8").decode("unicode_escape")
-        except UnicodeDecodeError:
-            return text
-        
-    def visitForLoop(self, ctx: EsperadosParser.ForLoopContext):
-        var_name = ctx.NAME().getText()
-        start = int(ctx.INT(0).getText())
-        end = int(ctx.INT(1).getText())
-        step = int(ctx.INT(2).getText()) if ctx.INT(2) else 1
-
-        i = start
-        while (step > 0 and i < end) or (step < 0 and i > end):
-            self.variables[var_name] = i
-            try:
-                self.visitLoopInstructions(ctx.loopInstructions())
-            except ContinueException:
-                i += step
-                continue
-            except BreakException:
-                break
-            i += step
-    
-    def visitLoopInstructions(self, ctx: EsperadosParser.LoopInstructionsContext):
-        for child in ctx.children:
-            self.visit(child)
-
-    def visitLoopAction(self, ctx: EsperadosParser.LoopActionContext):
-        if ctx.action():
-            return self.visitAction(ctx.action())
-        elif ctx.BREAK():
-            raise BreakException()
-        elif ctx.CONTINUE():
-            raise ContinueException()
-        
-        return None
-    
-    def visitWhileLoop(self, ctx: EsperadosParser.WhileLoopContext):
-        while self.visitExpr(ctx.expr()):
-            try:
-                self.visitLoopInstructions(ctx.loopInstructions())
-            except ContinueException:
-                continue
-            except BreakException:
-                break
-        return None
-
-    def visitFunctionDef(self, ctx: EsperadosParser.FunctionDefContext):
-        funName = ctx.NAME().getText()
-        self.functions[funName] = {"params": {}, "instructions": None}
-        if ctx.parameters():
-            self.visitParameters(ctx.parameters(), funName)
-        self.functions[funName]["instructions"] = ctx.funDefInstructions()
-        return None
-
-    def visitParameters(self, ctx: EsperadosParser.ParametersContext, funName: str):
-        for i in range(0, len(ctx.NAME())):
-            self.functions[funName]["params"][ctx.NAME(i).getText()] = None
-        return None
-    
-    def visitFunDefInstructions(self, ctx: EsperadosParser.FunDefInstructionsContext):
-        for child in ctx.children:
-            try:
-                self.visit(child)
-            except ReturnException as e:
-                return e.value
-        return None
-
-    def visitFunDefAction(self, ctx: EsperadosParser.FunDefActionContext):
-        if ctx.action():
-            return self.visitAction(ctx.action())
-        if ctx.returnStmt():
-            return self.visitReturnStmt(ctx.returnStmt())
-
-    def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
-        fun_name = ctx.NAME(0).getText()
-        for i in range(0, len(ctx.expr())):
-            self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visitExpr(ctx.expr(i))
-        temp_variables = self.variables
-        self.variables = self.functions[fun_name]["params"]
-        value = self.visitFunDefInstructions(self.functions[fun_name]["instructions"])
-        self.variables = temp_variables
-        return value
-    
-    def visitReturnStmt(self, ctx: EsperadosParser.ReturnStmtContext):
-        value = self.visitExpr(ctx.expr()) if ctx.expr() else None
-        raise ReturnException(value)
-    
-    def visitDeleteStmt(self, ctx: EsperadosParser.DeleteStmtContext):
-        _ = self.variables.pop(ctx.NAME().getText())
-        return None
-    
-    def visitDefList(self, ctx: EsperadosParser.DefListContext):
-        list_name = ctx.NAME().getText()
-        self.lists[list_name] = []
-        for i in range(0, len(ctx.expr())):
-            self.lists[list_name].append(self.visitExpr(ctx.expr(i)))
-        return None
+        elif ctx.getFromList():
+            ctx = ctx.getFromList()
+            list_name = ctx.NAME().getText()
+            index = self.visitExpr(ctx.expr())
+            if list_name in self.global_lists:
+                return self.global_lists[list_name][index]
+            if list_name in self.temp_vars[-1].keys():
+                return self.temp_vars[-1][list_name][index]
+            else:
+                raise NameError(f"List '{list_name}' is not defined")
+        elif ctx.NAME():
+            value, _ = self.findVariable(ctx.NAME())
+            return value
+        elif ctx.functionCall():
+            return self.visit(ctx.functionCall())
+            
+    def findVariable(self, var_name):
+        name = var_name.getText()
+        if self.temp_vars and name in self.temp_vars[-1].keys():
+            return (self.temp_vars[-1][name], self.temp_vars)
+        elif name in self.global_vars:
+            return (self.global_vars[name], self.global_vars)
+        elif name in self.global_lists:
+            return (self.global_lists[name], self.global_lists)
+        elif name in self.global_dicts:
+            return (self.global_dicts[name], self.global_dicts)
+        return (None, None)
+        # raise Exception(f"Zmienna '{name}' nie istnieje.")

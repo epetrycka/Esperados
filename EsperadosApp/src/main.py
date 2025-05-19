@@ -4,7 +4,7 @@ from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
 from generated.EsperadosParser import EsperadosParser
 from visitor import EsperadosVisitorImpl
-from visualizeTree import visualize_tree
+from visualize_tree import visualize_tree
 
 def main(argv):
     if len(argv) < 2:

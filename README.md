@@ -133,10 +133,16 @@ Adiau
 ---
 
 ### Visitor (interpretacja):
-- [ ] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
+- [x] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja pętli `for each`, klas i lambd.
+- [ ] Implementacja klas i lambd.
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
+- [ ] Wynalezienie sposobu na zmienne wewnątrz funkcyjne, do których będą miały dostęp ify, pętle itp -> trzeba przetestować globalne
+- [x] Przemyślenie działania w razie rekurencji pętli i funkcji
+- [x] Usuwanie nazw zmiennych po wyjściu z pętli, ifów, funkcji
+- [ ] Gdzie zapisywać listy i słowniki temp?
+- [x] Funkcja w funkcji w pętli iteracja??
+
 
 </details>

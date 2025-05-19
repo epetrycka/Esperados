@@ -3,55 +3,49 @@ import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
-program         : (comment | NL)* GREETING instructions EOF ;
+program         : comment* GREETING (comment | instructions)* GOODBYE comment* EOF ;
 
-comment         : COMMENTBLOCK | COMMENT ;
-
-goodbye         : GOODBYE (comment | NL)* EOF ;
-
-instructions    : (comment | action | NL)* goodbye? ;
-
-action          : printExpr
-                | inputExpr
+instructions    : printExpr
                 | variableExpr
-                | defList
+                | deleteStmt
                 | condition 
                 | forLoop 
+                | forEachLoop
                 | whileLoop
                 | functionDef
                 | functionCall
-                | deleteStmt;
+                | defList
+                | addToList
+                | removeFromList
+                | insertToList
+                | returnStmt
+                ;
 
-printExpr       : PRINT LP expr (COMMA expr)* RP ;
-
-inputExpr       : VARDEF type? NAME ASG INPUT LP RP;
-
-variableExpr    : GLOBAL? VARDEF NAME type? ASG expr ;
-
-condition       : ifExpr elifExpr* elseExpr? ;
-
-ifExpr          : IF LP expr RP LC instructions RC ;
-
-elifExpr        : ELIF LP expr RP LC instructions RC ;
-
-elseExpr        : ELSE LC instructions RC ;
-
-loopAction      : action
+actions         : instructions
                 | BREAK
                 | CONTINUE ;
 
-loopInstructions: (comment | loopAction | NL)* ;
+printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC loopInstructions RC ;
+variableExpr    : GLOBAL? VARDEF type? NAME ASG (expr | INPUT LP RP);
 
-whileLoop       : WHILE LP expr RP LC loopInstructions RC ;
+condition       : ifExpr elifExpr* elseExpr? ;
 
-funDefAction    : action
-                | returnStmt ;
+ifExpr          : IF LP expr RP LC actions* RC ;
 
-funDefInstructions: (comment | funDefAction | NL)* ;
+elifExpr        : ELIF LP expr RP LC actions* RC ;
 
-functionDef     : DEF NAME LP parameters? RP LC funDefInstructions RC ;
+elseExpr        : ELSE LC actions* RC ;
+
+forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC actions* RC ;
+
+whileLoop       : WHILE LP expr RP LC actions* RC ;
+
+forEachLoop     : FOREACH NAME IN NAME LC actions* RC ;
+
+deleteStmt      : DEL NAME ;
+
+functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 
 parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
 
@@ -59,6 +53,10 @@ functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)
 
 returnStmt      : RETURN expr? ;
 
-deleteStmt      : DEL NAME ;
+defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
-defList     : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;
+addToList       : NAME ADD expr ;
+
+removeFromList  : NAME SUB expr ;
+
+insertToList    : NAME ADD LP expr COMMA expr RP ;
