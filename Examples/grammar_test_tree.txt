@@ -1,54 +1,23 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> main
-(program Saluton (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "wpisz cos: "))))))))) )))
-(action (inputExpr variablo k asigini inputo ( )))
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom k))))))))) )))
-(action (variableExpr variablo x (type entjero) asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 2)))))))))))
-<<<<<<< HEAD
-=======
-=======
-(program Saluton (instructions (action (variableExpr variablo x (type entjero) asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 0)))))))))))
->>>>>>> main
->>>>>>> main
-(action (variableExpr variablo y (type flosi) asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1.5)))))))))))
-(action (variableExpr variablo tekst (type snuro) asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Czesc")))))))))))
-(action (variableExpr tutmonda variablo licznik (type entjero) asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 10)))))))))))
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> main
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Witaj "))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom tekst))))))))) )))
-(action (forLoop por ( i ; 0 ; 5 ; 1 ) { (loopInstructions (loopAction (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Iteracja:"))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) ))))
-(loopAction (action (condition (ifExpr se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) granda egala (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i jest wieksze lub rowne 2"))))))))) )))) })
-(elifExpr alie se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) ne egala (additionExpr (multiExpr (exponExpr (atom 1))))))))) ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i nie jest rowne 1"))))))))) )))) })
-(elseExpr alie { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i to 1"))))))))) )))) }))))
-(loopAction (action (whileLoop gis ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) malgranda (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (loopInstructions (loopAction (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Petla while, i ="))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) ))))
-(loopAction haltu)) })))
-(loopAction daurigi)) }))
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Koniec petli"))))))))) )))
-(action (functionDef difini salutu ( (parameters (type snuro) : nomo) ) { (funDefInstructions (funDefAction (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Saluton: "))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom nomo))))))))) ))))
-(funDefAction (returnStmt reveni))
-(funDefAction (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Lol"))))))))) ))))) }))
-(action (functionCall funcio salutu ( nomo = (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Jol"))))))))) )))
-(action (deleteStmt forigi x))
-<<<<<<< HEAD
-(action (defList variablo lista asigini [ (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 2))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom vere))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "lol"))))))))) ]))
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom lista))))))))) )))
-=======
-(action (defList variablo LISTA asigini [ (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 2))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom vere))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "lol"))))))))) ]))
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom LISTA))))))))) )))
-=======
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Witaj"))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom tekst))))))))) )))
-(action (forLoop por ( i ; 0 ; 5 ; 1 ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Iteracja:"))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) )))
-(action (condition (ifExpr se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) granda egala (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i jest wi�ksze lub r�wne 2"))))))))) )))) })
-(elifExpr alie se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) ne egala (additionExpr (multiExpr (exponExpr (atom 1))))))))) ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i nie jest r�wne 1"))))))))) )))) })
-(elseExpr alie { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i to 1"))))))))) )))) })))
-(action (whileLoop gis ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) malgranda (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (instructions (action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "P�tla while, i ="))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) )))
-(action haltu)) }))
-(action daurigi)) }))
-(action (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Koniec p�tli"))))))))) )))
->>>>>>> main
->>>>>>> main
-(goodbye Adiau <EOF>)) <EOF>)
+(program Saluton (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "wpisz cos: "))))))))) )))
+(instructions (variableExpr variablo k asigini inputo ( )))
+(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom k))))))))) )))
+(instructions (variableExpr variablo (type entjero) x asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 2)))))))))))
+(instructions (variableExpr variablo (type flosi) y asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1.5)))))))))))
+(instructions (variableExpr variablo (type snuro) tekst asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Czesc")))))))))))
+(instructions (variableExpr tutmonda variablo (type entjero) licznik asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 10)))))))))))
+(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Witaj "))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom tekst))))))))) )))
+(instructions (forLoop por ( i ; 0 ; 5 ; 1 ) { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Iteracja:"))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) ))))
+(actions (instructions (condition (ifExpr se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) granda egala (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i jest wieksze lub rowne 2"))))))))) )))) })
+(elifExpr alie se ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) ne egala (additionExpr (multiExpr (exponExpr (atom 1))))))))) ) { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i nie jest rowne 1"))))))))) )))) })
+(elseExpr alie { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "i to 1"))))))))) )))) }))))
+(actions (instructions (whileLoop gis ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i)))) malgranda (additionExpr (multiExpr (exponExpr (atom 2))))))))) ) { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Petla while, i ="))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom i))))))))) ))))
+(actions haltu) })))
+(actions daurigi) }))
+(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Koniec petli"))))))))) )))
+(instructions (functionDef difini salutu ( (parameters (type snuro) : nomo) ) { (actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Saluton: "))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom nomo))))))))) ))))
+(actions (instructions (returnStmt reveni)))
+(actions (instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Lol"))))))))) )))) }))
+(instructions (functionCall funcio salutu ( nomo = (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "Jol"))))))))) )))
+(instructions (deleteStmt forigi x))
+(instructions (defList variablo listo lista asigini [ (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 2))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom vere))))))))) , (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "lol"))))))))) ]))
+(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom lista))))))))) ))) Adiau <EOF>)

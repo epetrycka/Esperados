@@ -344,7 +344,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def findVariable(self, var_name):
         name = var_name.getText()
         if self.temp_vars and name in self.temp_vars[-1].keys():
-            return (self.temp_vars[-1][name], self.temp_vars)
+            return (self.temp_vars[-1][name], self.temp_vars[-1])
         elif name in self.global_vars:
             return (self.global_vars[name], self.global_vars)
         elif name in self.global_lists:

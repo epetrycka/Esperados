@@ -11,11 +11,11 @@ skribi("wpisz cos: ")
 variablo k asigini inputo()
 skribi(k)
 
-variablo x entjero asigini 2
-variablo y flosi asigini 1.5
-variablo tekst snuro asigini "Czesc"
+variablo entjero x asigini 2
+variablo flosi y asigini 1.5
+variablo snuro tekst asigini "Czesc"
 
-tutmonda variablo licznik entjero asigini 10
+tutmonda variablo entjero licznik asigini 10
 
 skribi("Witaj ", tekst)
 
@@ -50,7 +50,7 @@ funcio salutu (nomo = "Jol")
 
 forigi x
 
-variablo lista asigini [1, 2, vere, "lol"]
+variablo listo lista asigini [1, 2, vere, "lol"]
 skribi(lista)
 
 Adiau

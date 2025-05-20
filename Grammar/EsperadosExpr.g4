@@ -23,7 +23,6 @@ exponExpr       : atom (EXPON atom)* ;
 getFromList     : NAME LS expr PS;
 
 atom            : LP expr RP
-                | NAME LS expr PS
                 | INT
                 | FLOAT
                 | STRING
