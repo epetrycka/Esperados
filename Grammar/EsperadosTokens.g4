@@ -1,4 +1,4 @@
-lexer grammar Esperados;
+lexer grammar EsperadosTokens;
 
 // LEXER
 

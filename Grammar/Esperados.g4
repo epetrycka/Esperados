@@ -3,7 +3,11 @@ import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
-program         : comment* GREETING (comment | instructions)* GOODBYE comment* EOF ;
+program         : skipBefore (GREETING instructions* GOODBYE skipAfter)? EOF ;
+
+skipBefore      : (~(GREETING | GOODBYE))*;
+
+skipAfter       : ( . )*? ;
 
 instructions    : printExpr
                 | variableExpr
@@ -48,8 +52,6 @@ deleteStmt      : DEL NAME ;
 functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 
 parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
-
-functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
 
 returnStmt      : RETURN expr? ;
 

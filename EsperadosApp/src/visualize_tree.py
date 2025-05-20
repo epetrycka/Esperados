@@ -11,8 +11,9 @@ def print_tree(node, parser, graph, parent_id=None, node_id=0):
 
     if hasattr(node, 'children'):
         child_id = node_id + 1
-        for child in node.children:
-            child_id = print_tree(child, parser, graph, cur_id, child_id)
+        if node.children:
+            for child in node.children:
+                child_id = print_tree(child, parser, graph, cur_id, child_id)
         return child_id
     else:
         return node_id + 1

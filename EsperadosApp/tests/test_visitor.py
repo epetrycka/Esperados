@@ -20,16 +20,29 @@ def run_code(code: str):
 def test_empty_file(capsys):
     with open("tests/examples/incomplete_files/empty_file.es") as f:
         code = f.read()
-    with pytest.raises(Exception) as exc_info:
-        run_code(code)
-    assert "program must begin with Saluton" in str(exc_info.value)
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    assert captured.out == ""
 
-def test_file_without_saluton(capsys):
-    with open("tests/examples/incomplete_files/without_saluton.es") as f:
+def test_correct_empty_file(capsys):
+    with open(f"tests/examples/incomplete_files/correct_empty_file.es") as f:
+        code = f.read()
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    assert captured.out == "👋 Saluton!\n👋 Adiau!\n"
+
+@pytest.mark.parametrize("filename, expected", [
+    ("incomplete_files/without_adiau.es", "program must end with Adiau"),
+    ("incomplete_files/without_saluton.es", "program must begin with Saluton"),
+    ("incomplete_files/adiau_before_saluton.es", "program must begin with Saluton"),
+])
+
+def test_saluton_adiau(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
         run_code(code)
-    assert "program must begin with Saluton" in str(exc_info.value)
+    assert expected in str(exc_info.value)
 
 @pytest.mark.parametrize("filename, expected", [
     ("print_statement/example_1.es", "Prosty print"),
@@ -43,3 +56,4 @@ def test_print_statements(filename, expected, capsys):
     _ = run_code(code)
     captured = capsys.readouterr()
     assert expected in captured.out
+

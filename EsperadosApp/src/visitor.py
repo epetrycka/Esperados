@@ -23,9 +23,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         if ctx.GREETING():
             print("👋 Saluton!")
         self.temp_vars.append({})
-        for i in range(0, len(ctx.instructions())):
-            for child in ctx.instructions(i).children:
-                self.visit(child)
+        if ctx.instructions():
+            for i in range(0, len(ctx.instructions())):
+                for child in ctx.instructions(i).children:
+                    self.visit(child)
         if ctx.GOODBYE():
             print("👋 Adiau!")
         return None
