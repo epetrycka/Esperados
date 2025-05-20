@@ -1,8 +1,8 @@
 Saluton
 
-se (melvero) {
+se (vere) {
   tutmonda variablo result asigini "if"
-} alie se (vere) {
+} alie se (malvero) {
   tutmonda variablo result asigini "elif"
 } alie {
   tutmonda variablo result asigini "else"

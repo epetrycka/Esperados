@@ -91,14 +91,14 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         if condition:
             for i in range(0, len(ctx.actions())):
                 self.visit(ctx.actions(i))
-        return None
+        return condition
     
     def visitElifExpr(self, ctx: EsperadosParser.ElifExprContext):
         condition = self.visit(ctx.expr())
         if condition:
             for i in range(0, len(ctx.actions())):
                 self.visit(ctx.actions(i))
-        return None
+        return condition
     
     def visitElseExpr(self, ctx: EsperadosParser.ElseExprContext):
         for i in range(0, len(ctx.actions())):

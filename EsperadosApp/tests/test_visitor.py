@@ -112,7 +112,7 @@ def test_elif_else_statement():
     with open("tests/examples/control_structures/elif_else.es") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.global_vars['result'] == "else"
+    assert visitor.global_vars['result'] == "if"
 
 def test_for_loop():
     with open("tests/examples/control_structures/for_loop.es") as f:
