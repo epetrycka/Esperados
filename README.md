@@ -127,7 +127,7 @@ Adiau
 - [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
 - [ ] Operacje na stringach (`indexOf` itp.).
 - [ ] Dodanie niemutowalnych list.
-- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz ( -> skip).
+- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz (zobaczyć jak użyć modów aby to zadziałało bez przechodzenia parserem).
 
 ---
 

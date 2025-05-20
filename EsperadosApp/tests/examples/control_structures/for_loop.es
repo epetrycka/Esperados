@@ -1,0 +1,9 @@
+Saluton
+
+tutmonda variablo sum asigini 0
+
+por (i; 0; 5; 1) {
+  tutmonda variablo sum asigini (sum aldoni i)
+}
+
+Adiau
