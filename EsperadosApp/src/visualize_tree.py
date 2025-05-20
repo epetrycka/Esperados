@@ -18,10 +18,10 @@ def print_tree(node, parser, graph, parent_id=None, node_id=0):
     else:
         return node_id + 1
 
-def visualize_tree(tree, parser, file_path: str):
-    base_name = os.path.splitext(os.path.basename(file_path))[0]
+def visualize_tree(tree, parser, file_name: str, path: str):
+    base_name = os.path.splitext(os.path.basename(file_name))[0]
     
-    output_dir = os.path.join(os.path.dirname(file_path), "..", "Examples")
+    output_dir = os.path.join(os.path.dirname(path), "trees")
     os.makedirs(output_dir, exist_ok=True)
 
     output_file = os.path.join(output_dir, base_name + '_ast')

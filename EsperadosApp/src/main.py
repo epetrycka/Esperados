@@ -25,13 +25,14 @@ def main(argv):
             visitor.visit(tree)
 
         base_name = os.path.splitext(os.path.basename(argv[1]))[0]
-        output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")
+        output_dir = os.path.join(os.path.dirname(argv[1]), "trees")
+        os.makedirs(output_dir, exist_ok=True)
         output_file = os.path.join(output_dir, base_name + '_tree')
 
         with open(f"{output_file}.txt", "w") as file:
             file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
 
-        visualize_tree(tree, parser, base_name)
+        visualize_tree(tree, parser, base_name, argv[1])
 
     except Exception as ex:
         print(ex)
