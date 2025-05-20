@@ -142,8 +142,9 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def visitForEachLoop(self, ctx: EsperadosParser.ForEachLoopContext):
         self.temp_vars.append(self.temp_vars[-1].copy())
         var_name = ctx.NAME(0).getText()
-        for var in list:
-            self.temp_vars[var_name] = var
+        lista, _ = self.findVariable(ctx.NAME(1))
+        for var in lista:
+            self.temp_vars[-1][var_name] = var
             try:
                 for k in range(0, len(ctx.actions())):
                     self.visit(ctx.actions(k))
