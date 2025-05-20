@@ -97,6 +97,16 @@ def test_variable_from_input(capsys):
     assert 'input' in visitor.temp_vars[-1]
     assert visitor.temp_vars[-1]['input'] == "Hello!"
 
+def test_no_access_out_of_scope(capsys):
+    with open(f"tests/examples/variable_definition/no_access_outofscope.es") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        visitor = run_code(code)
+        assert "Zmienna 'x' nie istnieje." in str(exc_info.value)
+        assert 'x' not in visitor.temp_vars[-1]
+
+# dotąd ok
+
 # =========================
 # Control Structures
 # =========================
