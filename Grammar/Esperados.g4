@@ -23,7 +23,6 @@ instructions    : printExpr
                 | removeFromList
                 | insertToList
                 | returnStmt
-                | replaceInList
                 ;
 
 actions         : instructions
@@ -63,5 +62,3 @@ addToList       : NAME ADD expr ;
 removeFromList  : NAME SUB expr ;
 
 insertToList    : NAME ADD LP expr COMMA expr RP ;
-
-replaceInList   : NAME LS expr PS ASG expr ;

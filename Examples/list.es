@@ -17,9 +17,6 @@ skribi("Drugi element listy: ", x, " " ,lista1[3])
 lista1 aldoni (0, 9)
 skribi(lista1)
 
-lista1[0] asigini 18
-skribi(lista1)
-
 variablo test_nazwy asigini 1
 skribi(test_nazwy)
 

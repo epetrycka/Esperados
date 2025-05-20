@@ -12,13 +12,6 @@ class ReturnException(Exception):
         self.value = value
 
 class EsperadosVisitorImpl(EsperadosVisitor):
-    def raiseError(self, ctx, error_type, message):
-        line = f"line {ctx.start.line}" if ctx and ctx.start else ''
-        contents = (ctx.getText() + "\n\t") if ctx else ''
-        line_message =f"{line} {contents}"
-        full_message = f"\033[91m{line_message}{message}\033[0m"
-        raise error_type(full_message)
-
     def __init__(self):
         self.global_vars = {}
         self.global_lists = {}
@@ -215,23 +208,21 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif list_name in self.temp_vars[-1].keys():
             self.temp_vars[-1][list_name].append(value)
         else:
-            self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
+            raise NameError(f"List '{list_name}' is not defined")
         return None
     
     def visitRemoveFromList(self, ctx: EsperadosParser.RemoveFromListContext):
         list_name = ctx.NAME().getText()
         element = self.visitExpr(ctx.expr())
         if list_name in self.global_lists:
-            if element not in self.global_lists[list_name]:
-                self.raiseError(ctx, ValueError, f"Element '{element}' not found in list '{list_name}'")
             self.global_lists[list_name].remove(element)
         elif list_name in self.temp_vars[-1].keys():
-            if element not in self.temp_vars[-1][list_name]:
-                self.raiseError(ctx, ValueError, f"Element '{element}' not found in list '{list_name}'")
             self.temp_vars[-1][list_name].remove(element)
         else:
             if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
-                self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
+                raise NameError(f"List '{list_name}' is not defined")
+            if element not in self.global_lists[list_name] or element not in self.temp_vars[-1][list_name]:
+                raise ValueError(f"Element '{element}' not found in list '{list_name}'")
         return None
     
     def visitInsertToList(self, ctx: EsperadosParser.InsertToListContext):
@@ -244,26 +235,9 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.temp_vars[-1][list_name].insert(index, element)
         else:
             if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
-                self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
-            # if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
-            #     self.raiseError(ctx, IndexError, f"List index out of range: {index}")
-        return None
-    
-    def visitReplaceInList(self, ctx: EsperadosParser.ReplaceInListContext):
-        list_name = ctx.NAME().getText()
-        index = self.visitExpr(ctx.expr(0))
-        element = self.visitExpr(ctx.expr(1))
-        if list_name in self.global_lists:
-            if index < 0 or index > len(self.global_lists[list_name]):
-                self.raiseError(ctx, IndexError, f"List index out of range: {index}")
-            self.global_lists[list_name][index] = element
-        elif list_name in self.temp_vars[-1].keys():
-            if index < 0 or index > len(self.temp_vars[-1][list_name]):
-                self.raiseError(ctx, IndexError, f"List index out of range: {index}")
-            self.temp_vars[-1][list_name][index] = element
-        else:
-            if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
                 raise NameError(f"List '{list_name}' is not defined")
+            if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
+                raise IndexError(f"List index out of range: {index}")
         return None
 
     #Expressions
@@ -322,20 +296,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         for i in range(1, len(ctx.exponExpr())):
             exponExpr2 = self.visit(ctx.exponExpr(i))
             if ctx.MULT():
-                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
-                    self.raiseError(ctx, TypeError, f"Can't multiply non-number types: {type(value).__name__} * {type(exponExpr2).__name__}")
                 value = value * exponExpr2
             if ctx.DIV():
-                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
-                    self.raiseError(ctx, TypeError, f"Can't divide non-number types: {type(value).__name__} / {type(exponExpr2).__name__}")
-                if exponExpr2 == 0:
-                    self.raiseError(ctx, TypeError, "Division by zero is not allowed!")
                 value = value / exponExpr2
             if ctx.MOD():
-                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
-                    self.raiseError(ctx, TypeError, f"Modulo operation requires numbers: {type(value).__name__} % {type(exponExpr2).__name__}")
-                if exponExpr2 == 0:
-                    self.raiseError(ctx, TypeError, "Modulo by zero is not allowed!")
                 value = value % exponExpr2
         return value
     
@@ -389,6 +353,5 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return (self.global_lists[name], self.global_lists)
         elif name in self.global_dicts:
             return (self.global_dicts[name], self.global_dicts)
-        else:
-            self.raiseError(None, Exception, f"Zmienna '{name}' nie istnieje.")
         return (None, None)
+        # raise Exception(f"Zmienna '{name}' nie istnieje.")
