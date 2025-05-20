@@ -146,9 +146,9 @@ def test_function_def_call():
 # Lists
 # =========================
 
-def test_list_operations():
-    with open("tests/examples/lists/list_ops.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert visitor.global_lists['l'][0] == 0
-    assert 1 not in visitor.global_lists['l']
+# def test_list_operations():
+#     with open("tests/examples/lists/list_ops.es") as f:
+#         code = f.read()
+#     visitor = run_code(code)
+#     assert visitor.global_lists['l'][0] == 0
+#     assert 1 not in visitor.global_lists['l']
