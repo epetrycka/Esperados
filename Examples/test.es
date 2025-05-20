@@ -1,10 +1,15 @@
 Saluton
 
-tutmonda variablo listo lista asigini [1, 2, 3]
-tutmonda variablo sum asigini 0
-
-por ciu item en lista {
-  tutmonda variablo sum asigini (sum aldoni item)
+se (vere) {
+  tutmonda variablo result asigini "if"
+  skribi (result)
+} alie se (malvero) {
+  tutmonda variablo result asigini "elif"
+  skribi (result)
+} alie {
+  tutmonda variablo result asigini "else"
+  skribi (result)
 }
+
 
 Adiau
