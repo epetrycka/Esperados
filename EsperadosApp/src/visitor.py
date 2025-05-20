@@ -12,6 +12,12 @@ class ReturnException(Exception):
         self.value = value
 
 class EsperadosVisitorImpl(EsperadosVisitor):
+    def raiseError(self, ctx, error_type, message):
+        line = ctx.start.line if ctx and ctx.start else '?'
+        contents = ctx.getText()
+        full_message = f"\033[91mline {line} {contents}\n\t{message}\033[0m"
+        raise error_type(full_message)
+
     def __init__(self):
         self.global_vars = {}
         self.global_lists = {}
@@ -309,10 +315,20 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         for i in range(1, len(ctx.exponExpr())):
             exponExpr2 = self.visit(ctx.exponExpr(i))
             if ctx.MULT():
+                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
+                    self.raiseError(ctx, TypeError, f"Can't multiply non-number types: {type(value).__name__} * {type(exponExpr2).__name__}")
                 value = value * exponExpr2
             if ctx.DIV():
+                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
+                    self.raiseError(ctx, TypeError, f"Can't divide non-number types: {type(value).__name__} / {type(exponExpr2).__name__}")
+                if exponExpr2 == 0:
+                    self.raiseError(ctx, TypeError, "Division by zero is not allowed!")
                 value = value / exponExpr2
             if ctx.MOD():
+                if not isinstance(value, (int, float)) or not isinstance(exponExpr2, (int, float)):
+                    self.raiseError(ctx, TypeError, f"Modulo operation requires numbers: {type(value).__name__} % {type(exponExpr2).__name__}")
+                if exponExpr2 == 0:
+                    self.raiseError(ctx, TypeError, "Modulo by zero is not allowed!")
                 value = value % exponExpr2
         return value
     
@@ -368,3 +384,5 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return (self.global_dicts[name], self.global_dicts)
         return (None, None)
         # raise Exception(f"Zmienna '{name}' nie istnieje.")
+
+# czerwony error \033[91m \033[0m
