@@ -237,6 +237,21 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
                 raise IndexError(f"List index out of range: {index}")
         return None
+    
+    def visitReplaceInList(self, ctx: EsperadosParser.ReplaceInListContext):
+        list_name = ctx.NAME().getText()
+        index = self.visitExpr(ctx.expr(0))
+        element = self.visitExpr(ctx.expr(1))
+        if list_name in self.global_lists:
+            self.global_lists[list_name][index] = element
+        elif list_name in self.temp_vars[-1].keys():
+            self.temp_vars[-1][list_name][index] = element
+        else:
+            if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
+                raise NameError(f"List '{list_name}' is not defined")
+            if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
+                raise IndexError(f"List index out of range: {index}")
+        return None
 
     #Expressions
     
