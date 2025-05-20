@@ -5,6 +5,7 @@ from generated.EsperadosLexer import EsperadosLexer
 from generated.EsperadosParser import EsperadosParser
 from visitor import EsperadosVisitorImpl
 from visualize_tree import visualize_tree
+from error_handler import ErrorListener
 
 def main(argv):
     if len(argv) < 2:
@@ -14,9 +15,14 @@ def main(argv):
         lexer = EsperadosLexer(input_stream)
         stream = CommonTokenStream(lexer)
         parser = EsperadosParser(stream)
+        parser.removeErrorListeners()
+        parser.addErrorListener(ErrorListener())
         tree = parser.program()
-        visitor = EsperadosVisitorImpl()
-        visitor.visit(tree)
+        if parser.getNumberOfSyntaxErrors() > 0:
+            print("syntax errors")
+        else:
+            visitor = EsperadosVisitorImpl()
+            visitor.visit(tree)
 
         base_name = os.path.splitext(os.path.basename(argv[1]))[0]
         output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")

@@ -46,7 +46,7 @@ difini salutu(snuro: nomo){
     skribi("Lol")
 }
 
-funcio salutu (nomo = "Jol")
+funcio salutu (nomo = k)
 
 forigi x
 
