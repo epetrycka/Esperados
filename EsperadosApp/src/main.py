@@ -5,6 +5,7 @@ from generated.EsperadosLexer import EsperadosLexer
 from generated.EsperadosParser import EsperadosParser
 from visitor import EsperadosVisitorImpl
 from visualize_tree import visualize_tree
+from error_handler import ErrorListener
 
 def main(argv):
     if len(argv) < 2:
@@ -14,18 +15,24 @@ def main(argv):
         lexer = EsperadosLexer(input_stream)
         stream = CommonTokenStream(lexer)
         parser = EsperadosParser(stream)
+        parser.removeErrorListeners()
+        parser.addErrorListener(ErrorListener())
         tree = parser.program()
-        visitor = EsperadosVisitorImpl()
-        visitor.visit(tree)
+        if parser.getNumberOfSyntaxErrors() > 0:
+            print("syntax errors")
+        else:
+            visitor = EsperadosVisitorImpl()
+            visitor.visit(tree)
 
         base_name = os.path.splitext(os.path.basename(argv[1]))[0]
-        output_dir = os.path.join(os.path.dirname(argv[1]), "..", "Examples")
+        output_dir = os.path.join(os.path.dirname(argv[1]), "trees")
+        os.makedirs(output_dir, exist_ok=True)
         output_file = os.path.join(output_dir, base_name + '_tree')
 
         with open(f"{output_file}.txt", "w") as file:
             file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
 
-        visualize_tree(tree, parser, base_name)
+        visualize_tree(tree, parser, base_name, argv[1])
 
     except Exception as ex:
         print(ex)

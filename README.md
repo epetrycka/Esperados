@@ -117,9 +117,8 @@ Adiau
 
 ### Gramatyka:
 - [ ] Obsługa wartości `NULL` (`nenio`) dla zmiennych.
-- [ ] Definiowanie map.
+- [ ] Definiowanie map, lambd.
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
-- [ ] Pętla `for each`.
 - [ ] Każda instrukcja musi kończyć się znakiem następnej lini.
 
 <sub><i>Opcjonalnie:</i></sub>  
@@ -128,21 +127,24 @@ Adiau
 - [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
 - [ ] Operacje na stringach (`indexOf` itp.).
 - [ ] Dodanie niemutowalnych list.
-- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz ( -> skip).
+- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz (zobaczyć jak użyć modów aby to zadziałało bez przechodzenia parserem).
 
 ---
 
 ### Visitor (interpretacja):
-- [x] Rozdzielenie zmiennych na globalne i lokalne (funkcyjne).
+
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
 - [ ] Implementacja klas i lambd.
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
-- [ ] Wynalezienie sposobu na zmienne wewnątrz funkcyjne, do których będą miały dostęp ify, pętle itp -> trzeba przetestować globalne
-- [x] Przemyślenie działania w razie rekurencji pętli i funkcji
-- [x] Usuwanie nazw zmiennych po wyjściu z pętli, ifów, funkcji
-- [ ] Gdzie zapisywać listy i słowniki temp?
-- [x] Funkcja w funkcji w pętli iteracja??
+- [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
 
+---
+
+### Error handler:
+
+- [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
+- [ ] Walidacja czy element znajduje się w słowniku
+- [ ] Sprawdzenie czy wartość jest liczbą ?
 
 </details>

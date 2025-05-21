@@ -1,4 +1,4 @@
-lexer grammar Esperados;
+lexer grammar EsperadosTokens;
 
 // LEXER
 
@@ -17,6 +17,8 @@ WHILE           : 'gis' ;
 DEF             : 'difini' ;
 DEL             : 'forigi' ;
 FUN             : 'funcio' ;
+KEYS            : 'slosiloj' ;
+VALUES          : 'valoroj' ;
 
 ASG             : 'asigini' ;
 ADD             : 'aldoni' ;
@@ -61,6 +63,7 @@ INTTYPE         : 'entjero' ;
 FLOATTYPE       : 'flosi' ;
 STRINGTYPE      : 'snuro' ;    
 LIST            : 'listo' ;
+DICT            : 'vortaro' ;
 
 INT             : [0-9]+ ;
 fragment ESC    : '\\' ["\\/bfnrt] ;

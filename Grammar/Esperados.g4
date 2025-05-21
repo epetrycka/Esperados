@@ -3,7 +3,11 @@ import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
-program         : comment* GREETING (comment | instructions)* GOODBYE comment* EOF ;
+program         : skipBefore (GREETING instructions* GOODBYE skipAfter)? EOF ;
+
+skipBefore      : (~(GREETING | GOODBYE))*;
+
+skipAfter       : ( . )*? ;
 
 instructions    : printExpr
                 | variableExpr
@@ -19,6 +23,8 @@ instructions    : printExpr
                 | removeFromList
                 | insertToList
                 | returnStmt
+                | replaceInStruct
+                | defDict
                 ;
 
 actions         : instructions
@@ -43,13 +49,11 @@ whileLoop       : WHILE LP expr RP LC actions* RC ;
 
 forEachLoop     : FOREACH NAME IN NAME LC actions* RC ;
 
-deleteStmt      : DEL NAME ;
+defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
 functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 
 parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
-
-functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
 
 returnStmt      : RETURN expr? ;
 
@@ -60,3 +64,7 @@ addToList       : NAME ADD expr ;
 removeFromList  : NAME SUB expr ;
 
 insertToList    : NAME ADD LP expr COMMA expr RP ;
+
+replaceInStruct : NAME LS expr PS ASG expr ;
+
+defDict         : GLOBAL? VARDEF DICT NAME ASG LC (expr COLON expr (COMMA expr COLON expr)*)? RC ;
