@@ -20,9 +20,13 @@ multiExpr       : exponExpr ((MULT | DIV | MOD) exponExpr)* ;
 
 exponExpr       : atom (EXPON atom)* ;
 
-getFromList     : NAME LS expr PS;
+getFromStruct   : NAME LS expr PS;
 
 functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
+
+getDictKeys     : KEYS LP NAME RP ;
+
+getDictValues   : VALUES LP NAME RP ;
 
 atom            : LP expr RP
                 | INT
@@ -31,8 +35,10 @@ atom            : LP expr RP
                 | TRUE
                 | FALSE
                 | NAME 
-                | getFromList
-                | functionCall;
+                | getFromStruct
+                | functionCall 
+                | getDictKeys 
+                | getDictValues ;
 
 type            : INTTYPE
                 | FLOATTYPE

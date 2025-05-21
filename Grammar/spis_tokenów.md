@@ -30,6 +30,8 @@
 | `nenio`      | none               | Null literal           |        |
 | `ne`         | not                | Logical negation       | ✅     |
 | `reveni`     | return             | Return statement       | ✅     |
+| `slosiloj`   |                    | Gets dictionary keys   |         |
+| `valoroj`    |                    | Gets dictionary values |        |
 | `Saluton`    | (start of program) | Program entry point    | ✅     |
 | `Adiau`      | (end of program)   | Program termination    | ✅     |
 
@@ -88,6 +90,7 @@
 | `flosi`   | float             | Float       | ✅     |
 | `snuro`   | str               | String      | ✅     |
 | `listo`   | list              | Lista       | ✅     |
+| `vortaro' | dictionary        | Słownik     | ✅     |
 
 ### Lexer Tokens – Literals & Structure
 
