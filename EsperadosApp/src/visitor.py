@@ -176,9 +176,11 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         return None
 
     def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
+        fun_name = ctx.NAME(0).getText()
+        if fun_name not in self.functions:
+            self.raiseError(ctx, NameError, f"Function '{fun_name}' is not defined.")
         self.temp_vars.append(self.temp_vars[-1].copy())
         value = None
-        fun_name = ctx.NAME(0).getText()
         for i in range(0, len(ctx.expr())):
             self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
         self.temp_vars[-1].update(self.functions[fun_name]["params"])
@@ -245,8 +247,6 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         else:
             if list_name not in self.global_lists or list_name not in self.temp_vars[-1].keys():
                 self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
-            # if index < 0 or index > len(self.global_lists[list_name]) or index > len(self.temp_vars[-1][list_name]):
-            #     self.raiseError(ctx, IndexError, f"List index out of range: {index}")
         return None
     
     def visitReplaceInList(self, ctx: EsperadosParser.ReplaceInListContext):
@@ -297,14 +297,17 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 value = value == additionExpr2
             if ctx.INEQUAL():
                 value = value != additionExpr2
-            if ctx.GREATER():
-                value = value > additionExpr2
-            if ctx.LESS():
-                value = value < additionExpr2
-            if ctx.EGREATER():
-                value = value >= additionExpr2
-            if ctx.ELESS():
-                value = value <= additionExpr2
+            if type(value) != type(additionExpr2) and not isinstance(value, bool) and not isinstance(additionExpr2, bool):
+                self.raiseError(ctx, TypeError, f"Can't compare '{type(value).__name__}' and '{type(additionExpr2).__name__}'")
+            else:
+                if ctx.GREATER():
+                    value = value > additionExpr2
+                if ctx.LESS():
+                    value = value < additionExpr2
+                if ctx.EGREATER():
+                    value = value >= additionExpr2
+                if ctx.ELESS():
+                    value = value <= additionExpr2
         return value
     
     def visitAdditionExpr(self, ctx: EsperadosParser.AdditionExprContext):
@@ -312,8 +315,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         for i in range(1, len(ctx.multiExpr())):
             multiExpr2 = self.visit(ctx.multiExpr(i))
             if ctx.ADD():
+                if type(value) != type(multiExpr2):
+                    self.raiseError(ctx, TypeError, f"Can't add two different types: {type(value).__name__} + {type(multiExpr2).__name__}")
                 value = value + multiExpr2
             if ctx.SUB():
+                if type(value) != type(multiExpr2):
+                    self.raiseError(ctx, TypeError, f"Can't substract two different types: {type(value).__name__} - {type(multiExpr2).__name__}")
                 value = value - multiExpr2
         return value
     
@@ -343,6 +350,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         value = self.visit(ctx.atom(0))
         for i in range(1, len(ctx.atom())):
             atom2 = self.visit(ctx.atom(i))
+            if not isinstance(value, (int, float)):
+                self.raiseError(ctx, TypeError, f"Cannot exponentiate non-numeric type: {type(value).__name__}")
             value = value ** atom2
         return value
     
@@ -372,7 +381,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             if list_name in self.temp_vars[-1].keys():
                 return self.temp_vars[-1][list_name][index]
             else:
-                raise NameError(f"List '{list_name}' is not defined")
+                self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
         elif ctx.NAME():
             value, _ = self.findVariable(ctx.NAME())
             return value
@@ -390,5 +399,5 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif name in self.global_dicts:
             return (self.global_dicts[name], self.global_dicts)
         else:
-            self.raiseError(None, Exception, f"Zmienna '{name}' nie istnieje.")
+            self.raiseError(None, Exception, f"Line {var_name.symbol.line}\n\tVariable '{name}' is not defined.")
         return (None, None)
