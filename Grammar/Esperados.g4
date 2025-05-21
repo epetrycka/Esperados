@@ -35,6 +35,8 @@ printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
 variableExpr    : GLOBAL? VARDEF type? NAME ASG (expr | INPUT LP RP);
 
+deleteStmt      : DEL NAME ;
+
 condition       : ifExpr elifExpr* elseExpr? ;
 
 ifExpr          : IF LP expr RP LC actions* RC ;
@@ -48,8 +50,6 @@ forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC a
 whileLoop       : WHILE LP expr RP LC actions* RC ;
 
 forEachLoop     : FOREACH NAME IN NAME LC actions* RC ;
-
-defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
 functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 

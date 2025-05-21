@@ -33,7 +33,7 @@ def main(argv):
             file.write(tree.toStringTree(recog=parser).replace(") (", ")\n("))
 
         visualize_tree(tree, parser, base_name, argv[1])
-
+        
     except Exception as ex:
         print(ex)
 

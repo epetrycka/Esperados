@@ -14,3 +14,4 @@
 - [ ] For each zmienna nie jest listą, lista jest dynamicznie powiększana w pętli, usunięcie listy w trakcie wykonywania pętli
 - [ ] Funkcja w funkcji, przekazywanie argumentów, rekurencja w funkcji, funkcja bez return, kilka return, redeklaracja funkcji, nadpisywanie parametrów, zły typ parametrów.
 - [ ] Dostęp do list, zmiana elementów list, dodawanie elementów, usuwanie, out of range index.
+- [ ] W pliku test.es błąd: 'NoneType' object has no attribute 'children' przy obsłudze zmiennej nie w pamięci

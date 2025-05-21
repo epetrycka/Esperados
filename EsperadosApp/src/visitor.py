@@ -15,12 +15,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def raiseError(self, ctx, error_type, message):
         line = f"line {ctx.start.line}:" if ctx and ctx.start else ''
         instruction = ' '
-        if ctx.children:
+        if ctx and ctx.children:
             for child in ctx.children:
                 instruction += child.getText()
                 instruction += ' '
         else:
-            instruction = ctx.getText()
+            instruction = ctx.getText() if ctx else ''
         contents = (f'"{instruction}"' + "\n\t") if ctx else ''
         line_message =f"{line} {contents}"
         full_message = f"\033[91m{line_message}{message}\033[0m"

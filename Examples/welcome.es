@@ -20,7 +20,6 @@ difini salutu(listo: names){
             reveni malvero
         } alie {
             skribi("Saluton: ", name)
-            reveni vere
         }
     }
 }
