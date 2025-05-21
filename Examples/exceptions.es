@@ -29,7 +29,8 @@ variablo listo lista2 asigini [1,2,4]
 :O lista1 aldoni 1
 :O lista1 aldoni (0,1)
 :O lista[5] asigini 9
-
+:O skribi(dict["a"])
+:O skribi(lista[10])
 
 :O findVariable
 skribi(x)

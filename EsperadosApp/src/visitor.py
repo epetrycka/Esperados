@@ -394,25 +394,51 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return False
         elif ctx.getFromStruct():
             ctx = ctx.getFromStruct()
-            list_name = ctx.NAME().getText()
+            struct_name = ctx.NAME().getText()
             index = self.visitExpr(ctx.expr())
-            if list_name in self.global_lists:
-                return self.global_lists[list_name][index]
-            if list_name in self.temp_vars[-1].keys():
-                return self.temp_vars[-1][list_name][index]
-            if list_name in self.temp_lists[-1].keys():
-                return self.temp_lists[-1][list_name][index]
-            if list_name in self.global_dicts:
-                return self.global_dicts[list_name][index]
-            if list_name in self.temp_dicts[-1].keys():
-                return self.temp_dicts[-1][list_name][index]
+            list_, dict_ = None, None
+            if struct_name in self.global_lists:
+                list_ = self.global_lists[struct_name]
+            elif struct_name in self.temp_vars[-1].keys():
+                list_ = self.temp_vars[-1][struct_name]
+            elif struct_name in self.temp_lists[-1].keys():
+                list_ = self.temp_lists[-1][struct_name]
+            elif struct_name in self.global_dicts:
+                dict_ = self.global_dicts[struct_name]
+            elif struct_name in self.temp_dicts[-1].keys():
+                dict_ = self.temp_dicts[-1][struct_name]
             else:
-                self.raiseError(ctx, NameError, f"List '{list_name}' is not defined")
+                if isinstance(index, int): self.raiseError(ctx, NameError, f"List '{struct_name}' is not defined")
+                else: self.raiseError(ctx, NameError, f"Dict '{struct_name}' is not defined")
+            if list_ and (index < 0 or index >= len(list_)):
+                self.raiseError(ctx, IndexError, f"List index out of range. {struct_name} length: {len(list_)}")
+            return list_[index] if list_ else dict_[index]
         elif ctx.NAME():
             value, _ = self.findVariable(ctx.NAME())
             return value
         elif ctx.functionCall():
             return self.visit(ctx.functionCall())
+        elif ctx.getDictKeys():
+            ctx = ctx.getDictKeys()
+            dict_name = ctx.NAME().getText()
+            temp = []
+            if dict_name in self.global_dicts:
+                return list(self.global_dicts[dict_name].keys())
+            elif dict_name in self.temp_dicts[-1].keys():
+                return list(self.temp_dicts[-1][dict_name].keys())
+            else:
+                self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
+        elif ctx.getDictValues():
+            ctx = ctx.getDictValues()
+            dict_name = ctx.NAME().getText()
+            temp = []
+            if dict_name in self.global_dicts:
+                return list(self.global_dicts[dict_name].values())
+            elif dict_name in self.temp_dicts[-1].keys():
+                return list(self.temp_dicts[-1][dict_name].values())
+            else:
+                self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
+            
             
     def findVariable(self, var_name):
         name = var_name.getText()

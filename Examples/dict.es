@@ -12,4 +12,7 @@ skribi(dict["jeden"])
 dict["jeden"] asigini 9
 skribi(dict)
 
+skribi("keys: ", slosiloj(dict))
+skribi("values: ", valoroj(dict))
+
 Adiau

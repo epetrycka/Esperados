@@ -24,6 +24,10 @@ getFromStruct   : NAME LS expr PS;
 
 functionCall    : FUN NAME LP (NAME EQUALSIGN expr (COMMA NAME EQUALSIGN expr)*)? RP ;
 
+getDictKeys     : KEYS LP NAME RP ;
+
+getDictValues   : VALUES LP NAME RP ;
+
 atom            : LP expr RP
                 | INT
                 | FLOAT
@@ -32,7 +36,9 @@ atom            : LP expr RP
                 | FALSE
                 | NAME 
                 | getFromStruct
-                | functionCall;
+                | functionCall 
+                | getDictKeys 
+                | getDictValues ;
 
 type            : INTTYPE
                 | FLOATTYPE

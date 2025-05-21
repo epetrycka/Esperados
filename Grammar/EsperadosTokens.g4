@@ -17,6 +17,8 @@ WHILE           : 'gis' ;
 DEF             : 'difini' ;
 DEL             : 'forigi' ;
 FUN             : 'funcio' ;
+KEYS            : 'slosiloj' ;
+VALUES          : 'valoroj' ;
 
 ASG             : 'asigini' ;
 ADD             : 'aldoni' ;
