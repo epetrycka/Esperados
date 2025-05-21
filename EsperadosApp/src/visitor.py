@@ -446,7 +446,6 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             else:
                 self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
             
-            
     def findVariable(self, var_name):
         name = var_name.getText()
         if self.temp_vars and name in self.temp_vars[-1].keys():
