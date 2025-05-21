@@ -23,7 +23,8 @@ instructions    : printExpr
                 | removeFromList
                 | insertToList
                 | returnStmt
-                | replaceInList
+                | replaceInStruct
+                | defDict
                 ;
 
 actions         : instructions
@@ -64,4 +65,6 @@ removeFromList  : NAME SUB expr ;
 
 insertToList    : NAME ADD LP expr COMMA expr RP ;
 
-replaceInList   : NAME LS expr PS ASG expr ;
+replaceInStruct : NAME LS expr PS ASG expr ;
+
+defDict         : GLOBAL? VARDEF DICT NAME ASG LC (expr COLON expr (COMMA expr COLON expr)*)? RC ;

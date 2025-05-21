@@ -61,6 +61,7 @@ INTTYPE         : 'entjero' ;
 FLOATTYPE       : 'flosi' ;
 STRINGTYPE      : 'snuro' ;    
 LIST            : 'listo' ;
+DICT            : 'vortaro' ;
 
 INT             : [0-9]+ ;
 fragment ESC    : '\\' ["\\/bfnrt] ;
