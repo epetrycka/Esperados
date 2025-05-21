@@ -13,8 +13,15 @@ class ReturnException(Exception):
 
 class EsperadosVisitorImpl(EsperadosVisitor):
     def raiseError(self, ctx, error_type, message):
-        line = f"line {ctx.start.line}" if ctx and ctx.start else ''
-        contents = (ctx.getText() + "\n\t") if ctx else ''
+        line = f"line {ctx.start.line}:" if ctx and ctx.start else ''
+        instruction = ' '
+        if ctx.children:
+            for child in ctx.children:
+                instruction += child.getText()
+                instruction += ' '
+        else:
+            instruction = ctx.getText()
+        contents = (f'"{instruction}"' + "\n\t") if ctx else ''
         line_message =f"{line} {contents}"
         full_message = f"\033[91m{line_message}{message}\033[0m"
         raise error_type(full_message)
