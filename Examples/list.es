@@ -3,6 +3,7 @@ Saluton
 skribi("listy test, cześć")
 
 variablo listo lista1 asigini [1, 2, 3, 9]
+
 skribi(lista1) 
 
 lista1 aldoni 3

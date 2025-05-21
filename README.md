@@ -132,12 +132,17 @@ Adiau
 ---
 
 ### Visitor (interpretacja):
+
 - [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
 - [ ] Implementacja klas i lambd.
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
-- [ ] Wynalezienie sposobu na zmienne wewnątrz funkcyjne, do których będą miały dostęp ify, pętle itp -> trzeba przetestować globalne
-- [ ] Gdzie zapisywać listy i słowniki temp?
 - [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
+
+---
+
+### Error handler:
+
+- [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
 
 </details>

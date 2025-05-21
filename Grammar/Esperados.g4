@@ -48,7 +48,7 @@ whileLoop       : WHILE LP expr RP LC actions* RC ;
 
 forEachLoop     : FOREACH NAME IN NAME LC actions* RC ;
 
-deleteStmt      : DEL NAME ;
+defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
 
 functionDef     : DEF NAME LP parameters? RP LC actions* RC ;
 

@@ -51,6 +51,7 @@ funcio salutu (nomo = k)
 forigi x
 
 variablo listo lista asigini [1, 2, vere, "lol"]
+
 skribi(lista)
 
 Adiau

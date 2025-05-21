@@ -1,6 +1,6 @@
-#Plan testów
+# Plan testów
 
-##Funkcje do przetestowania
+## Funkcje do przetestowania
 
 - [ ] Zachowania w przypadku pustego pliku, pliku z samymi komentarzami, zła kolejność Saluto Adiau
 - [ ] Przypadek błędu otwarcia pliku (test aplikacji)
