@@ -163,12 +163,25 @@ True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\n3\n0\n4\n2\nTrue
 False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
-False\nFalse\nTrue\n👋 Adiau!\n"""
+False\nFalse\nTrue\nFalse\nTrue\nTrue\n👋 Adiau!\n"""
+    assert expected == captured.out
+
+def test_operations(capsys):
+    with open(f"tests/examples/expressions/all_operations.es") as f:
+        code = f.read()
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    expected = """👋 Saluton!\nhe cos
+10.8\n2\n11\n6\n4\n👋 Adiau!\n"""
     assert expected == captured.out
 
 @pytest.mark.parametrize("filename, expected", [
     ("expressions/compare_str_and_bool.es", "Can't compare 'str' and 'bool'"),
     ("expressions/compare_str_and_int.es", "Can't compare 'str' and 'int'"),
+    ("expressions/compare_float_and_str.es", "Can't compare 'float' and 'str'"),
+    ("expressions/add_exceptions_str_int.es", "Can't add two different types: str + int"),
+    ("expressions/add_exceptions_str_float.es", "Can't add two different types: str + float"),
+    ("expressions/add_exceptions_str_bool.es", "Can't add two different types: str + bool"),
 ])
 
 def test_invalid_expressions_raise_exception(filename, expected, capsys):

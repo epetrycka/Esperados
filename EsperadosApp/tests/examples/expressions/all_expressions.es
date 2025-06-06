@@ -60,5 +60,8 @@ skribi(f malgranda g)           :O True
 skribi(f granda egala g)        :O False
 skribi(f egala g)               :O False
 skribi(f ne egala g)            :O True
+skribi(g kaj malvero)           :O False 
+skribi(g ne egala "string")     :O True
+skribi(ne "Halo")               :O True
 
 Adiau
