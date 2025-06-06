@@ -97,13 +97,88 @@ def test_variable_from_input(capsys):
     assert 'input' in visitor.temp_vars[-1]
     assert visitor.temp_vars[-1]['input'] == "Hello!"
 
+def test_first_class_functions(capsys):
+    with open(f"tests/examples/variable_definition/first_class_functions.es") as f:
+        code = f.read()
+    visitor = run_code(code)
+    captured = capsys.readouterr()
+    assert 'Saluton: Imie' in captured.out
+    assert 'x' in visitor.temp_vars[-1]
+    assert 'salutu' in visitor.functions
+
 def test_no_access_out_of_scope(capsys):
     with open(f"tests/examples/variable_definition/no_access_outofscope.es") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
         visitor = run_code(code)
-        assert "Zmienna 'x' nie istnieje." in str(exc_info.value)
+        assert "Variable 'x' is not defined" in str(exc_info.value)
         assert 'x' not in visitor.temp_vars[-1]
+
+def test_overwritting_variables(capsys):
+    with open(f"tests/examples/variable_definition/overwritting_global.es") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        visitor = run_code(code)
+        assert "Variable name x is already in use" in str(exc_info.value)
+        assert 'x' in visitor.temp_vars[-1]
+
+# =========================
+# Delete Statement
+# =========================
+
+@pytest.mark.parametrize("filename, name, expected, type", [
+    ("delete_statement/correct_delete_temp.es", "x", "423", "t"),
+    ("delete_statement/correct_delete_global.es", "y", "Hej", "g"),
+])
+
+def test_delete_statement_correct(filename, name, expected, type, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    captured = capsys.readouterr()
+    if type == "g":
+        assert name not in visitor.global_vars
+        assert expected in captured.out
+    elif type == "t":
+        assert name not in visitor.temp_vars[-1]
+        assert expected in captured.out
+
+def test_delete_statement_incorrect(capsys):
+    with open(f"tests/examples/delete_statement/delete_non_exist.es") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+        assert "Variable 'x' is not defined" in str(exc_info.value)
+
+# =========================
+# Expressions
+# =========================
+
+def test_logical_expressions(capsys):
+    with open(f"tests/examples/expressions/all_expressions.es") as f:
+        code = f.read()
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    expected = """👋 Saluton!\nTrue\nTrue\nTrue
+True\nTrue\nTrue\nFalse\nTrue\nTrue
+True\nTrue\nTrue\nFalse\nTrue\nTrue
+True\nFalse\nTrue\nFalse\nTrue\nTrue
+True\nFalse\nTrue\n3\n0\n4\n2\nTrue\nFalse\nTrue
+False\n0\nTrue\nTrue\n👋 Adiau!\n"""
+    assert expected == captured.out
+
+# @pytest.mark.parametrize("filename, name, expected", [
+#     ("delete_statement/correct_delete_temp.es", "x", "423", "t"),
+#     ("delete_statement/correct_delete_global.es", "y", "Hej", "g"),
+# ])
+
+# def test_invalid_expressions_raise_exception(filename, name, expected, capsys):
+#     with open(f"tests/examples/variable_definition/overwritting_global.es") as f:
+#         code = f.read()
+#     with pytest.raises(Exception) as exc_info:
+#         visitor = run_code(code)
+#         assert "Variable x is already in use" in str(exc_info.value)
+#         assert 'x' in visitor.temp_vars[-1]
 
 # dotąd ok
 

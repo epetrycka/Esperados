@@ -1,0 +1,4 @@
+(program skipBefore Saluton (instructions (variableExpr tutmonda variablo x asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 10)))))))))))
+(instructions (deleteStmt forigi x))
+(instructions (variableExpr variablo x asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 5)))))))))))
+(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom x))))))))) ))) Adiau skipAfter <EOF>)

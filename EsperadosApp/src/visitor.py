@@ -78,9 +78,17 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             elif ctx.INPUT():
                 value = input()
             if ctx.GLOBAL():
-                self.global_vars[varName] = value
+                try:
+                    _, _ = self.findTempVariable(ctx.NAME())
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use")
+                except NameError:
+                    self.global_vars[varName] = value
             else:
-                self.temp_vars[-1][varName] = value
+                try:
+                    _, _ = self.findGlobalVariable(ctx.NAME())
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use")
+                except NameError:
+                    self.temp_vars[-1][varName] = value
             return None
         return None
     
@@ -188,14 +196,20 @@ class EsperadosVisitorImpl(EsperadosVisitor):
 
     def visitFunctionCall(self, ctx: EsperadosParser.FunctionCallContext):
         fun_name = ctx.NAME(0).getText()
-        if fun_name not in self.functions:
+        if fun_name in self.functions:
+            function = self.functions[fun_name]
+        elif fun_name in self.global_vars:
+            function = self.global_vars[fun_name]
+        elif fun_name in self.temp_vars[-1]:
+            function = self.temp_vars[-1][fun_name]
+        else:
             self.raiseError(ctx, NameError, f"Function '{fun_name}' is not defined.")
         self.temp_vars.append(self.temp_vars[-1].copy())
         value = None
         for i in range(0, len(ctx.expr())):
-            self.functions[fun_name]["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
-        self.temp_vars[-1].update(self.functions[fun_name]["params"])
-        instructions = self.functions[fun_name]["instructions"]
+            function["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
+        self.temp_vars[-1].update(function["params"])
+        instructions = function["instructions"]
         try:
             for i in range(0, len(instructions)):
                 self.visit(instructions[i])
@@ -445,7 +459,21 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 return list(self.temp_dicts[-1][dict_name].values())
             else:
                 self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
-            
+
+    #funkcja pomocnicza
+          
+    def findTempVariable(self, var_name):
+        name = var_name.getText()
+        if self.temp_vars and name in self.temp_vars[-1].keys():
+            return (self.temp_vars[-1][name], self.temp_vars[-1])
+        elif self.temp_lists and name in self.temp_lists[-1].keys():
+            return (self.temp_lists[-1][name], self.temp_lists[-1])
+        elif self.temp_dicts and name in self.temp_dicts[-1].keys():
+            return (self.temp_dicts[-1][name], self.temp_dicts[-1])
+        else:
+            self.raiseError(None, NameError, f"Line {var_name.symbol.line}\n\tVariable '{name}' is not defined.")
+        return (None, None)
+        
     def findVariable(self, var_name):
         name = var_name.getText()
         if self.temp_vars and name in self.temp_vars[-1].keys():
@@ -454,12 +482,19 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return (self.temp_lists[-1][name], self.temp_lists[-1])
         elif self.temp_dicts and name in self.temp_dicts[-1].keys():
             return (self.temp_dicts[-1][name], self.temp_dicts[-1])
-        elif name in self.global_vars:
+        else:
+            return self.findGlobalVariable(var_name)
+    
+    def findGlobalVariable(self, var_name):
+        name = var_name.getText()
+        if name in self.global_vars:
             return (self.global_vars[name], self.global_vars)
         elif name in self.global_lists:
             return (self.global_lists[name], self.global_lists)
         elif name in self.global_dicts:
             return (self.global_dicts[name], self.global_dicts)
+        elif name in self.functions:
+            return (self.functions[name], self.functions)
         else:
-            self.raiseError(None, Exception, f"Line {var_name.symbol.line}\n\tVariable '{name}' is not defined.")
+            self.raiseError(None, NameError, f"Line {var_name.symbol.line}\n\tVariable '{name}' is not defined.")
         return (None, None)

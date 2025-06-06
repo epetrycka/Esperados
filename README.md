@@ -120,6 +120,7 @@ Adiau
 - [ ] Definiowanie map, lambd.
 - [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
 - [ ] Każda instrukcja musi kończyć się znakiem następnej lini.
+- [ ] Dodanie 'x asigini 5' bez definicji czy zmienna jest globalna czy nie zwykła zmiana wartości zmiennej już istniejącej
 
 <sub><i>Opcjonalnie:</i></sub>  
 - [ ] Definicje klasy (do rozważenia).
@@ -138,6 +139,7 @@ Adiau
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 - [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
+- [ ] Co z tymi referencjami i głęboką kopią?
 
 ---
 

@@ -7,9 +7,9 @@ To jest komentarz blokowy
 Składa się z wielu linii
 P:
 
-skribi("wpisz cos: ")
-variablo k asigini inputo()
-skribi(k)
+:O skribi("wpisz cos: ")
+:O variablo k asigini inputo()
+:O skribi(k)
 
 variablo entjero x asigini 2
 variablo flosi y asigini 1.5
