@@ -110,17 +110,15 @@ def test_no_access_out_of_scope(capsys):
     with open(f"tests/examples/variable_definition/no_access_outofscope.es") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
-        visitor = run_code(code)
-        assert "Variable 'x' is not defined" in str(exc_info.value)
-        assert 'x' not in visitor.temp_vars[-1]
+        _ = run_code(code)
+    assert "Variable 'x' is not defined" in str(exc_info.value)
 
 def test_overwritting_variables(capsys):
     with open(f"tests/examples/variable_definition/overwritting_global.es") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
-        visitor = run_code(code)
-        assert "Variable name x is already in use" in str(exc_info.value)
-        assert 'x' in visitor.temp_vars[-1]
+        _ = run_code(code)
+    assert "Variable name x is already in use" in str(exc_info.value)
 
 # =========================
 # Delete Statement
@@ -148,7 +146,7 @@ def test_delete_statement_incorrect(capsys):
         code = f.read()
     with pytest.raises(Exception) as exc_info:
         run_code(code)
-        assert "Variable 'x' is not defined" in str(exc_info.value)
+    assert "Variable 'y' is not defined" in str(exc_info.value)
 
 # =========================
 # Expressions
@@ -163,22 +161,22 @@ def test_logical_expressions(capsys):
 True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\nFalse\nTrue\nTrue
-True\nFalse\nTrue\n3\n0\n4\n2\nTrue\nFalse\nTrue
-False\n0\nTrue\nTrue\n👋 Adiau!\n"""
+True\nFalse\nTrue\n3\n0\n4\n2\nTrue
+False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
+False\nFalse\nTrue\n👋 Adiau!\n"""
     assert expected == captured.out
 
-# @pytest.mark.parametrize("filename, name, expected", [
-#     ("delete_statement/correct_delete_temp.es", "x", "423", "t"),
-#     ("delete_statement/correct_delete_global.es", "y", "Hej", "g"),
-# ])
+@pytest.mark.parametrize("filename, expected", [
+    ("expressions/compare_str_and_bool.es", "Can't compare 'str' and 'bool'"),
+    ("expressions/compare_str_and_int.es", "Can't compare 'str' and 'int'"),
+])
 
-# def test_invalid_expressions_raise_exception(filename, name, expected, capsys):
-#     with open(f"tests/examples/variable_definition/overwritting_global.es") as f:
-#         code = f.read()
-#     with pytest.raises(Exception) as exc_info:
-#         visitor = run_code(code)
-#         assert "Variable x is already in use" in str(exc_info.value)
-#         assert 'x' in visitor.temp_vars[-1]
+def test_invalid_expressions_raise_exception(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        _ = run_code(code)
+    assert expected in str(exc_info.value)
 
 # dotąd ok
 

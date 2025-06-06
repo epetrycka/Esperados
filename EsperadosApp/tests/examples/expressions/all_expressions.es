@@ -52,4 +52,13 @@ skribi(m kaj k)                 :O 0
 skribi(k au m)                  :O True
 skribi(ne (m kaj k))           :O True
 
+:O Mieszanie typów (int i float)
+variablo f asigini 5
+variablo g asigini 5.8
+
+skribi(f malgranda g)           :O True
+skribi(f granda egala g)        :O False
+skribi(f egala g)               :O False
+skribi(f ne egala g)            :O True
+
 Adiau
