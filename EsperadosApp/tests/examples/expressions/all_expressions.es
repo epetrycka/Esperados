@@ -56,11 +56,11 @@ skribi(ne (m kaj k))           :O True
 variablo f asigini 5
 variablo g asigini 5.8
 
-skribi(f malgranda g)           :O True
-skribi(f granda egala g)        :O False
-skribi(f egala g)               :O False
-skribi(f ne egala g)            :O True
-skribi(g kaj malvero)           :O False 
+skribi(f malgranda g)           :O True #FIXME
+skribi(f granda egala g)        :O False #FIXME
+skribi(f egala g)               :O False #FIXME
+skribi(f ne egala g)            :O True #FIXME
+skribi(g kaj malvero)           :O False
 skribi(g ne egala "string")     :O True
 skribi(ne "Halo")               :O True
 

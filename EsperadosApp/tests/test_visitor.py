@@ -163,7 +163,7 @@ True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\n3\n0\n4\n2\nTrue
 False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
-False\nFalse\nTrue\nFalse\nTrue\nTrue\n👋 Adiau!\n"""
+False\nFalse\nTrue\nFalse\nTrue\nTrue\n👋 Adiau!\n""" #FIXME
     assert expected == captured.out
 
 def test_operations(capsys):
@@ -172,16 +172,39 @@ def test_operations(capsys):
     _ = run_code(code)
     captured = capsys.readouterr()
     expected = """👋 Saluton!\nhe cos
-10.8\n2\n11\n6\n4\n👋 Adiau!\n"""
+10.8\n2\n11\n6\n4\n5.5\n0.8\n0\n-7
+-1.0\n2\n2.2\n7.5\n1\n6\n8.75\n3\n4.5
+2.0\n1.0\n4.0\n11.0\n3.0\n2.0
+0.5\n0\n2\n2.5\n0\n1.0\n👋 Adiau!\n""" #FIXME
     assert expected == captured.out
 
 @pytest.mark.parametrize("filename, expected", [
-    ("expressions/compare_str_and_bool.es", "Can't compare 'str' and 'bool'"),
-    ("expressions/compare_str_and_int.es", "Can't compare 'str' and 'int'"),
-    ("expressions/compare_float_and_str.es", "Can't compare 'float' and 'str'"),
+    ("expressions/compare_except_str_and_int.es", "Can't compare 'str' and 'int'"),
+    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"), #FIXME
+    ("expressions/compare_except_float_and_str.es", "Can't compare 'float' and 'str'"),
     ("expressions/add_exceptions_str_int.es", "Can't add two different types: str + int"),
     ("expressions/add_exceptions_str_float.es", "Can't add two different types: str + float"),
     ("expressions/add_exceptions_str_bool.es", "Can't add two different types: str + bool"),
+    ("expressions/sub_exceptions_str_str.es", "Can't substract two string types: str - str"), #FIXME 
+    ("expressions/sub_exceptions_str_int.es", "Can't substract two different types: str - int"),
+    ("expressions/sub_exceptions_str_float.es", "Can't substract two different types: str - float"),
+    ("expressions/sub_exceptions_str_bool.es", "Can't substract two different types: bool - str"),
+    ("expressions/multi_exceptions_str_str.es", "Can't multiply non-number types: str * str"),
+    ("expressions/multi_exceptions_str_int.es", "Can't multiply non-number types: str * int"),
+    ("expressions/multi_exceptions_str_float.es", "Can't multiply non-number types: str * float"),
+    ("expressions/multi_exceptions_str_bool.es", "Can't multiply non-number types: str * bool"),
+    ("expressions/divide_exceptions_str_str.es", "Can't divide non-number types: str / str"),
+    ("expressions/divide_exceptions_str_int.es", "Can't divide non-number types: str / int"),
+    ("expressions/divide_exceptions_str_float.es", "Can't divide non-number types: str / float"),
+    ("expressions/divide_exceptions_str_bool.es", "Can't divide non-number types: str / bool"),
+    ("expressions/divide_exceptions_false.es", "Division by zero is not allowed!"),
+    ("expressions/divide_exceptions_zero.es", "Division by zero is not allowed!"),
+    ("expressions/mod_exceptions_str_str.es", "Modulo operation requires numbers: str % str"),
+    ("expressions/mod_exceptions_str_int.es", "Modulo operation requires numbers: str % int"),
+    ("expressions/mod_exceptions_str_float.es", "Modulo operation requires numbers: str % float"),
+    ("expressions/mod_exceptions_str_bool.es", "Modulo operation requires numbers: str % bool"),
+    ("expressions/mod_exceptions_false.es", "Modulo by zero is not allowed!"),
+    ("expressions/mod_exceptions_zero.es", "Modulo by zero is not allowed!"),
 ])
 
 def test_invalid_expressions_raise_exception(filename, expected, capsys):
@@ -192,7 +215,8 @@ def test_invalid_expressions_raise_exception(filename, expected, capsys):
     assert expected in str(exc_info.value)
 
 # dotąd ok
-
+#ify, for, for each, while, for2?, funkcje, listy, słowniki
+ 
 # =========================
 # Control Structures
 # =========================
