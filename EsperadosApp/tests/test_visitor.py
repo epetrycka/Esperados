@@ -175,7 +175,8 @@ def test_operations(capsys):
 10.8\n2\n11\n6\n4\n5.5\n0.8\n0\n-7
 -1.0\n2\n2.2\n7.5\n1\n6\n8.75\n3\n4.5
 2.0\n1.0\n4.0\n11.0\n3.0\n2.0
-0.5\n0\n2\n2.5\n0\n1.0\n👋 Adiau!\n""" #FIXME
+0.5\n0\n2\n2.5\n0\n1.0
+3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n""" #FIXME
     assert expected == captured.out
 
 @pytest.mark.parametrize("filename, expected", [
@@ -205,6 +206,10 @@ def test_operations(capsys):
     ("expressions/mod_exceptions_str_bool.es", "Modulo operation requires numbers: str % bool"),
     ("expressions/mod_exceptions_false.es", "Modulo by zero is not allowed!"),
     ("expressions/mod_exceptions_zero.es", "Modulo by zero is not allowed!"),
+    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
+    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
+    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
+    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric type: str"),
 ])
 
 def test_invalid_expressions_raise_exception(filename, expected, capsys):
@@ -214,31 +219,40 @@ def test_invalid_expressions_raise_exception(filename, expected, capsys):
         _ = run_code(code)
     assert expected in str(exc_info.value)
 
-# dotąd ok
-#ify, for, for each, while, for2?, funkcje, listy, słowniki
- 
 # =========================
 # Control Structures
 # =========================
 
-def test_if_statement():
-    with open("tests/examples/control_structures/simple_if.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert 'a' not in visitor.temp_vars[-1]
-    assert visitor.temp_vars[-1]['b'] == 2
+# =========================
+# If-Elif_Else
+# =========================
 
-def test_elif_else_statement():
-    with open("tests/examples/control_structures/elif_else.es") as f:
+@pytest.mark.parametrize("filename, expected", [
+    ("if_statement/correct_if.es", "if"),
+    ("if_statement/correct_elif.es", "elif"),
+    ("if_statement/correct_else.es", "else"),
+])
+
+def test_if_statement(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.global_vars['result'] == "if"
+    assert visitor.global_vars['result'] == expected
+
+# =========================
+# For
+# =========================
 
 def test_for_loop():
     with open("tests/examples/control_structures/for_loop.es") as f:
         code = f.read()
     visitor = run_code(code)
     assert visitor.global_vars['sum'] == 10
+
+
+# dotąd ok
+#for each, while, for2?, funkcje, listy, słowniki
+
 
 def test_while_loop():
     with open("tests/examples/control_structures/while_loop.es") as f:
