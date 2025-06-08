@@ -95,6 +95,45 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return None
         return None
     
+    def visitVariableChange(self, ctx: EsperadosParser.VariableChangeContext):
+        if ctx.NAME() is not None:
+            varName = ctx.NAME().getText()
+            if ctx.INPUT():
+                value = self.input_provider()
+            elif ctx.LS():
+                try:
+                    _, where = self.findVariable(ctx.NAME())
+                except NameError:
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is not defined")
+                if (where is not self.temp_lists[-1]) and (where is not self.global_lists):
+                    self.raiseError(ctx, ValueError, f"Variable {varName} type is not a list")
+                where[varName] = []
+                for i in range(0, len(ctx.expr())):
+                    where[varName].append(self.visitExpr(ctx.expr(i)))
+                return None
+            elif ctx.LC() and ctx.COLON():
+                try:
+                    _, where = self.findVariable(ctx.NAME())
+                except NameError:
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is not defined")
+                if( where is not self.temp_dicts[-1]) and (where is not self.global_dicts):
+                    self.raiseError(ctx, ValueError, f"Variable {varName} type is not a dict")
+                where[varName] = {}
+                for i in range(0, len(ctx.expr())-1, 2):
+                    where[varName][self.visitExpr(ctx.expr(i))] = self.visitExpr(ctx.expr(i+1))
+                return None
+            elif ctx.expr():
+                value = self.visitExpr(ctx.expr())
+            try:
+                _, where = self.findVariable(ctx.NAME())
+                if where is not self.temp_vars[-1] or where is not self.global_vars:
+                    self.raiseError(ctx, ValueError, f"Variable {varName} type is a dict or list")
+                where[varName] = value
+            except NameError:
+                self.raiseError(ctx, ValueError, f"Variable name {varName} is not defined")
+            return None
+        return None
+    
     def visitDeleteStmt(self, ctx: EsperadosParser.DeleteStmtContext):
         _, where = self.findVariable(ctx.NAME())
         if where is not None:
@@ -232,12 +271,13 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         value = None
         names = []
         for i in range(0, len(ctx.expr())):
-            if ctx.NAME(i+1).getText() in names:
-                self.raiseError(ctx, NameError, f"Parameter {ctx.NAME(i+1).getText()} is redefined")
-            names.append(ctx.NAME(i+1).getText())
-            if ctx.NAME(i+1).getText() not in function["params"]:
-                self.raiseError(ctx, NameError, f"Parameter {ctx.NAME(i+1).getText()} does not apear in function definition")
-            function["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
+            param_name = ctx.NAME(i+1).getText()
+            if param_name in names:
+                self.raiseError(ctx, NameError, f"Parameter {param_name} is redefined")
+            names.append(param_name)
+            if param_name not in function["params"]:
+                self.raiseError(ctx, NameError, f"Parameter {param_name} does not apear in function definition")
+            function["params"][param_name] = self.visit(ctx.expr(i))
         if any([function["params"][key] is None for key in function["params"].keys()]):
             missed_params = [key for key in function["params"].keys() if function["params"][key] is None]
             self.raiseError(ctx, NameError, f"Function require parameters: {missed_params}")

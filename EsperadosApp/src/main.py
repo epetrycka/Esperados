@@ -1,4 +1,5 @@
 import sys
+import threading
 import os
 from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
@@ -8,6 +9,7 @@ from visualize_tree import visualize_tree
 from error_handler import ErrorListener
 
 def main(argv):
+    sys.setrecursionlimit(100000)
     if len(argv) < 2:
         raise AttributeError("Not enough arguments. Please provide a file with code (with .es extension) as an argument.")
     try:
@@ -38,4 +40,9 @@ def main(argv):
         print(ex)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    threading.stack_size(32 * 1024 * 1024)
+
+    t = threading.Thread(target=main, args=(sys.argv,))
+    t.daemon = True
+    t.start()
+    t.join()

@@ -5,7 +5,7 @@ import io
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QPushButton,
     QMessageBox, QPlainTextEdit, QLabel, QHBoxLayout,
-    QFrame, QTextEdit
+    QFrame
 )
 from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
@@ -15,9 +15,7 @@ from error_handler import ErrorListener
 from PyQt5.QtWidgets import QInputDialog
 
 from PyQt5.QtGui import (
-    QSyntaxHighlighter, QTextCharFormat, QColor, QFont,
-    QTextCursor, QTextOption, QPainter, QTextFormat,
-    QFontDatabase
+    QSyntaxHighlighter, QTextCharFormat, QColor, QFont, QPainter
 )
 from PyQt5.QtCore import Qt, QRegExp, QRect, QSize
 from PyQt5.QtWidgets import QFileDialog

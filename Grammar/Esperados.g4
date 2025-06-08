@@ -11,6 +11,7 @@ skipAfter       : ( . )*? ;
 
 instructions    : printExpr
                 | variableExpr
+                | variableChange
                 | deleteStmt
                 | condition 
                 | forLoop 
@@ -34,6 +35,8 @@ actions         : instructions
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
 variableExpr    : GLOBAL? VARDEF type? NAME ASG (expr | INPUT LP RP);
+
+variableChange  : NAME ASG (expr | INPUT LP RP | LS (expr (COMMA expr)*)? PS | LC (expr COLON expr (COMMA expr COLON expr)*)? RC);
 
 deleteStmt      : DEL NAME ;
 
