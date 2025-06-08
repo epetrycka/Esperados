@@ -243,22 +243,59 @@ def test_if_statement(filename, expected, capsys):
 # For
 # =========================
 
-def test_for_loop():
-    with open("tests/examples/control_structures/for_loop.es") as f:
+@pytest.mark.parametrize("filename, expected", [
+    ("for_loop/correct_asc_for.es", 6),
+    ("for_loop/correct_desc_for.es", 0),
+    ("for_loop/for_in_for.es", -20),
+    ("for_loop/break_statement.es", 21),
+    ("for_loop/continue_statement.es", 15),
+])
+
+def test_for_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.global_vars['sum'] == 10
+    assert visitor.global_vars['sum'] == expected
 
+@pytest.mark.parametrize("filename, expected", [
+    ("for_loop/for_exceptions_existing_var.es", "Variable name i is already in use"),
+    ("for_loop/for_exceptions_str.es", "Value string Lol is not a numberic type and cannot be used in for loop parameters"),
+])
+
+def test_for_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
+
+def test_for_warnings(capsys):
+    with open(f"tests/examples/for_loop/wrong_step.es") as f:
+        code = f.read()
+    with pytest.warns(RuntimeWarning) as record:
+        run_code(code)
+    assert any("Params start: 0, end: 5, step: -1 are not executable" in str(w.message) for w in record)
+
+# =========================
+# While
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("while_loop/correct_while.es", 66),
+    ("while_loop/while_in_while.es", 27),
+    ("while_loop/neg_condition.es", 0),
+    ("while_loop/break_statement.es", 6),
+    ("while_loop/continue_statement.es", 15),
+])
+
+def test_while_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_vars['sum'] == expected
 
 # dotąd ok
-#for each, while, for2?, funkcje, listy, słowniki
-
-
-def test_while_loop():
-    with open("tests/examples/control_structures/while_loop.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert visitor.global_vars['i'] == 5
+# funkcje, listy, for each, słowniki
 
 def test_foreach_loop():
     with open("tests/examples/control_structures/foreach_loop.es") as f:

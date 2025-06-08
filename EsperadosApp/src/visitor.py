@@ -1,3 +1,4 @@
+import warnings
 from generated.EsperadosVisitor import EsperadosVisitor
 from generated.EsperadosParser import EsperadosParser
 
@@ -131,12 +132,27 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 self.visit(ctx.actions(i))
         return None
     
+    def visitForParam(self, ctx: EsperadosParser.ForParamContext):
+        if ctx.INT():
+            return int(ctx.INT().getText())
+        elif ctx.expr():
+            value = self.visitExpr(ctx.expr())
+            if isinstance(value, str):
+                self.raiseError(ctx, ValueError, f"Value {value} is not a numberic type and cannot be used in for loop parameters")
+            return value
+    
     def visitForLoop(self, ctx: EsperadosParser.ForLoopContext):
         self.temp_vars.append(self.temp_vars[-1].copy())
-        var_name = ctx.NAME().getText()
-        start = int(ctx.INT(0).getText())
-        end = int(ctx.INT(1).getText())
-        step = int(ctx.INT(2).getText()) if ctx.INT(2) else 1
+        try:
+            _, _ = self.findVariable(ctx.NAME())
+            self.raiseError(ctx, ValueError, f"Variable name {ctx.NAME().getText()} is already in use")
+        except NameError:
+            var_name = ctx.NAME().getText()
+        start = self.visit(ctx.forParam(0))
+        end = self.visit(ctx.forParam(1))
+        step = self.visit(ctx.forParam(2)) if ctx.forParam(2) else 1
+        if (start < end and step < 0) or (start > end and step > 0) or step == 0:
+            warnings.warn(f"Params start: {start}, end: {end}, step: {step} are not executable", RuntimeWarning)
         i = start
         while (step > 0 and i < end) or (step < 0 and i > end):
             self.temp_vars[-1][var_name] = i

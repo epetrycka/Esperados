@@ -45,7 +45,9 @@ elifExpr        : ELIF LP expr RP LC actions* RC ;
 
 elseExpr        : ELSE LC actions* RC ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC actions* RC ;
+forLoop         : FOR LP NAME forParam forParam forParam? RP LC actions* RC ;
+
+forParam        : SEMICOLON (INT | expr);
 
 whileLoop       : WHILE LP expr RP LC actions* RC ;
 
