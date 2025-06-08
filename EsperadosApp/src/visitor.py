@@ -24,7 +24,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             instruction = ctx.getText() if ctx else ''
         contents = (f'"{instruction}"' + "\n") if ctx else ''
         line_message =f"{line} {contents}"
-        full_message = f"{line_message}{message}"
+        full_message = f"\033[91m{line_message}{message}\033[0m"
         raise error_type(full_message)
 
     def __init__(self, input_provider=None):
