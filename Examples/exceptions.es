@@ -3,14 +3,28 @@ Saluton
 skribi("test wyjatkow")
 
 :O multiExpr
-:O skribi(1 multigi "a")
-:O skribi(1 dividi 0)
-:O skribi("a" modulo 1)
-:O skribi(1 modulo 0)
-:O skribi(x)
+
+:O int str 
+:O skribi(1 subtrahi "a")
+
+:O int float
+skribi(1 aldoni 1.5)
+
+:O int bool
+skribi(1 aldoni vere)
+
+:O int int
+
+:O int list
+variablo listo lista1 asigini [1]
+:O skribi(1 aldoni lista1)
+
+:O int dict
+variablo vortaro dict asigini {"jeden": 1}
+:O skribi(1 subtrahi dict)
 
 :O comparisonExpr
-se (7 egala 7) {
+se (7.2 granda 1.5) {
     skribi("ok")
 }
 
@@ -30,10 +44,10 @@ variablo listo lista2 asigini [1,2,4]
 :O lista1 aldoni (0,1)
 :O lista[5] asigini 9
 :O skribi(dict["a"])
-skribi(lista[10])
+:O skribi(lista[10])
 
 :O findVariable
-skribi(x)
+:O skribi(x)
 
 :P
 por ciu test en tests {

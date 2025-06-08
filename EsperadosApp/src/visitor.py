@@ -348,13 +348,22 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     
     def visitComparisonExpr(self, ctx: EsperadosParser.ComparisonExprContext):
         value = self.visit(ctx.additionExpr(0))
+        error = False
         for i in range(1, len(ctx.additionExpr())):
             additionExpr2 = self.visit(ctx.additionExpr(i))
             if ctx.EQUAL():
                 value = value == additionExpr2
+                return value
             if ctx.INEQUAL():
                 value = value != additionExpr2
-            if type(value) != type(additionExpr2) and not isinstance(value, bool) and not isinstance(additionExpr2, bool):
+                return value
+            if (isinstance(value, str) and isinstance(additionExpr2, str) == False) or (isinstance(additionExpr2, str) and isinstance(value, str) == False): 
+                error = True
+            elif (isinstance(value, list) and isinstance(additionExpr2, list) == False) or (isinstance(additionExpr2, list) and isinstance(value, list) == False):
+                error = True
+            elif (isinstance(value, dict) and isinstance(additionExpr2, dict) == False) or (isinstance(additionExpr2, dict) and isinstance(value, dict) == False):
+                error = True
+            if error:
                 self.raiseError(ctx, TypeError, f"Can't compare '{type(value).__name__}' and '{type(additionExpr2).__name__}'")
             else:
                 if ctx.GREATER():
@@ -369,20 +378,28 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     
     def visitAdditionExpr(self, ctx: EsperadosParser.AdditionExprContext):
         value = self.visit(ctx.multiExpr(0))
+        error = False
         for i in range(1, len(ctx.multiExpr())):
             multiExpr2 = self.visit(ctx.multiExpr(i))
+            if (isinstance(value, str) or isinstance(multiExpr2, str)) or (isinstance(value, list) and isinstance(multiExpr2, list)==False) or (isinstance(value, dict) and isinstance(multiExpr2, dict) == False):
+                error = True
+            elif (isinstance(multiExpr2, list) and isinstance(value, list)==False) or (isinstance(multiExpr2, dict) and isinstance(value, dict) == False):
+                error = True
+            if (isinstance(value, str) and isinstance(multiExpr2, str)):
+                error = False
             if ctx.ADD():
-                if type(value) != type(multiExpr2):
-                    self.raiseError(ctx, TypeError, f"Can't add two different types: {type(value).__name__} + {type(multiExpr2).__name__}")
+                if (error):
+                    self.raiseError(ctx, TypeError, f"Can't add types: {type(value).__name__} + {type(multiExpr2).__name__}")
                 value = value + multiExpr2
             if ctx.SUB():
-                if type(value) != type(multiExpr2):
-                    self.raiseError(ctx, TypeError, f"Can't substract two different types: {type(value).__name__} - {type(multiExpr2).__name__}")
+                if (error):
+                    self.raiseError(ctx, TypeError, f"Can't substract types: {type(value).__name__} - {type(multiExpr2).__name__}")
                 value = value - multiExpr2
         return value
     
     def visitMultiExpr(self, ctx: EsperadosParser.MultiExprContext):
         value = self.visit(ctx.exponExpr(0))
+        error = False
         for i in range(1, len(ctx.exponExpr())):
             exponExpr2 = self.visit(ctx.exponExpr(i))
             if ctx.MULT():
@@ -407,8 +424,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         value = self.visit(ctx.atom(0))
         for i in range(1, len(ctx.atom())):
             atom2 = self.visit(ctx.atom(i))
-            if not isinstance(value, (int, float)):
-                self.raiseError(ctx, TypeError, f"Cannot exponentiate non-numeric type: {type(value).__name__}")
+            if isinstance(value, (int, float)) == False or isinstance(atom2, (int, float)) == False:
+                self.raiseError(ctx, TypeError, f"Cannot exponentiate non-numeric types: {type(value).__name__}, {type(atom2).__name__}")
             value = value ** atom2
         return value
     
