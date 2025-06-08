@@ -228,7 +228,11 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.raiseError(ctx, NameError, f"Function '{fun_name}' is not defined.")
         self.temp_vars.append(self.temp_vars[-1].copy())
         value = None
+        names = []
         for i in range(0, len(ctx.expr())):
+            if ctx.NAME(i+1).getText() in names:
+                self.raiseError(ctx, NameError, f"Parameter {ctx.NAME(i+1).getText()} is redefined")
+            names.append(ctx.NAME(i+1).getText())
             if ctx.NAME(i+1).getText() not in function["params"]:
                 self.raiseError(ctx, NameError, f"Parameter {ctx.NAME(i+1).getText()} does not apear in function definition")
             function["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
@@ -243,6 +247,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         except ReturnException as e:
             value = e.value
         _ = self.temp_vars.pop()
+        for key in function["params"].keys():
+            function["params"][key] = None
         return value
     
     def visitReturnStmt(self, ctx: EsperadosParser.ReturnStmtContext):
