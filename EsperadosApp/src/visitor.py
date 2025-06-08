@@ -317,7 +317,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.temp_dicts[-1][struct_name][index] = element
         else:
             if struct_name not in self.global_lists or struct_name not in self.temp_lists[-1].keys() and isinstance(index, int):
-                raise NameError(f"List '{struct_name}' is not defined")
+                self.raiseError(ctx, NameError, f"Struct '{struct_name}' is not defined")
         return None
     
     def visitDefDict(self, ctx: EsperadosParser.DefDictContext):

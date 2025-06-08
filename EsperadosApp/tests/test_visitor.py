@@ -163,7 +163,7 @@ True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\n3\n0\n4\n2\nTrue
 False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
-False\nFalse\nTrue\nFalse\nTrue\nTrue\n👋 Adiau!\n""" #FIXME
+False\nFalse\nTrue\nFalse\nTrue\nFalse\n👋 Adiau!\n""" #FIXME
     assert expected == captured.out
 
 def test_operations(capsys):
@@ -335,7 +335,41 @@ def test_function_def_call(filename, expected, capsys):
     ("functions/redefinition.es", "Function fun1 is already defined"),
 ])
 
-def test_for_exceptions(filename, expected, capsys):
+def test_fun_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
+
+# =========================
+# Lists
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("lists/list_def.es", [1, 2, 3, "4"]),
+    ("lists/empty_list.es", []),
+    ("lists/add_to_list.es", [1, 2, 4, 9]),
+    ("lists/add_list_to_list.es", ['lista', ['kolejna', 'lista']]),
+    ("lists/insert_val.es", [1, 2, 3, 4, 4, 5]),
+    ("lists/replace_val.es", [1, 2, 3, 1, 5]),
+])
+
+def test_list_operations(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_lists['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("lists/add_to_non_list.es", "List 'result' is not defined"),
+    ("lists/insert_str_index.es", "Index in insert function must be numeric"), #FIXME
+    ("lists/insert_non_existing_list.es", "List 'result2' is not defined"),
+    ("lists/replace_non_list.es", "Struct 'result2' is not defined"),
+    ("lists/replace_str_index.es", "Index in replace function must be numeric"), #FIXME
+])
+
+def test_lists_exceptions(filename, expected, capsys):
     with open(f"tests/examples/{filename}") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
@@ -343,15 +377,4 @@ def test_for_exceptions(filename, expected, capsys):
     assert expected in str(exc_info.value)
 
 # dotąd ok
-# funkcje, listy, for each, słowniki
-
-# =========================
-# Lists
-# =========================
-
-# def test_list_operations():
-#     with open("tests/examples/lists/list_ops.es") as f:
-#         code = f.read()
-#     visitor = run_code(code)
-#     assert visitor.global_lists['l'][0] == 0
-#     assert 1 not in visitor.global_lists['l']
+# listy, for each, słowniki

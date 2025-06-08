@@ -149,5 +149,6 @@ Adiau
 - [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
 - [ ] Walidacja czy element znajduje się w słowniku
 - [ ] Sprawdzenie czy wartość jest liczbą ?
+- [ ] Dodanie czerwonego napisu
 
 </details>

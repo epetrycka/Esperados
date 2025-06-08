@@ -62,6 +62,6 @@ skribi(f egala g)               :O False #FIXME
 skribi(f ne egala g)            :O True #FIXME
 skribi(g kaj malvero)           :O False
 skribi(g ne egala "string")     :O True
-skribi(ne "Halo")               :O True
+skribi(ne "Halo")               :O False
 
 Adiau
