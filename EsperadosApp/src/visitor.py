@@ -22,12 +22,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                 instruction += ' '
         else:
             instruction = ctx.getText() if ctx else ''
-        contents = (f'"{instruction}"' + "\n\t") if ctx else ''
+        contents = (f'"{instruction}"' + "\n") if ctx else ''
         line_message =f"{line} {contents}"
-        full_message = f"\033[91m{line_message}{message}\033[0m"
+        full_message = f"{line_message}{message}"
         raise error_type(full_message)
 
-    def __init__(self):
+    def __init__(self, input_provider=None):
         self.global_vars = {}
         self.global_lists = {}
         self.global_dicts = {}
@@ -35,6 +35,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.temp_vars = []
         self.temp_lists = []
         self.temp_dicts = []
+
+        self.input_provider = input_provider or input
 
     def visitProgram(self, ctx: EsperadosParser.ProgramContext):
         if ctx.GREETING():
@@ -77,7 +79,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             if ctx.expr():
                 value = self.visitExpr(ctx.expr())
             elif ctx.INPUT():
-                value = input()
+                value = self.input_provider()
             if ctx.GLOBAL():
                 try:
                     _, _ = self.findTempVariable(ctx.NAME())
