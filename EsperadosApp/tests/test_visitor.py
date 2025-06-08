@@ -402,4 +402,8 @@ def test_lists_exceptions(filename, expected, capsys):
     assert expected in str(exc_info.value)
 
 # dotąd ok
-# for each, słowniki
+# słowniki
+
+# =========================
+# Dictionaries
+# =========================
