@@ -5,7 +5,7 @@ import io
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QPushButton,
     QMessageBox, QPlainTextEdit, QLabel, QHBoxLayout,
-    QFrame, QTextEdit
+    QFrame, QTextEdit   
 )
 from antlr4 import *
 from generated.EsperadosLexer import EsperadosLexer
@@ -217,16 +217,17 @@ class EsperadosIDE(QWidget):
         output_label.setStyleSheet("font-weight: bold;")
         output_layout.addWidget(output_label)
         
-        self.output_area = QPlainTextEdit()
+        self.output_area = QTextEdit()
         self.output_area.setReadOnly(True)
         self.output_area.setFont(QFont("Consolas", 11))
         self.output_area.setStyleSheet("""
-            QPlainTextEdit {
+            QTextEdit {
                 background-color: #1e1e1e;
                 color: #d4d4d4;
                 border: none;
             }
         """)
+
         output_layout.addWidget(self.output_area)
         
         editor_output_layout.addWidget(output_frame, 1)
@@ -302,7 +303,7 @@ class EsperadosIDE(QWidget):
             self.status_label.setText("Finished successfully")
 
         except Exception as e:
-            self.output_area.setPlainText(str(e))
+            self.output_area.setHtml(f'<span style="color: red;">{str(e).replace("\033[91m", "").replace("\033[0m", "").replace("\t", "").replace("\n", "<br>")}</span>')
             self.status_label.setText("Finished with errors")
 
 
