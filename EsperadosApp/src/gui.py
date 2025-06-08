@@ -20,6 +20,8 @@ from PyQt5.QtGui import (
 from PyQt5.QtCore import Qt, QRegExp, QRect, QSize
 from PyQt5.QtWidgets import QFileDialog
 
+sys.setrecursionlimit(100000)
+
 class LineNumberArea(QWidget):
     def __init__(self, editor):
         super().__init__(editor)
@@ -256,7 +258,6 @@ class EsperadosIDE(QWidget):
         self.status_label.setText("Processing...")
 
         visitor = EsperadosVisitorImpl(input_provider=self.get_input_from_user)
-
         try:
             with tempfile.NamedTemporaryFile(delete=False, suffix=".es", mode='w', encoding='utf-8') as tmp_file:
                 tmp_file.write(code)
