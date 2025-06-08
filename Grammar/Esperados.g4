@@ -62,7 +62,7 @@ parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
 
 returnStmt      : RETURN expr? ;
 
-defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
+defList         : GLOBAL? VARDEF LIST NAME ASG (LS (expr (COMMA expr)*)? PS | getDictKeys | getDictValues);
 
 addToList       : NAME ADD expr ;
 

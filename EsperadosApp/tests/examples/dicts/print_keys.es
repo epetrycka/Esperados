@@ -5,6 +5,8 @@ tutmonda variablo listo result asigini []
 
 variablo listo keys asigini slosiloj(sum)
 
+skribi(keys)
+
 por ciu key en keys{
     result aldoni key
 }

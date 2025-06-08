@@ -91,10 +91,11 @@ def test_variable_def(filename, name, expected, type, capsys):
         assert visitor.temp_vars[-1][name] == expected
 
 def test_variable_from_input(capsys):
-    with open(f"tests/examples/variable_definition/variable_from_input.es") as f:
+    with open("tests/examples/variable_definition/variable_from_input.es") as f:
         code = f.read()
-    visitor = run_code(code, mock_inputs=["Hello!"])
-    assert 'input' in visitor.temp_vars[-1]
+    with patch('builtins.input', side_effect=["Hello!"]) as mocked_input:
+        visitor = run_code(code)
+        mocked_input.assert_called_once()
     assert visitor.temp_vars[-1]['input'] == "Hello!"
 
 def test_first_class_functions(capsys):
@@ -163,7 +164,7 @@ True\nTrue\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\nFalse\nTrue\nTrue
 True\nFalse\nTrue\n3\n0\n4\n2\nTrue
 False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
-False\nFalse\nTrue\nFalse\nTrue\nFalse\n👋 Adiau!\n""" #FIXME
+False\nFalse\nTrue\nFalse\nTrue\nFalse\n👋 Adiau!\n"""
     assert expected == captured.out
 
 def test_operations(capsys):
@@ -186,7 +187,7 @@ def test_operations(capsys):
     ("expressions/add_exceptions_str_int.es", "Can't add types: str + int"),
     ("expressions/add_exceptions_str_float.es", "Can't add types: str + float"),
     ("expressions/add_exceptions_str_bool.es", "Can't add types: str + bool"),
-    ("expressions/sub_exceptions_str_str.es", "Can't substract two string types: str - str"), #FIXME 
+    ("expressions/sub_exceptions_str_str.es", "Can't substract types: str - str"),
     ("expressions/sub_exceptions_str_int.es", "Can't substract types: str - int"),
     ("expressions/sub_exceptions_str_float.es", "Can't substract types: str - float"),
     ("expressions/sub_exceptions_str_bool.es", "Can't substract types: bool - str"),
@@ -314,7 +315,7 @@ def test_foreach_loop(filename, expected, capsys):
     assert visitor.global_vars['sum'] == expected
 
 @pytest.mark.parametrize("filename, expected", [
-    ("foreach_loop/non_exist_list.es", "Object lista is not iterable"), #FIXME
+    ("foreach_loop/non_exist_list.es", "Object lista is not iterable"),
 ])
 
 def test_foreach_exceptions(filename, expected, capsys):
@@ -385,10 +386,10 @@ def test_list_operations(filename, expected, capsys):
 
 @pytest.mark.parametrize("filename, expected", [
     ("lists/add_to_non_list.es", "List 'result' is not defined"),
-    ("lists/insert_str_index.es", "Index in insert function must be numeric"), #FIXME
+    ("lists/insert_str_index.es", "Index in insert function must be numeric"),
     ("lists/insert_non_existing_list.es", "List 'result2' is not defined"),
     ("lists/replace_non_list.es", "Struct 'result2' is not defined"),
-    ("lists/replace_str_index.es", "Index in replace function must be numeric"), #FIXME
+    ("lists/replace_str_index.es", "Index in replace function must be numeric"),
     ("lists/replace_outofrange.es", "List index out of range: -1"),
     ("lists/print_outofrange.es", "List index out of range. result length: 5"),
     ("lists/remove_non_exist_val.es", "Element '0' not found in list 'result'"),

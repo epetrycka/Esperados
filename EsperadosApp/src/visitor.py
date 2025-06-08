@@ -301,12 +301,22 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         list_name = ctx.NAME().getText()
         if ctx.GLOBAL():
             self.global_lists[list_name] = []
-            for i in range(0, len(ctx.expr())):
-                self.global_lists[list_name].append(self.visitExpr(ctx.expr(i)))
+            if ctx.getDictKeys():
+                self.global_lists[list_name] = self.visit(ctx.getDictKeys())
+            elif ctx.getDictValues():
+                self.global_lists[list_name] = self.visit(ctx.getDictValues())
+            else:
+                for i in range(0, len(ctx.expr())):
+                    self.global_lists[list_name].append(self.visitExpr(ctx.expr(i)))
         else:
             self.temp_lists[-1][list_name] = []
-            for i in range(0, len(ctx.expr())):
-                self.temp_lists[-1][list_name].append(self.visitExpr(ctx.expr(i)))
+            if ctx.getDictKeys():
+                self.temp_lists[-1][list_name] = self.visit(ctx.getDictKeys())
+            elif ctx.getDictValues():
+                self.temp_lists[-1][list_name] = self.visit(ctx.getDictValues())
+            else:
+                for i in range(0, len(ctx.expr())):
+                    self.temp_lists[-1][list_name].append(self.visitExpr(ctx.expr(i)))
         return None
 
     def visitAddToList(self, ctx: EsperadosParser.AddToListContext):
@@ -339,6 +349,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     def visitInsertToList(self, ctx: EsperadosParser.InsertToListContext):
         list_name = ctx.NAME().getText()
         index = self.visitExpr(ctx.expr(0))
+        if isinstance(index, str):
+            self.raiseError(ctx, ValueError, f"Index in insert function must be numeric")
         element = self.visitExpr(ctx.expr(1))
         if list_name in self.global_lists:
             self.global_lists[list_name].insert(index, element)
@@ -354,10 +366,14 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         index = self.visitExpr(ctx.expr(0))
         element = self.visitExpr(ctx.expr(1))
         if struct_name in self.global_lists:
+            if isinstance(index, str):
+                self.raiseError(ctx, ValueError, f"Index in replace function must be numeric")
             if index < 0 or index > len(self.global_lists[struct_name]):
                 self.raiseError(ctx, IndexError, f"List index out of range: {index}")
             self.global_lists[struct_name][index] = element
         elif struct_name in self.temp_lists[-1].keys():
+            if isinstance(index, str):
+                self.raiseError(ctx, ValueError, f"Index in replace function must be numeric")
             if index < 0 or index > len(self.temp_lists[-1][struct_name]):
                 self.raiseError(ctx, IndexError, f"List index out of range: {index}")
             self.temp_lists[-1][struct_name][index] = element
@@ -451,6 +467,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                     self.raiseError(ctx, TypeError, f"Can't add types: {type(value).__name__} + {type(multiExpr2).__name__}")
                 value = value + multiExpr2
             if ctx.SUB():
+                if (isinstance(value, str) and isinstance(multiExpr2, str)):
+                    error = True
                 if (error):
                     self.raiseError(ctx, TypeError, f"Can't substract types: {type(value).__name__} - {type(multiExpr2).__name__}")
                 value = value - multiExpr2
@@ -458,7 +476,6 @@ class EsperadosVisitorImpl(EsperadosVisitor):
     
     def visitMultiExpr(self, ctx: EsperadosParser.MultiExprContext):
         value = self.visit(ctx.exponExpr(0))
-        error = False
         for i in range(1, len(ctx.exponExpr())):
             exponExpr2 = self.visit(ctx.exponExpr(i))
             if ctx.MULT():
@@ -532,23 +549,28 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif ctx.functionCall():
             return self.visit(ctx.functionCall())
         elif ctx.getDictKeys():
-            ctx = ctx.getDictKeys()
-            dict_name = ctx.NAME().getText()
-            if dict_name in self.global_dicts:
-                return list(self.global_dicts[dict_name].keys())
-            elif dict_name in self.temp_dicts[-1].keys():
-                return list(self.temp_dicts[-1][dict_name].keys())
-            else:
-                self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
+            self.visit(ctx.getDictKeys())
         elif ctx.getDictValues():
-            ctx = ctx.getDictValues()
-            dict_name = ctx.NAME().getText()
-            if dict_name in self.global_dicts:
-                return list(self.global_dicts[dict_name].values())
-            elif dict_name in self.temp_dicts[-1].keys():
-                return list(self.temp_dicts[-1][dict_name].values())
-            else:
-                self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
+            self.visit(ctx.getDictValues())
+        return None
+
+    def visitGetDictKeys(self, ctx):
+        dict_name = ctx.NAME().getText()
+        if dict_name in self.global_dicts:
+            return list(self.global_dicts[dict_name].keys())
+        elif dict_name in self.temp_dicts[-1].keys():
+            return list(self.temp_dicts[-1][dict_name].keys())
+        else:
+            self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
+
+    def visitGetDictValues(self, ctx):
+        dict_name = ctx.NAME().getText()
+        if dict_name in self.global_dicts:
+            return list(self.global_dicts[dict_name].values())
+        elif dict_name in self.temp_dicts[-1].keys():
+            return list(self.temp_dicts[-1][dict_name].values())
+        else:
+            self.raiseError(ctx, NameError, f"Dict '{dict_name}' is not defined")
 
     #funkcja pomocnicza
           
