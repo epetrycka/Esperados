@@ -199,6 +199,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
 
     def visitFunctionDef(self, ctx: EsperadosParser.FunctionDefContext):
         funName = ctx.NAME().getText()
+        if funName in self.functions:
+            self.raiseError(ctx, NameError, f"Function {funName} is already defined")
         self.functions[funName] = {"params": {}, "instructions": None}
         if ctx.parameters():
             self.visitParameters(ctx.parameters(), funName)
@@ -207,6 +209,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
 
     def visitParameters(self, ctx: EsperadosParser.ParametersContext, funName: str):
         for i in range(0, len(ctx.NAME())):
+            if ctx.NAME(i).getText() in self.functions[funName]["params"]:
+                self.raiseError(ctx, NameError, f"Parameter name '{ctx.NAME(i).getText()}' is already used in this function definition")
             self.functions[funName]["params"][ctx.NAME(i).getText()] = None
         return None
 
@@ -223,7 +227,12 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.temp_vars.append(self.temp_vars[-1].copy())
         value = None
         for i in range(0, len(ctx.expr())):
+            if ctx.NAME(i+1).getText() not in function["params"]:
+                self.raiseError(ctx, NameError, f"Parameter {ctx.NAME(i+1).getText()} does not apear in function definition")
             function["params"][ctx.NAME(i+1).getText()] = self.visit(ctx.expr(i))
+        if any([function["params"][key] is None for key in function["params"].keys()]):
+            missed_params = [key for key in function["params"].keys() if function["params"][key] is None]
+            self.raiseError(ctx, NameError, f"Function require parameters: {missed_params}")
         self.temp_vars[-1].update(function["params"])
         instructions = function["instructions"]
         try:
@@ -308,7 +317,7 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.temp_dicts[-1][struct_name][index] = element
         else:
             if struct_name not in self.global_lists or struct_name not in self.temp_lists[-1].keys() and isinstance(index, int):
-                raise NameError(f"List '{struct_name}' is not defined")
+                self.raiseError(ctx, NameError, f"Struct '{struct_name}' is not defined")
         return None
     
     def visitDefDict(self, ctx: EsperadosParser.DefDictContext):

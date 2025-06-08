@@ -140,6 +140,7 @@ Adiau
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 - [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
 - [ ] Co z tymi referencjami i głęboką kopią?
+- [ ] Wprowadzić limit rekurencji
 
 ---
 
@@ -148,5 +149,6 @@ Adiau
 - [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
 - [ ] Walidacja czy element znajduje się w słowniku
 - [ ] Sprawdzenie czy wartość jest liczbą ?
+- [ ] Dodanie czerwonego napisu
 
 </details>
