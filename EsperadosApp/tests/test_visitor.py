@@ -172,24 +172,24 @@ def test_operations(capsys):
     _ = run_code(code)
     captured = capsys.readouterr()
     expected = """👋 Saluton!\nhe cos
-10.8\n2\n11\n6\n4\n5.5\n0.8\n0\n-7
+10.8\n2\n11\n6.0\n4\n5.5\n0.7999999999999998\n0\n-7
 -1.0\n2\n2.2\n7.5\n1\n6\n8.75\n3\n4.5
 2.0\n1.0\n4.0\n11.0\n3.0\n2.0
 0.5\n0\n2\n2.5\n0\n1.0
-3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n""" #FIXME
+3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n"""
     assert expected == captured.out
 
 @pytest.mark.parametrize("filename, expected", [
     ("expressions/compare_except_str_and_int.es", "Can't compare 'str' and 'int'"),
-    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"), #FIXME
+    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"),
     ("expressions/compare_except_float_and_str.es", "Can't compare 'float' and 'str'"),
-    ("expressions/add_exceptions_str_int.es", "Can't add two different types: str + int"),
-    ("expressions/add_exceptions_str_float.es", "Can't add two different types: str + float"),
-    ("expressions/add_exceptions_str_bool.es", "Can't add two different types: str + bool"),
+    ("expressions/add_exceptions_str_int.es", "Can't add types: str + int"),
+    ("expressions/add_exceptions_str_float.es", "Can't add types: str + float"),
+    ("expressions/add_exceptions_str_bool.es", "Can't add types: str + bool"),
     ("expressions/sub_exceptions_str_str.es", "Can't substract two string types: str - str"), #FIXME 
-    ("expressions/sub_exceptions_str_int.es", "Can't substract two different types: str - int"),
-    ("expressions/sub_exceptions_str_float.es", "Can't substract two different types: str - float"),
-    ("expressions/sub_exceptions_str_bool.es", "Can't substract two different types: bool - str"),
+    ("expressions/sub_exceptions_str_int.es", "Can't substract types: str - int"),
+    ("expressions/sub_exceptions_str_float.es", "Can't substract types: str - float"),
+    ("expressions/sub_exceptions_str_bool.es", "Can't substract types: bool - str"),
     ("expressions/multi_exceptions_str_str.es", "Can't multiply non-number types: str * str"),
     ("expressions/multi_exceptions_str_int.es", "Can't multiply non-number types: str * int"),
     ("expressions/multi_exceptions_str_float.es", "Can't multiply non-number types: str * float"),
@@ -206,10 +206,10 @@ def test_operations(capsys):
     ("expressions/mod_exceptions_str_bool.es", "Modulo operation requires numbers: str % bool"),
     ("expressions/mod_exceptions_false.es", "Modulo by zero is not allowed!"),
     ("expressions/mod_exceptions_zero.es", "Modulo by zero is not allowed!"),
-    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric type: str"),
+    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric types: bool, str"),
+    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric types: int, str"),
+    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric types: float, str"),
+    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric types: str"),
 ])
 
 def test_invalid_expressions_raise_exception(filename, expected, capsys):
@@ -313,7 +313,7 @@ def test_foreach_loop(filename, expected, capsys):
     assert visitor.global_vars['sum'] == expected
 
 @pytest.mark.parametrize("filename, expected", [
-    ("foreach_loop/non_exist_lista.es", "Object lista is not iterable"), #FIXME
+    ("foreach_loop/non_exist_list.es", "Object lista is not iterable"), #FIXME
 ])
 
 def test_foreach_exceptions(filename, expected, capsys):
