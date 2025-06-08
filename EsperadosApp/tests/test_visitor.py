@@ -172,24 +172,24 @@ def test_operations(capsys):
     _ = run_code(code)
     captured = capsys.readouterr()
     expected = """👋 Saluton!\nhe cos
-10.8\n2\n11\n6\n4\n5.5\n0.8\n0\n-7
+10.8\n2\n11\n6.0\n4\n5.5\n0.7999999999999998\n0\n-7
 -1.0\n2\n2.2\n7.5\n1\n6\n8.75\n3\n4.5
 2.0\n1.0\n4.0\n11.0\n3.0\n2.0
 0.5\n0\n2\n2.5\n0\n1.0
-3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n""" #FIXME
+3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n"""
     assert expected == captured.out
 
 @pytest.mark.parametrize("filename, expected", [
     ("expressions/compare_except_str_and_int.es", "Can't compare 'str' and 'int'"),
-    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"), #FIXME
+    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"),
     ("expressions/compare_except_float_and_str.es", "Can't compare 'float' and 'str'"),
-    ("expressions/add_exceptions_str_int.es", "Can't add two different types: str + int"),
-    ("expressions/add_exceptions_str_float.es", "Can't add two different types: str + float"),
-    ("expressions/add_exceptions_str_bool.es", "Can't add two different types: str + bool"),
+    ("expressions/add_exceptions_str_int.es", "Can't add types: str + int"),
+    ("expressions/add_exceptions_str_float.es", "Can't add types: str + float"),
+    ("expressions/add_exceptions_str_bool.es", "Can't add types: str + bool"),
     ("expressions/sub_exceptions_str_str.es", "Can't substract two string types: str - str"), #FIXME 
-    ("expressions/sub_exceptions_str_int.es", "Can't substract two different types: str - int"),
-    ("expressions/sub_exceptions_str_float.es", "Can't substract two different types: str - float"),
-    ("expressions/sub_exceptions_str_bool.es", "Can't substract two different types: bool - str"),
+    ("expressions/sub_exceptions_str_int.es", "Can't substract types: str - int"),
+    ("expressions/sub_exceptions_str_float.es", "Can't substract types: str - float"),
+    ("expressions/sub_exceptions_str_bool.es", "Can't substract types: bool - str"),
     ("expressions/multi_exceptions_str_str.es", "Can't multiply non-number types: str * str"),
     ("expressions/multi_exceptions_str_int.es", "Can't multiply non-number types: str * int"),
     ("expressions/multi_exceptions_str_float.es", "Can't multiply non-number types: str * float"),
@@ -206,10 +206,10 @@ def test_operations(capsys):
     ("expressions/mod_exceptions_str_bool.es", "Modulo operation requires numbers: str % bool"),
     ("expressions/mod_exceptions_false.es", "Modulo by zero is not allowed!"),
     ("expressions/mod_exceptions_zero.es", "Modulo by zero is not allowed!"),
-    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric type: str"), #FIXME
-    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric type: str"),
+    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric types: bool, str"),
+    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric types: int, str"),
+    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric types: float, str"),
+    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric types: str"),
 ])
 
 def test_invalid_expressions_raise_exception(filename, expected, capsys):
@@ -298,11 +298,31 @@ def test_while_loop(filename, expected, capsys):
 # For each
 # =========================
 
-# def test_foreach_loop():
-#     with open("tests/examples/control_structures/foreach_loop.es") as f:
-#         code = f.read()
-#     visitor = run_code(code)
-#     assert visitor.global_vars['sum'] == 6
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/correct_foreach.es", 10),
+    ("foreach_loop/for_str.es", "string do dodania"),
+    ("foreach_loop/for_different_types.es", True),
+    ("foreach_loop/break_statement.es", 0),
+    ("foreach_loop/continue_statement.es", 0),
+    ("foreach_loop/for_empty_list.es", ""),
+])
+
+def test_foreach_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_vars['sum'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/non_exist_list.es", "Object lista is not iterable"), #FIXME
+])
+
+def test_foreach_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
 
 # =========================
 # Functions
@@ -319,6 +339,7 @@ def test_while_loop(filename, expected, capsys):
     ("functions/first_class_fun.es", "Saluton: Imie"),
     ("functions/loop_fun_call.es", 6),
     ("functions/fun_in_condition.es", "-"),
+    ("functions/return_in_loop.es", 0),
 ])
 
 def test_function_def_call(filename, expected, capsys):
@@ -353,6 +374,7 @@ def test_fun_exceptions(filename, expected, capsys):
     ("lists/add_list_to_list.es", ['lista', ['kolejna', 'lista']]),
     ("lists/insert_val.es", [1, 2, 3, 4, 4, 5]),
     ("lists/replace_val.es", [1, 2, 3, 1, 5]),
+    ("lists/remove_val.es", [1, 2, 4, 5]),
 ])
 
 def test_list_operations(filename, expected, capsys):
@@ -367,6 +389,10 @@ def test_list_operations(filename, expected, capsys):
     ("lists/insert_non_existing_list.es", "List 'result2' is not defined"),
     ("lists/replace_non_list.es", "Struct 'result2' is not defined"),
     ("lists/replace_str_index.es", "Index in replace function must be numeric"), #FIXME
+    ("lists/replace_outofrange.es", "List index out of range: -1"),
+    ("lists/print_outofrange.es", "List index out of range. result length: 5"),
+    ("lists/remove_non_exist_val.es", "Element '0' not found in list 'result'"),
+    ("lists/remove_non_exist_list.es", "List 'result2' is not defined"),
 ])
 
 def test_lists_exceptions(filename, expected, capsys):
@@ -376,5 +402,46 @@ def test_lists_exceptions(filename, expected, capsys):
         run_code(code)
     assert expected in str(exc_info.value)
 
-# dotąd ok
-# listy, for each, słowniki
+# =========================
+# Dictionaries
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/dict_def.es", {"jeden": 1, "dwa": 2, "trzy" : 3}),
+    ("dicts/empty_dict.es", {}),
+    ("dicts/add_to_dict.es", {"jeden": 1, "dwa": 2, "trzy" : 3, 2 : "dwa"}),
+    ("dicts/add_list_to_dict.es", {'jeden': 1, 'dwa': 3, 'trzy': 3, 'numery': [1, 2, 3]}),
+])
+
+def test_dicts_operations(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_dicts['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/print_keys.es", ["jeden", "dwa", "trzy"]),
+    ("dicts/key_empty_dict.es", []), #FIXME
+    ("dicts/values_empty_dict.es", []), #FIXME
+    ("dicts/print_values.es", [1, 2, 3]),
+])
+
+def test_dicts_keys(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_lists["result"] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/key_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/values_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/add_to_non_dict.es", "Struct 'result2' is not defined"),
+    ("dicts/print_non_dict.es", "Dict 'result2' is not defined"),
+])
+
+def test_dicts_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)

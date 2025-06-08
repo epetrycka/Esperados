@@ -151,4 +151,11 @@ Adiau
 - [ ] Sprawdzenie czy wartość jest liczbą ?
 - [ ] Dodanie czerwonego napisu
 
+### Final:
+
+- [ ] Przygotować sprawozdanie
+- [ ] Dodać instalator
+- [ ] Dodać przykładowe kody jakies popularne jak np fibonaci czy coś
+- [ ] Nazwy errorów pozmieniać zeby nie wszystkie były NAME ERROR tylko odpowiednie do przypadku lol
+
 </details>

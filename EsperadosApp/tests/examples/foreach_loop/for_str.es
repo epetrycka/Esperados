@@ -1,7 +1,7 @@
 Saluton
 
-tutmonda variablo lista asigini 7
-tutmonda variablo sum asigini 0
+tutmonda variablo lista asigini "string do dodania"
+tutmonda variablo sum asigini ""
 
 por ciu item en lista {
   tutmonda variablo sum asigini (sum aldoni item)

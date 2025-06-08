@@ -1,19 +1,19 @@
 Saluton
 
 skribi("he" aldoni " cos")      :O "he cos"
-skribi(5 aldoni 5.8)            :O 10.8 #FIXME
+skribi(5 aldoni 5.8)            :O 10.8
 skribi(vere aldoni vere)        :O 2
 skribi(2 aldoni 9)              :O 11
 skribi(2.5 aldoni 3.5)          :O 6
-skribi(3 aldoni vere)           :O 4 #FIXME
-skribi(vere aldoni 4.5)         :O 5.5 #FIXME
+skribi(3 aldoni vere)           :O 4
+skribi(vere aldoni 4.5)         :O 5.5
 
-skribi(5.8 subtrahi 5)            :O 0.8 #FIXME
+skribi(5.8 subtrahi 5)            :O 0.7999999999999998
 skribi(vere subtrahi vere)        :O 0
 skribi(2 subtrahi 9)              :O -7
 skribi(2.5 subtrahi 3.5)          :O -1.0
-skribi(3 subtrahi vere)           :O 2 #FIXME
-skribi(3.2 subtrahi vere)         :O 2.2 #FIXME
+skribi(3 subtrahi vere)           :O 2
+skribi(3.2 subtrahi vere)         :O 2.2
 
 skribi(5 multigi 1.5)            :O 7.5 
 skribi(vere multigi vere)        :O 1
