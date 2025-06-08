@@ -273,7 +273,8 @@ class EsperadosIDE(QWidget):
             try:
                 tree = parser.program()
             except Exception as syntax_error:
-                self.output_area.setPlainText({syntax_error})
+                self.output_area.setHtml(f'<span style="color: red;">{str(syntax_error)}</span>')
+                # self.output_area.setPlainText(str(syntax_error))
                 self.status_label.setText("Finished with syntax error")
                 return
 
