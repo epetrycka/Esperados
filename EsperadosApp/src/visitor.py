@@ -185,6 +185,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         self.temp_vars.append(self.temp_vars[-1].copy())
         var_name = ctx.NAME(0).getText()
         lista, _ = self.findVariable(ctx.NAME(1))
+        if not isinstance(lista, (list, str)):
+            self.raiseError(ctx, ValueError, f"'Object {ctx.NAME(1)} is not iterable")
         for var in lista:
             self.temp_vars[-1][var_name] = var
             try:
@@ -484,7 +486,6 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif ctx.getDictKeys():
             ctx = ctx.getDictKeys()
             dict_name = ctx.NAME().getText()
-            temp = []
             if dict_name in self.global_dicts:
                 return list(self.global_dicts[dict_name].keys())
             elif dict_name in self.temp_dicts[-1].keys():
@@ -494,7 +495,6 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         elif ctx.getDictValues():
             ctx = ctx.getDictValues()
             dict_name = ctx.NAME().getText()
-            temp = []
             if dict_name in self.global_dicts:
                 return list(self.global_dicts[dict_name].values())
             elif dict_name in self.temp_dicts[-1].keys():

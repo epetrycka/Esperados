@@ -48,8 +48,6 @@ If not:
 cd EsperadosApp
 pytest
 ```
-> [!WARNING]
-> No runnable tests yet
 
 ### Notes
 ```

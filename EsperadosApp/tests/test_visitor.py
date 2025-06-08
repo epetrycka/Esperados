@@ -304,6 +304,7 @@ def test_while_loop(filename, expected, capsys):
     ("foreach_loop/for_different_types.es", True),
     ("foreach_loop/break_statement.es", 0),
     ("foreach_loop/continue_statement.es", 0),
+    ("foreach_loop/for_empty_list.es", ""),
 ])
 
 def test_foreach_loop(filename, expected, capsys):
@@ -401,9 +402,46 @@ def test_lists_exceptions(filename, expected, capsys):
         run_code(code)
     assert expected in str(exc_info.value)
 
-# dotąd ok
-# słowniki
-
 # =========================
 # Dictionaries
 # =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/dict_def.es", {"jeden": 1, "dwa": 2, "trzy" : 3}),
+    ("dicts/empty_dict.es", {}),
+    ("dicts/add_to_dict.es", {"jeden": 1, "dwa": 2, "trzy" : 3, 2 : "dwa"}),
+    ("dicts/add_list_to_dict.es", {'jeden': 1, 'dwa': 3, 'trzy': 3, 'numery': [1, 2, 3]}),
+])
+
+def test_dicts_operations(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_dicts['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/print_keys.es", ["jeden", "dwa", "trzy"]),
+    ("dicts/key_empty_dict.es", []), #FIXME
+    ("dicts/values_empty_dict.es", []), #FIXME
+    ("dicts/print_values.es", [1, 2, 3]),
+])
+
+def test_dicts_keys(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_lists["result"] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/key_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/values_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/add_to_non_dict.es", "Struct 'result2' is not defined"),
+    ("dicts/print_non_dict.es", "Dict 'result2' is not defined"),
+])
+
+def test_dicts_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
