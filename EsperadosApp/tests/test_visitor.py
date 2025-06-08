@@ -298,11 +298,30 @@ def test_while_loop(filename, expected, capsys):
 # For each
 # =========================
 
-# def test_foreach_loop():
-#     with open("tests/examples/control_structures/foreach_loop.es") as f:
-#         code = f.read()
-#     visitor = run_code(code)
-#     assert visitor.global_vars['sum'] == 6
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/correct_foreach.es", 10),
+    ("foreach_loop/for_str.es", "string do dodania"),
+    ("foreach_loop/for_different_types.es", True),
+    ("foreach_loop/break_statement.es", 0),
+    ("foreach_loop/continue_statement.es", 0),
+])
+
+def test_foreach_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_vars['sum'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/non_exist_lista.es", "Object lista is not iterable"), #FIXME
+])
+
+def test_foreach_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
 
 # =========================
 # Functions
@@ -319,6 +338,7 @@ def test_while_loop(filename, expected, capsys):
     ("functions/first_class_fun.es", "Saluton: Imie"),
     ("functions/loop_fun_call.es", 6),
     ("functions/fun_in_condition.es", "-"),
+    ("functions/return_in_loop.es", 0),
 ])
 
 def test_function_def_call(filename, expected, capsys):
@@ -353,6 +373,7 @@ def test_fun_exceptions(filename, expected, capsys):
     ("lists/add_list_to_list.es", ['lista', ['kolejna', 'lista']]),
     ("lists/insert_val.es", [1, 2, 3, 4, 4, 5]),
     ("lists/replace_val.es", [1, 2, 3, 1, 5]),
+    ("lists/remove_val.es", [1, 2, 4, 5]),
 ])
 
 def test_list_operations(filename, expected, capsys):
@@ -367,6 +388,10 @@ def test_list_operations(filename, expected, capsys):
     ("lists/insert_non_existing_list.es", "List 'result2' is not defined"),
     ("lists/replace_non_list.es", "Struct 'result2' is not defined"),
     ("lists/replace_str_index.es", "Index in replace function must be numeric"), #FIXME
+    ("lists/replace_outofrange.es", "List index out of range: -1"),
+    ("lists/print_outofrange.es", "List index out of range. result length: 5"),
+    ("lists/remove_non_exist_val.es", "Element '0' not found in list 'result'"),
+    ("lists/remove_non_exist_list.es", "List 'result2' is not defined"),
 ])
 
 def test_lists_exceptions(filename, expected, capsys):
@@ -377,4 +402,4 @@ def test_lists_exceptions(filename, expected, capsys):
     assert expected in str(exc_info.value)
 
 # dotąd ok
-# listy, for each, słowniki
+# for each, słowniki

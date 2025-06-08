@@ -1,6 +1,6 @@
 Saluton
 
-tutmonda variablo listo lista asigini ["hej", 1, 2, "cos", vere, 0, 5, malvero]
+tutmonda variablo listo lista asigini ["hej", 1, 2, "cos", vere, 0, 5, malvero, 9]
 
 difini zapisz(lista) {
     por ciu item en lista{
@@ -11,7 +11,5 @@ difini zapisz(lista) {
 }
 
 tutmonda variablo result asigini funcio zapisz(lista = lista)
-
-skribi(result)
 
 Adiau
