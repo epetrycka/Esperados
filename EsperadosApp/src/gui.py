@@ -145,7 +145,6 @@ class EsperadosHighlighter(QSyntaxHighlighter):
                 length = pattern.matchedLength()
                 self.setFormat(index, length, fmt)
                 index = pattern.indexIn(text, index + length)
-
         self.setCurrentBlockState(0)
 
 class EsperadosIDE(QWidget):
@@ -331,7 +330,6 @@ class EsperadosIDE(QWidget):
             return text
         else:
             return ""
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
