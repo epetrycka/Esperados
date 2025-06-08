@@ -140,6 +140,7 @@ Adiau
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 - [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
 - [ ] Co z tymi referencjami i głęboką kopią?
+- [ ] Wprowadzić limit rekurencji
 
 ---
 

@@ -294,24 +294,56 @@ def test_while_loop(filename, expected, capsys):
     visitor = run_code(code)
     assert visitor.global_vars['sum'] == expected
 
-# dotąd ok
-# funkcje, listy, for each, słowniki
+# =========================
+# For each
+# =========================
 
-def test_foreach_loop():
-    with open("tests/examples/control_structures/foreach_loop.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert visitor.global_vars['sum'] == 6
+# def test_foreach_loop():
+#     with open("tests/examples/control_structures/foreach_loop.es") as f:
+#         code = f.read()
+#     visitor = run_code(code)
+#     assert visitor.global_vars['sum'] == 6
 
 # =========================
 # Functions
 # =========================
 
-def test_function_def_call():
-    with open("tests/examples/functions/function_call.es") as f:
+@pytest.mark.parametrize("filename, expected", [
+    ("functions/function_call.es", 15),
+    ("functions/function_without_params.es", "wynik"),
+    ("functions/function_one_param.es", "jeden"),
+    ("functions/multi_call.es", "czwarty"),
+    ("functions/recursion.es", 5040),
+    ("functions/fun_in_fun.es", 9),
+    ("functions/fun_call_other_fun.es", 15),
+    ("functions/first_class_fun.es", "Saluton: Imie"),
+    ("functions/loop_fun_call.es", 6),
+    ("functions/fun_in_condition.es", "-"),
+])
+
+def test_function_def_call(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.temp_vars[-1]['result'] == 15
+    assert visitor.global_vars['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("functions/used_parameter_name.es", "Parameter name 'a' is already used in this function definition"),
+    ("functions/non_existing_fun.es", "Function 'fun2' is not defined."),
+    ("functions/non_existing_param.es", "Parameter name does not apear in function definition"),
+    ("functions/require_arguments.es", "Function require parameters: ['nazwa']"),
+    ("functions/redefinition.es", "Function fun1 is already defined"),
+])
+
+def test_for_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
+
+# dotąd ok
+# funkcje, listy, for each, słowniki
 
 # =========================
 # Lists

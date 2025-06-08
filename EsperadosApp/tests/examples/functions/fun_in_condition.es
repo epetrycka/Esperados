@@ -16,6 +16,4 @@ se (funcio fun(a = a)){
     tutmonda variablo result asigini "-"
 }
 
-skribi(result)
-
 Adiau
