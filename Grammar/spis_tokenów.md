@@ -18,22 +18,22 @@
 | `daurigi`    | continue           | Loop control           | ✅     |
 | `difini`     | def                | Function definition    | ✅     |
 | `forigi`     | delete             | Deletion               | ✅     |
-| `provu`      | try                | Exception handling     |        |
-| `krom`       | except             | Exception handling     |        |
 | `malvero`    | false              | Boolean literal        | ✅     |
 | `vere`       | true               | Boolean literal        | ✅     |
-| `finfine`    | finally            | Exception handling     |        |
-| `klaso`      | class              | Class definition       |        |
 | `tutmonda`   | global             | Scope modifier         | ✅     |
-| `estas`      | is                 | Identity operator      |        |
 | `funkcio`    | funkcja            | Function definition    | ✅     |
-| `nenio`      | none               | Null literal           |        |
 | `ne`         | not                | Logical negation       | ✅     |
 | `reveni`     | return             | Return statement       | ✅     |
-| `slosiloj`   |                    | Gets dictionary keys   |         |
-| `valoroj`    |                    | Gets dictionary values |        |
+| `slosiloj`   | keys               | Gets dictionary keys   | ✅     |
+| `valoroj`    | values             | Gets dictionary values | ✅     |
 | `Saluton`    | (start of program) | Program entry point    | ✅     |
 | `Adiau`      | (end of program)   | Program termination    | ✅     |
+| `estas`      | is                 | Identity operator      |        |
+| `klaso`      | class              | Class definition       |        |
+| `nenio`      | none               | Null literal           |        |
+| `krom`       | except             | Exception handling     |        |
+| `provu`      | try                | Exception handling     |        |
+| `finfine`    | finally            | Exception handling     |        |
 
 ---
 

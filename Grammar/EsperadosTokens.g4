@@ -65,10 +65,10 @@ STRINGTYPE      : 'snuro' ;
 LIST            : 'listo' ;
 DICT            : 'vortaro' ;
 
-INT             : [0-9]+ ;
+INT             : '-'?[0-9]+ ;
 fragment ESC    : '\\' ["\\/bfnrt] ;
 STRING          : '"' (ESC | ~["\\\r\n])* '"' ;
-FLOAT           : [0-9]+ '.' [0-9]+ ;
+FLOAT           : '-'?[0-9]+ '.' [0-9]+ ;
 
 NAME            : [a-zA-Z] [a-zA-Z0-9_]* ;
 

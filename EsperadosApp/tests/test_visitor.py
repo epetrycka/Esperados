@@ -91,74 +91,358 @@ def test_variable_def(filename, name, expected, type, capsys):
         assert visitor.temp_vars[-1][name] == expected
 
 def test_variable_from_input(capsys):
-    with open(f"tests/examples/variable_definition/variable_from_input.es") as f:
+    with open("tests/examples/variable_definition/variable_from_input.es") as f:
         code = f.read()
-    visitor = run_code(code, mock_inputs=["Hello!"])
-    assert 'input' in visitor.temp_vars[-1]
+    with patch('builtins.input', side_effect=["Hello!"]) as mocked_input:
+        visitor = run_code(code)
+        mocked_input.assert_called_once()
     assert visitor.temp_vars[-1]['input'] == "Hello!"
+
+def test_first_class_functions(capsys):
+    with open(f"tests/examples/variable_definition/first_class_functions.es") as f:
+        code = f.read()
+    visitor = run_code(code)
+    captured = capsys.readouterr()
+    assert 'Saluton: Imie' in captured.out
+    assert 'x' in visitor.temp_vars[-1]
+    assert 'salutu' in visitor.functions
 
 def test_no_access_out_of_scope(capsys):
     with open(f"tests/examples/variable_definition/no_access_outofscope.es") as f:
         code = f.read()
     with pytest.raises(Exception) as exc_info:
-        visitor = run_code(code)
-        assert "Zmienna 'x' nie istnieje." in str(exc_info.value)
-        assert 'x' not in visitor.temp_vars[-1]
+        _ = run_code(code)
+    assert "Variable 'x' is not defined" in str(exc_info.value)
 
-# dotąd ok
+def test_overwritting_variables(capsys):
+    with open(f"tests/examples/variable_definition/overwritting_global.es") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        _ = run_code(code)
+    assert "Variable name x is already in use" in str(exc_info.value)
+
+# =========================
+# Delete Statement
+# =========================
+
+@pytest.mark.parametrize("filename, name, expected, type", [
+    ("delete_statement/correct_delete_temp.es", "x", "423", "t"),
+    ("delete_statement/correct_delete_global.es", "y", "Hej", "g"),
+])
+
+def test_delete_statement_correct(filename, name, expected, type, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    captured = capsys.readouterr()
+    if type == "g":
+        assert name not in visitor.global_vars
+        assert expected in captured.out
+    elif type == "t":
+        assert name not in visitor.temp_vars[-1]
+        assert expected in captured.out
+
+def test_delete_statement_incorrect(capsys):
+    with open(f"tests/examples/delete_statement/delete_non_exist.es") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert "Variable 'y' is not defined" in str(exc_info.value)
+
+# =========================
+# Expressions
+# =========================
+
+def test_logical_expressions(capsys):
+    with open(f"tests/examples/expressions/all_expressions.es") as f:
+        code = f.read()
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    expected = """👋 Saluton!\nTrue\nTrue\nTrue
+True\nTrue\nTrue\nFalse\nTrue\nTrue
+True\nTrue\nTrue\nFalse\nTrue\nTrue
+True\nFalse\nTrue\nFalse\nTrue\nTrue
+True\nFalse\nTrue\n3\n0\n4\n2\nTrue
+False\nTrue\nFalse\n0\nTrue\nTrue\nTrue
+False\nFalse\nTrue\nFalse\nTrue\nFalse\n👋 Adiau!\n"""
+    assert expected == captured.out
+
+def test_operations(capsys):
+    with open(f"tests/examples/expressions/all_operations.es") as f:
+        code = f.read()
+    _ = run_code(code)
+    captured = capsys.readouterr()
+    expected = """👋 Saluton!\nhe cos
+10.8\n2\n11\n6.0\n4\n5.5\n0.7999999999999998\n0\n-7
+-1.0\n2\n2.2\n7.5\n1\n6\n8.75\n3\n4.5
+2.0\n1.0\n4.0\n11.0\n3.0\n2.0
+0.5\n0\n2\n2.5\n0\n1.0
+3.0\n1\n8\n0.8\n3\n1.0\n👋 Adiau!\n"""
+    assert expected == captured.out
+
+@pytest.mark.parametrize("filename, expected", [
+    ("expressions/compare_except_str_and_int.es", "Can't compare 'str' and 'int'"),
+    ("expressions/compare_except_str_and_bool.es", "Can't compare 'str' and 'bool'"),
+    ("expressions/compare_except_float_and_str.es", "Can't compare 'float' and 'str'"),
+    ("expressions/add_exceptions_str_int.es", "Can't add types: str + int"),
+    ("expressions/add_exceptions_str_float.es", "Can't add types: str + float"),
+    ("expressions/add_exceptions_str_bool.es", "Can't add types: str + bool"),
+    ("expressions/sub_exceptions_str_str.es", "Can't substract types: str - str"),
+    ("expressions/sub_exceptions_str_int.es", "Can't substract types: str - int"),
+    ("expressions/sub_exceptions_str_float.es", "Can't substract types: str - float"),
+    ("expressions/sub_exceptions_str_bool.es", "Can't substract types: bool - str"),
+    ("expressions/multi_exceptions_str_str.es", "Can't multiply non-number types: str * str"),
+    ("expressions/multi_exceptions_str_int.es", "Can't multiply non-number types: str * int"),
+    ("expressions/multi_exceptions_str_float.es", "Can't multiply non-number types: str * float"),
+    ("expressions/multi_exceptions_str_bool.es", "Can't multiply non-number types: str * bool"),
+    ("expressions/divide_exceptions_str_str.es", "Can't divide non-number types: str / str"),
+    ("expressions/divide_exceptions_str_int.es", "Can't divide non-number types: str / int"),
+    ("expressions/divide_exceptions_str_float.es", "Can't divide non-number types: str / float"),
+    ("expressions/divide_exceptions_str_bool.es", "Can't divide non-number types: str / bool"),
+    ("expressions/divide_exceptions_false.es", "Division by zero is not allowed!"),
+    ("expressions/divide_exceptions_zero.es", "Division by zero is not allowed!"),
+    ("expressions/mod_exceptions_str_str.es", "Modulo operation requires numbers: str % str"),
+    ("expressions/mod_exceptions_str_int.es", "Modulo operation requires numbers: str % int"),
+    ("expressions/mod_exceptions_str_float.es", "Modulo operation requires numbers: str % float"),
+    ("expressions/mod_exceptions_str_bool.es", "Modulo operation requires numbers: str % bool"),
+    ("expressions/mod_exceptions_false.es", "Modulo by zero is not allowed!"),
+    ("expressions/mod_exceptions_zero.es", "Modulo by zero is not allowed!"),
+    ("expressions/expon_exceptions_bool_str.es", "Cannot exponentiate non-numeric types: bool, str"),
+    ("expressions/expon_exceptions_int_str.es", "Cannot exponentiate non-numeric types: int, str"),
+    ("expressions/expon_exceptions_float_str.es", "Cannot exponentiate non-numeric types: float, str"),
+    ("expressions/expon_exceptions_str_int.es", "Cannot exponentiate non-numeric types: str"),
+])
+
+def test_invalid_expressions_raise_exception(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        _ = run_code(code)
+    assert expected in str(exc_info.value)
 
 # =========================
 # Control Structures
 # =========================
 
-def test_if_statement():
-    with open("tests/examples/control_structures/simple_if.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert 'a' not in visitor.temp_vars[-1]
-    assert visitor.temp_vars[-1]['b'] == 2
+# =========================
+# If-Elif_Else
+# =========================
 
-def test_elif_else_statement():
-    with open("tests/examples/control_structures/elif_else.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert visitor.global_vars['result'] == "if"
+@pytest.mark.parametrize("filename, expected", [
+    ("if_statement/correct_if.es", "if"),
+    ("if_statement/correct_elif.es", "elif"),
+    ("if_statement/correct_else.es", "else"),
+])
 
-def test_for_loop():
-    with open("tests/examples/control_structures/for_loop.es") as f:
+def test_if_statement(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.global_vars['sum'] == 10
+    assert visitor.global_vars['result'] == expected
 
-def test_while_loop():
-    with open("tests/examples/control_structures/while_loop.es") as f:
-        code = f.read()
-    visitor = run_code(code)
-    assert visitor.global_vars['i'] == 5
+# =========================
+# For
+# =========================
 
-def test_foreach_loop():
-    with open("tests/examples/control_structures/foreach_loop.es") as f:
+@pytest.mark.parametrize("filename, expected", [
+    ("for_loop/correct_asc_for.es", 6),
+    ("for_loop/correct_desc_for.es", 0),
+    ("for_loop/for_in_for.es", -20),
+    ("for_loop/break_statement.es", 21),
+    ("for_loop/continue_statement.es", 15),
+])
+
+def test_for_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.global_vars['sum'] == 6
+    assert visitor.global_vars['sum'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("for_loop/for_exceptions_existing_var.es", "Variable name i is already in use"),
+    ("for_loop/for_exceptions_str.es", "Value string Lol is not a numberic type and cannot be used in for loop parameters"),
+])
+
+def test_for_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
+
+def test_for_warnings(capsys):
+    with open(f"tests/examples/for_loop/wrong_step.es") as f:
+        code = f.read()
+    with pytest.warns(RuntimeWarning) as record:
+        run_code(code)
+    assert any("Params start: 0, end: 5, step: -1 are not executable" in str(w.message) for w in record)
+
+# =========================
+# While
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("while_loop/correct_while.es", 66),
+    ("while_loop/while_in_while.es", 27),
+    ("while_loop/neg_condition.es", 0),
+    ("while_loop/break_statement.es", 6),
+    ("while_loop/continue_statement.es", 15),
+])
+
+def test_while_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_vars['sum'] == expected
+
+# =========================
+# For each
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/correct_foreach.es", 10),
+    ("foreach_loop/for_str.es", "string do dodania"),
+    ("foreach_loop/for_different_types.es", True),
+    ("foreach_loop/break_statement.es", 0),
+    ("foreach_loop/continue_statement.es", 0),
+    ("foreach_loop/for_empty_list.es", ""),
+])
+
+def test_foreach_loop(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_vars['sum'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("foreach_loop/non_exist_list.es", "Object lista is not iterable"),
+])
+
+def test_foreach_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
 
 # =========================
 # Functions
 # =========================
 
-def test_function_def_call():
-    with open("tests/examples/functions/function_call.es") as f:
+@pytest.mark.parametrize("filename, expected", [
+    ("functions/function_call.es", 15),
+    ("functions/function_without_params.es", "wynik"),
+    ("functions/function_one_param.es", "jeden"),
+    ("functions/multi_call.es", "czwarty"),
+    ("functions/recursion.es", 5040),
+    ("functions/fun_in_fun.es", 9),
+    ("functions/fun_call_other_fun.es", 15),
+    ("functions/first_class_fun.es", "Saluton: Imie"),
+    ("functions/loop_fun_call.es", 6),
+    ("functions/fun_in_condition.es", "-"),
+    ("functions/return_in_loop.es", 0),
+])
+
+def test_function_def_call(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
         code = f.read()
     visitor = run_code(code)
-    assert visitor.temp_vars[-1]['result'] == 15
+    assert visitor.global_vars['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("functions/used_parameter_name.es", "Parameter name 'a' is already used in this function definition"),
+    ("functions/non_existing_fun.es", "Function 'fun2' is not defined."),
+    ("functions/non_existing_param.es", "Parameter name does not apear in function definition"),
+    ("functions/require_arguments.es", "Function require parameters: ['nazwa']"),
+    ("functions/redefinition.es", "Function fun1 is already defined"),
+])
+
+def test_fun_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
 
 # =========================
 # Lists
 # =========================
 
-# def test_list_operations():
-#     with open("tests/examples/lists/list_ops.es") as f:
-#         code = f.read()
-#     visitor = run_code(code)
-#     assert visitor.global_lists['l'][0] == 0
-#     assert 1 not in visitor.global_lists['l']
+@pytest.mark.parametrize("filename, expected", [
+    ("lists/list_def.es", [1, 2, 3, "4"]),
+    ("lists/empty_list.es", []),
+    ("lists/add_to_list.es", [1, 2, 4, 9]),
+    ("lists/add_list_to_list.es", ['lista', ['kolejna', 'lista']]),
+    ("lists/insert_val.es", [1, 2, 3, 4, 4, 5]),
+    ("lists/replace_val.es", [1, 2, 3, 1, 5]),
+    ("lists/remove_val.es", [1, 2, 4, 5]),
+])
+
+def test_list_operations(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_lists['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("lists/add_to_non_list.es", "List 'result' is not defined"),
+    ("lists/insert_str_index.es", "Index in insert function must be numeric"),
+    ("lists/insert_non_existing_list.es", "List 'result2' is not defined"),
+    ("lists/replace_non_list.es", "Struct 'result2' is not defined"),
+    ("lists/replace_str_index.es", "Index in replace function must be numeric"),
+    ("lists/replace_outofrange.es", "List index out of range: -1"),
+    ("lists/print_outofrange.es", "List index out of range. result length: 5"),
+    ("lists/remove_non_exist_val.es", "Element '0' not found in list 'result'"),
+    ("lists/remove_non_exist_list.es", "List 'result2' is not defined"),
+])
+
+def test_lists_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)
+
+# =========================
+# Dictionaries
+# =========================
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/dict_def.es", {"jeden": 1, "dwa": 2, "trzy" : 3}),
+    ("dicts/empty_dict.es", {}),
+    ("dicts/add_to_dict.es", {"jeden": 1, "dwa": 2, "trzy" : 3, 2 : "dwa"}),
+    ("dicts/add_list_to_dict.es", {'jeden': 1, 'dwa': 3, 'trzy': 3, 'numery': [1, 2, 3]}),
+])
+
+def test_dicts_operations(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_dicts['result'] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/print_keys.es", ["jeden", "dwa", "trzy"]),
+    ("dicts/key_empty_dict.es", []), #FIXME
+    ("dicts/values_empty_dict.es", []), #FIXME
+    ("dicts/print_values.es", [1, 2, 3]),
+])
+
+def test_dicts_keys(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    visitor = run_code(code)
+    assert visitor.global_lists["result"] == expected
+
+@pytest.mark.parametrize("filename, expected", [
+    ("dicts/key_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/values_non_dict.es", "Dict 'result2' is not defined"),
+    ("dicts/add_to_non_dict.es", "Struct 'result2' is not defined"),
+    ("dicts/print_non_dict.es", "Dict 'result2' is not defined"),
+])
+
+def test_dicts_exceptions(filename, expected, capsys):
+    with open(f"tests/examples/{filename}") as f:
+        code = f.read()
+    with pytest.raises(Exception) as exc_info:
+        run_code(code)
+    assert expected in str(exc_info.value)

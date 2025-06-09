@@ -11,6 +11,7 @@ skipAfter       : ( . )*? ;
 
 instructions    : printExpr
                 | variableExpr
+                | variableChange
                 | deleteStmt
                 | condition 
                 | forLoop 
@@ -35,6 +36,8 @@ printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
 variableExpr    : GLOBAL? VARDEF type? NAME ASG (expr | INPUT LP RP);
 
+variableChange  : NAME ASG (expr | INPUT LP RP | LS (expr (COMMA expr)*)? PS | LC (expr COLON expr (COMMA expr COLON expr)*)? RC);
+
 deleteStmt      : DEL NAME ;
 
 condition       : ifExpr elifExpr* elseExpr? ;
@@ -45,7 +48,9 @@ elifExpr        : ELIF LP expr RP LC actions* RC ;
 
 elseExpr        : ELSE LC actions* RC ;
 
-forLoop         : FOR LP NAME SEMICOLON INT SEMICOLON INT SEMICOLON INT? RP LC actions* RC ;
+forLoop         : FOR LP NAME forParam forParam forParam? RP LC actions* RC ;
+
+forParam        : SEMICOLON (INT | expr);
 
 whileLoop       : WHILE LP expr RP LC actions* RC ;
 
@@ -57,7 +62,7 @@ parameters      : (type COLON)? NAME (COMMA (type? COLON)? NAME)* ;
 
 returnStmt      : RETURN expr? ;
 
-defList         : GLOBAL? VARDEF LIST NAME ASG LS (expr (COMMA expr)*)? PS ;
+defList         : GLOBAL? VARDEF LIST NAME ASG (LS (expr (COMMA expr)*)? PS | getDictKeys | getDictValues);
 
 addToList       : NAME ADD expr ;
 

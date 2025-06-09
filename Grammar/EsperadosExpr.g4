@@ -42,8 +42,7 @@ atom            : LP expr RP
 
 type            : INTTYPE
                 | FLOATTYPE
-                | STRINGTYPE 
-                | LIST ;
+                | STRINGTYPE ;
 
 comment         : COMMENTBLOCK 
                 | COMMENT ;

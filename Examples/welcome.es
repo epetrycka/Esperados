@@ -14,7 +14,7 @@ gis (vere) {
     Lista aldoni text
 }
 
-difini salutu(listo: names){
+difini salutu(names){
     por ciu name en names{
         se (names egala ""){
             reveni malvero

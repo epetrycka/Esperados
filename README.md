@@ -138,13 +138,14 @@ Adiau
 - [ ] Obsługa list, map.
 - [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
 - [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
+- [ ] Co z tymi referencjami i głęboką kopią?
 
 ---
 
-### Error handler:
+### Final:
 
-- [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
-- [ ] Walidacja czy element znajduje się w słowniku
-- [ ] Sprawdzenie czy wartość jest liczbą ?
+- [ ] Przygotować sprawozdanie
+- [ ] Dodać instalator
+- [ ] Dodać przykładowe kody jakies popularne jak np fibonaci czy coś
 
 </details>
