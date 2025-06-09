@@ -142,11 +142,6 @@ Adiau
 
 ---
 
-### Error handler:
-
-- [ ] Obsługa błędów bardziej precyzyjnie: invalid token, missing token, syntax error, incomplete sentence, other
-- [ ] Dodanie czerwonego napisu
-
 ### Final:
 
 - [ ] Przygotować sprawozdanie
