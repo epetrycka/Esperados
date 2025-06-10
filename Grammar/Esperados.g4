@@ -3,11 +3,11 @@ import EsperadosTokens, EsperadosExpr;
 
 // PARSER
 
-program         : skipBefore (GREETING instructions* GOODBYE skipAfter)? EOF ;
+program         : skipBefore (GREETING instructions* GOODBYE ( skipBefore (GREETING instructions* GOODBYE ))* skipAfter) ;
 
-skipBefore      : (~(GREETING | GOODBYE))*;
+skipBefore      : (~(GREETING | GOODBYE))* ;
 
-skipAfter       : ( . )*? ;
+skipAfter       : (~(GREETING | GOODBYE))* ;
 
 instructions    : printExpr
                 | variableExpr

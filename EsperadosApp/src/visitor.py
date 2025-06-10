@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+import sys
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
 import warnings
 from generated.EsperadosVisitor import EsperadosVisitor
 from generated.EsperadosParser import EsperadosParser
@@ -83,13 +89,13 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             if ctx.GLOBAL():
                 try:
                     _, _ = self.findTempVariable(ctx.NAME())
-                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use")
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use as temporary")
                 except NameError:
                     self.global_vars[varName] = value
             else:
                 try:
                     _, _ = self.findGlobalVariable(ctx.NAME())
-                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use")
+                    self.raiseError(ctx, ValueError, f"Variable name {varName} is already in use as global")
                 except NameError:
                     self.temp_vars[-1][varName] = value
             return None
@@ -123,10 +129,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
                     where[varName][self.visitExpr(ctx.expr(i))] = self.visitExpr(ctx.expr(i+1))
                 return None
             elif ctx.expr():
-                value = self.visitExpr(ctx.expr())
+                value = self.visit(ctx.expr(0))
             try:
                 _, where = self.findVariable(ctx.NAME())
-                if where is not self.temp_vars[-1] or where is not self.global_vars:
+                if where is not self.temp_vars[-1] and where is not self.global_vars:
                     self.raiseError(ctx, ValueError, f"Variable {varName} type is a dict or list")
                 where[varName] = value
             except NameError:
@@ -509,8 +515,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         if ctx.STRING():
             text = ctx.STRING().getText()[1:-1]
             try:
-                return bytes(text, "utf-8").decode("unicode_escape")
-            except UnicodeDecodeError:
+                return text.encode('latin1').decode('unicode_escape').encode('latin1').decode('utf-8')
+            except UnicodeError:
                 return text
         elif ctx.INT():
             return int(ctx.INT().getText())
@@ -552,6 +558,27 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.visit(ctx.getDictKeys())
         elif ctx.getDictValues():
             self.visit(ctx.getDictValues())
+        elif ctx.intValue():
+            ctx = ctx.intValue()
+            try:
+                value = int(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to int value")
+        elif ctx.floatValue():
+            ctx = ctx.floatValue()
+            try:
+                value = float(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to float value")
+        elif ctx.stringValue():
+            ctx = ctx.stringValue()
+            try:
+                value = str(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to string value")
         return None
 
     def visitGetDictKeys(self, ctx):

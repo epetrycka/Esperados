@@ -28,6 +28,12 @@ getDictKeys     : KEYS LP NAME RP ;
 
 getDictValues   : VALUES LP NAME RP ;
 
+intValue        : INTTYPE LP expr RP ;
+
+floatValue      : FLOATTYPE LP expr RP ;
+
+stringValue     : STRINGTYPE LP expr RP ;
+
 atom            : LP expr RP
                 | INT
                 | FLOAT
@@ -38,7 +44,10 @@ atom            : LP expr RP
                 | getFromStruct
                 | functionCall 
                 | getDictKeys 
-                | getDictValues ;
+                | getDictValues 
+                | intValue 
+                | floatValue 
+                | stringValue ;
 
 type            : INTTYPE
                 | FLOATTYPE
