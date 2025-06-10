@@ -25,9 +25,9 @@ def run_code(code: str, mock_inputs=None):
 def test_empty_file(capsys):
     with open("tests/examples/incomplete_files/empty_file.es") as f:
         code = f.read()
-    _ = run_code(code)
-    captured = capsys.readouterr()
-    assert captured.out == ""
+    with pytest.raises(Exception) as exc_info:
+        _ = run_code(code)
+    assert "program must begin with Saluton" in str(exc_info.value)
 
 def test_correct_empty_file(capsys):
     with open(f"tests/examples/incomplete_files/correct_empty_file.es") as f:

@@ -9,7 +9,9 @@ class ErrorListener(ErrorListener):
                 error_msg = f"ERRORE: linea {line}:{column} - syntax error at {match.group()}"
             else:
                 error_msg = f"ERRORE: linea {line}:{column} - {msg}"
-        elif re.search(r"extraneous input.*Saluton.*", msg):
+        elif re.search(r"missing 'Saluton' *", msg):
+            error_msg = f"ERRORE: linea {line}:{column} - program must begin with Saluton"
+        elif re.search(r"expecting 'Saluton' *", msg):
             error_msg = f"ERRORE: linea {line}:{column} - program must begin with Saluton"
         elif re.search(r"extraneous input.*Adiau.*", msg):
             error_msg = f"ERRORE: linea {line}:{column} - program must end with Adiau"
