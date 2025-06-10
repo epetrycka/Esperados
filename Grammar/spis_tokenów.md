@@ -2,95 +2,95 @@
 
 ### Keywords and Tokens
 
-| Token        | Python Equivalent  | Category               | Used |
-|--------------|--------------------|------------------------|--------|
-| `variablo`   | variable           | Variable declaration   | ✅     |
-| `se`         | if                 | Conditional            | ✅     |
-| `gis`        | while              | Loop                   | ✅     |
-| `por`        | for                | Loop                   | ✅     |
-| `por ciu`    | for each           | Loop for lists         | ✅     |
-| `en`         | in                 | Membership operator    | ✅     |
-| `alie`       | else               | Conditional            | ✅     |
-| `alie se`    | elif               | Conditional            | ✅     |
-| `kaj`        | and                | Logical operator       | ✅     |
-| `au`         | or                 | Logical operator       | ✅     |
-| `haltu`      | break              | Loop control           | ✅     |
-| `daurigi`    | continue           | Loop control           | ✅     |
-| `difini`     | def                | Function definition    | ✅     |
-| `forigi`     | delete             | Deletion               | ✅     |
-| `malvero`    | false              | Boolean literal        | ✅     |
-| `vere`       | true               | Boolean literal        | ✅     |
-| `tutmonda`   | global             | Scope modifier         | ✅     |
-| `funkcio`    | funkcja            | Function definition    | ✅     |
-| `ne`         | not                | Logical negation       | ✅     |
-| `reveni`     | return             | Return statement       | ✅     |
-| `slosiloj`   | keys               | Gets dictionary keys   | ✅     |
-| `valoroj`    | values             | Gets dictionary values | ✅     |
-| `Saluton`    | (start of program) | Program entry point    | ✅     |
-| `Adiau`      | (end of program)   | Program termination    | ✅     |
-| `estas`      | is                 | Identity operator      |        |
-| `klaso`      | class              | Class definition       |        |
-| `nenio`      | none               | Null literal           |        |
-| `krom`       | except             | Exception handling     |        |
-| `provu`      | try                | Exception handling     |        |
-| `finfine`    | finally            | Exception handling     |        |
+| Token        | Python Equivalent  | Category               |
+|--------------|--------------------|------------------------|
+| `variablo`   | variable           | Variable declaration   |
+| `se`         | if                 | Conditional            |
+| `gis`        | while              | Loop                   |
+| `por`        | for                | Loop                   | 
+| `por ciu`    | for each           | Loop for lists         | 
+| `en`         | in                 | Membership operator    | 
+| `alie`       | else               | Conditional            | 
+| `alie se`    | elif               | Conditional            | 
+| `kaj`        | and                | Logical operator       | 
+| `au`         | or                 | Logical operator       | 
+| `haltu`      | break              | Loop control           | 
+| `daurigi`    | continue           | Loop control           | 
+| `difini`     | def                | Function definition    | 
+| `forigi`     | delete             | Deletion               | 
+| `malvero`    | false              | Boolean literal        | 
+| `vere`       | true               | Boolean literal        | 
+| `tutmonda`   | global             | Scope modifier         | 
+| `funkcio`    | funkcja            | Function definition    | 
+| `ne`         | not                | Logical negation       | 
+| `reveni`     | return             | Return statement       | 
+| `slosiloj`   | keys               | Gets dictionary keys   | 
+| `valoroj`    | values             | Gets dictionary values | 
+| `Saluton`    | (start of program) | Program entry point    | 
+| `Adiau`      | (end of program)   | Program termination    | 
+| `estas`      | is                 | Identity operator      | 
+| `klaso`      | class              | Class definition       | 
+| `nenio`      | none               | Null literal           | 
+| `krom`       | except             | Exception handling     |
+| `provu`      | try                | Exception handling     | 
+| `finfine`    | finally            | Exception handling     | 
 
 ---
 
 ### Arithmetic Operators
 
-| Token        | Python Equivalent | Operation         | Used |
-|--------------|-------------------|-------------------|--------|
-| `aldoni`     | `+`               | Addition          | ✅     |
-| `subtrahi`   | `-`               | Subtraction       | ✅     |
-| `multigi`    | `*`               | Multiplication    | ✅     |
-| `dividi`     | `/`               | Division          | ✅     |
-| `modulo`     | `%`               | Modulo            | ✅     |
-| `intensigi`  | `**`              | Exponentiation    | ✅     |
+| Token        | Python Equivalent | Operation         |
+|--------------|-------------------|-------------------|
+| `aldoni`     | `+`               | Addition          |
+| `subtrahi`   | `-`               | Subtraction       |
+| `multigi`    | `*`               | Multiplication    |
+| `dividi`     | `/`               | Division          |
+| `modulo`     | `%`               | Modulo            |
+| `intensigi`  | `**`              | Exponentiation    |
 
 ---
 
 ### Comparison and Assignment Operators
 
-| Token              | Python Equivalent | Operation              | Used |
-|--------------------|-------------------|------------------------|--------|
-| `asigini`          | `=`               | Assignment             | ✅     |
-| `egala`            | `==`              | Equality               | ✅     |
-| `ne egala`         | `!=`              | Inequality             | ✅     |
-| `granda`           | `>`               | Greater than           | ✅     |
-| `malgranda`        | `<`               | Less than              | ✅     |
-| `granda egala`     | `>=`              | Greater than or equal  | ✅     |
-| `malgranda egala`  | `<=`              | Less than or equal     | ✅     |
+| Token              | Python Equivalent | Operation              |
+|--------------------|-------------------|------------------------|
+| `asigini`          | `=`               | Assignment             |
+| `egala`            | `==`              | Equality               |
+| `ne egala`         | `!=`              | Inequality             |
+| `granda`           | `>`               | Greater than           |
+| `malgranda`        | `<`               | Less than              |
+| `granda egala`     | `>=`              | Greater than or equal  |
+| `malgranda egala`  | `<=`              | Less than or equal     |
 
 ---
 
 ### Structural Symbols
 
-| Symbol   | Meaning              | Category               | Used |
-|----------|----------------------|------------------------|--------|
-| `(`      | left_parenthesis     | Grouping               | ✅     |
-| `)`      | right_parenthesis    | Grouping               | ✅     |
-| `{`      | left_brace           | Block start            | ✅     |
-| `}`      | right_brace          | Block end              | ✅     |
-| `[`      | left_bracket         | Indexing/list start    | ✅     |
-| `]`      | right_bracket        | Indexing/list end      | ✅     |
-| `,`      | comma                | Separator              | ✅     |
-| `:`      | colon                | ForEach condition sep  | ✅     |
-| `;`      | semicolon            | ForLoop condition sep  | ✅     |
-| `:O...`  | comment_symbol       | Comment                | ✅     |
-| `:P...P:`| commentblock_symbols | Comment Block          | ✅     |
+| Symbol   | Meaning              | Category               |
+|----------|----------------------|------------------------|
+| `(`      | left_parenthesis     | Grouping               |
+| `)`      | right_parenthesis    | Grouping               |
+| `{`      | left_brace           | Block start            |
+| `}`      | right_brace          | Block end              |
+| `[`      | left_bracket         | Indexing/list start    |
+| `]`      | right_bracket        | Indexing/list end      |
+| `,`      | comma                | Separator              |
+| `:`      | colon                | ForEach condition sep  |
+| `;`      | semicolon            | ForLoop condition sep  |
+| `:O...`  | comment_symbol       | Comment                |
+| `:P...P:`| commentblock_symbols | Comment Block          |
 
 ---
 
 ### Data Types
 
-| Token     | Python Equivalent | Type        | Used |
-|-----------|-------------------|-------------|--------|
-| `entjero` | int               | Integer     | ✅     |
-| `flosi`   | float             | Float       | ✅     |
-| `snuro`   | str               | String      | ✅     |
-| `listo`   | list              | Lista       | ✅     |
-| `vortaro' | dictionary        | Słownik     | ✅     |
+| Token     | Python Equivalent | Type        |
+|-----------|-------------------|-------------|
+| `entjero` | int               | Integer     |
+| `flosi`   | float             | Float       |
+| `snuro`   | str               | String      |
+| `listo`   | list              | Lista       |
+| `vortaro' | dictionary        | Słownik     |
 
 ### Lexer Tokens – Literals & Structure
 
