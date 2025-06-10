@@ -84,25 +84,13 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ## Code Example
 
-```esperando
-Saluton
-
-difini salutu(snuro: nomo){
-    skribi("Saluton, ", nomo)
-}
-
-por ciu (variablo en ["Mia", "Eta", "Amiko"]){
-    salutu(nomo = variablo)
-}
-
-Adiau
-```
+![image](https://github.com/user-attachments/assets/943b4280-3fba-4cc8-ac11-0ab7f19ff9b5)
 
 [more examples](https://github.com/epetrycka/Esperados-SquickLang/tree/main/Examples)
 
 ## Uruchamianie programu
 
-W zakładce *realese* dostępna jest najnowsza wersja programu i jego installatora. 
+W zakładce *realese* dostępna jest najnowsza wersja programu i jego instalatora. 
 
 ### Instalacja
 
