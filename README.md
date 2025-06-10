@@ -25,41 +25,43 @@ Projekt zakłada stworzenie gramatyki i interpretera języka Esperados, który p
 
 ## Wymagania funkcjonalne
 
-1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy). ✅
-
----
+1. Własna składnia z językiem esperanto – zaprojektowana składnia do podstawowych operacji (zmienne, przypisania, warunki, pętle, funkcje, klasy).
 
 2. Wymagane rozpoczęcie definiowania instrukcji programu słowem kluczowym "Saluto", koniec instrukcji programu - "Adiau".
 
-3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie).
+3. Zmienne i typy – możliwość deklaracji globalnych i wewnętrznych zmiennych oraz użycie ich (np. int, string, bool - typ wartości przypisywany automatycznie, możliwe rzutowanie typów).
 
-4. Wypisywanie danych do konsoli.
+4. Wypisywanie danych do konsoli (kilka wartości o różnych typach) i pobieranie z kosoli.
 
 5. Instrukcje warunkowe – wsparcie dla if, else, elif.
 
-6. Pętle – while, for, for each.
+6. Pętle – while, for, for each - operacje break i continue wewnątrz pętli
 
-7. Funkcje – możliwość definiowania i wywoływania funkcji (definicje i skrócone - lambda).
+7. Funkcje – możliwość definiowania i wywoływania funkcji, zapis wskaźnika do funkcji do zmiennej, zwracanie wartości przez funkcję (lub puste `return`)
 
-8. Komentarze – możliwość dodawania komentarzy.
+8. Komentarze – możliwość dodawania komentarzy blokowych i liniowych.
 
 9. Podstawowe operacje matematyczne i logiczne – dodawanie, odejmowanie etc., porównania, AND/OR/NOT + obsługa kolejności wykonywania działań.
 
-10. Operacje na stringach.
+10. Operacje dodawania na stringach.
 
 11. Tworzenie tablic i map - definiowanie indexowanych tablic i map danych.
 
-12. Wczytywanie danych z konsoli do programu.
+12. Usuwanie zmiennych z pamięci, zmiana wartości zmiennych (o tym samym typie).
 
 13. Obsługa polskich znaków w konsoli i znaków białych w konsoli (np. '\n').
 
----
-
 14. Obsługa błędów składniowych i błędów kompilacji – generowanie błędów, jeśli składnia jest nieprawidłowa.
 
-15. Blok try-except-finally - możliwość obsługi błędów wewnątrz programu.
+15. Walidacja parametrów funkcji.
 
-16. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod.
+16. Operacje na tablich - replace, insert, add, remove.
+
+17. Operacje na słownikach - replace, add, keys, values.
+
+18. Działanie efektywne rekurencji. 
+
+19. Interfejs CLI – interpreter, który przyjmuje plik .es i uruchamia kod. Kolorowanie składni i numeracja linii.
 
 
 ## Wymagania niefunkcjonalne
@@ -96,56 +98,83 @@ por ciu (variablo en ["Mia", "Eta", "Amiko"]){
 Adiau
 ```
 
+[more examples](https://github.com/epetrycka/Esperados-SquickLang/tree/main/Examples)
+
 ## Uruchamianie programu
 
+W zakładce *realese* dostępna jest najnowsza wersja programu i jego installatora. 
+
+### Instalacja
+
+1. Należy pobrać plik EsperadosInstallator.exe i uruchomić go.
+2. W okienku pojawi się wybór ścieżki do zapisu plików programu.
+3. Po zatwierdzeniu program zostanie zainstalowany i automatycznie na pulpicie naszego komputera pojawi się skrót do aplikacji WelcomeToEsperados.exe, w której możemy korzystać z wygodnego interfejsu do obsługi naszego języka.
+
+Jest dostępna możliwość również korzystania z języka z poziomu linii komend. Aby tego użyć należy wykonać następujące kroki:
+
+#### ⚠️ Wymagania:
+
+Zainstalowany Python 3 (dodany do PATH)
+
+Aktywne venv lub zainstalowane wymagane paczki (antlr4, antlr4-python3-runtime, itp.) - pakiet install powinien zrobić to za ciebie.
+
+1. Z zakładki realese pobrać plik Windows.zip lub Linux.zip w zależności od systemu operacyjnego i rozpakować w utworzonym folderze Esperados, wybranym w aplikacji instalatora.
+
+### Windows
+
+1. Wpisać w linii komend otwartej w folderze Esperados:
+  
 ```bash
-> cd EsperadosApp
-> python -m venv venv
-> source venv/Scripts/activate
-> python -m pip install --upgrade pip
-> python -m pip install -r requirements.txt
-> python src/main.py ../Examples/code.es
+> ./install.bat
+```
+
+2. Wtedy będzie możliwe uruchamianie programu za pomocą komendy:
+
+```bash
+> ./esperados.bat example.es
+```
+
+4. Lub dodanie tymczasowego aliasu:
+
+```bash
+> doskey esperados=esperados.bat $*
+```
+
+5. Albo dodanie ścieżki do pliku `esperados.bat` do systemowych zmiennych środowiskowych (Path)
+
+```bash
+> esperados example.es
+```
+
+### Linux
+
+1. Nadaj prawa do uruchomienia i uruchom skrypt instalatora.
+
+```
+chmod +x esperados install.sh
+./install.sh
+```
+
+2. Uruchamiaj program.
+
+```
+./esperados example.es
+```
+
+3. Lub dodaj tymczasowy alias.
+
+```
+alias esperados="$(pwd)/esperados"
+```
+
+5. Albo stały alias.
+
+```
+echo 'alias esperados="$(pwd)/esperados"' >> ~/.bashrc
+source ~/.bashrc
+esperados example.es
 ```
 
 ---
 
-> [!IMPORTANT]
-> Projekt jest na etapie developmentu
-
-<details>
-  <summary><strong>TO DO</strong></summary>
-
-### Gramatyka:
-- [ ] Obsługa wartości `NULL` (`nenio`) dla zmiennych.
-- [ ] Definiowanie map, lambd.
-- [ ] Wyrażenia logiczne z operatorem `IN` (`en`) – sprawdzanie przynależności do listy/mapy/tablicy.
-- [ ] Każda instrukcja musi kończyć się znakiem następnej lini.
-
-<sub><i>Opcjonalnie:</i></sub>  
-- [ ] Definicje klasy (do rozważenia).
-- [ ] Wymuszanie typu zmiennej (np. `string(5)`, `int("56")`).
-- [ ] Operator `IS` (`estas`) – sprawdzanie typu zmiennej.
-- [ ] Operacje na stringach (`indexOf` itp.).
-- [ ] Dodanie niemutowalnych list.
-- [ ] Traktowanie kodu przed pierwszym `Saluto` i po `Adiau` jako komentarz (zobaczyć jak użyć modów aby to zadziałało bez przechodzenia parserem).
-
----
-
-### Visitor (interpretacja):
-
-- [ ] Obsługa wymuszania typu przy definicji i za pomocą funkcji.
-- [ ] Implementacja klas i lambd.
-- [ ] Obsługa list, map.
-- [ ] Wsparcie dla polskich znaków i białych znaków (np. `\n`).
-- [ ] Zapisywanie funkcji w scopach, poza scopem nie powinno być do niej dostępu
-- [ ] Co z tymi referencjami i głęboką kopią?
-
----
-
-### Final:
-
-- [ ] Przygotować sprawozdanie
-- [ ] Dodać instalator
-- [ ] Dodać przykładowe kody jakies popularne jak np fibonaci czy coś
-
-</details>
+*Życzymy dobrej zabawy podczas korzystania z Esperados!*
