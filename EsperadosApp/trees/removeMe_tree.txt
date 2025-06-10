@@ -1,3 +1,0 @@
-(program skipBefore Saluton (instructions (variableExpr variablo x asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom "nie wiem co")))))))))))
-(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom x))))))))) ))) Adiau (skipBefore I tu tez jakies gowno) Saluton (instructions (variableExpr tutmonda variablo y asigini (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom 1)))))))))))
-(instructions (printExpr skribi ( (expr (orExpr (andExpr (notExpr (comparisonExpr (additionExpr (multiExpr (exponExpr (atom y))))))))) ))) Adiau skipAfter)
