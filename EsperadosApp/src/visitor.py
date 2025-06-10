@@ -552,6 +552,27 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             self.visit(ctx.getDictKeys())
         elif ctx.getDictValues():
             self.visit(ctx.getDictValues())
+        elif ctx.intValue():
+            ctx = ctx.intValue()
+            try:
+                value = int(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to int value")
+        elif ctx.floatValue():
+            ctx = ctx.floatValue()
+            try:
+                value = float(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to float value")
+        elif ctx.stringValue():
+            ctx = ctx.stringValue()
+            try:
+                value = str(self.visit(ctx.expr()))
+                return value
+            except Exception:
+                self.raiseError(ctx, ValueError, f"Cannot convert {self.visit(ctx.expr())} to string value")
         return None
 
     def visitGetDictKeys(self, ctx):
