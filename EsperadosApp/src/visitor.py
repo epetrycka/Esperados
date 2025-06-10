@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+import sys
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
 import warnings
 from generated.EsperadosVisitor import EsperadosVisitor
 from generated.EsperadosParser import EsperadosParser
@@ -509,8 +515,8 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         if ctx.STRING():
             text = ctx.STRING().getText()[1:-1]
             try:
-                return bytes(text, "utf-8").decode("unicode_escape")
-            except UnicodeDecodeError:
+                return text.encode('latin1').decode('unicode_escape').encode('latin1').decode('utf-8')
+            except UnicodeError:
                 return text
         elif ctx.INT():
             return int(ctx.INT().getText())
